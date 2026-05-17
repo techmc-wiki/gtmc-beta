@@ -1,4 +1,5 @@
 import { type ArticleTreeNode } from "@/lib/github"
+import { routing } from "@/i18n/routing"
 import { ArticleManifest, type ArticleEntry } from "./article-manifest-store"
 
 export type ArticleLocale = "en" | "zh"
@@ -10,6 +11,12 @@ export interface LocalizedArticleMetadata {
 
 const localTreeCache = new Map<ArticleLocale, ArticleTreeNode[]>()
 
+/**
+ * Builds the article navigation tree for a locale.
+ *
+ * Consumer boundaries should pass an explicit locale. The zh default is kept
+ * only for backward compatibility with existing internal callers.
+ */
 export async function getArticleTree(
   locale: ArticleLocale = "zh"
 ): Promise<ArticleTreeNode[]> {
@@ -74,6 +81,24 @@ export function getLocalizedArticleEntry(
   }
 }
 
+export function hasArticleLocale(
+  slug: string,
+  locale: ArticleLocale
+): boolean {
+  return ArticleManifest[slug]?.availableLocales.includes(locale) ?? false
+}
+
+export function getArticleAvailableLocales(slug: string): ArticleLocale[] {
+  return ArticleManifest[slug]?.availableLocales ?? []
+}
+
+export function getArticleLocalizedFilePath(
+  slug: string,
+  locale: ArticleLocale
+): string | undefined {
+  return ArticleManifest[slug]?.localizedFilePaths[locale]
+}
+
 function buildLocalTree(locale: ArticleLocale): ArticleTreeNode[] {
   const entries = Object.values(ArticleManifest)
   if (entries.length === 0) {
@@ -92,14 +117,16 @@ function buildLocalTree(locale: ArticleLocale): ArticleTreeNode[] {
     .filter((entry) => !entry.parentSlug || !ArticleManifest[entry.parentSlug])
     .sort((a, b) => compareEntries(a, b, locale))
 
-  return roots.map((entry) => buildTreeNode(entry, parentIndex, locale))
+  return roots
+    .map((entry) => buildTreeNode(entry, parentIndex, locale))
+    .filter((node): node is ArticleTreeNode => node !== null)
 }
 
 function buildTreeNode(
   entry: ArticleEntry,
   parentIndex: Map<string, ArticleEntry[]>,
   locale: ArticleLocale
-): ArticleTreeNode {
+): ArticleTreeNode | null {
   const childrenFromSlug = entry.children ?? []
   const childrenFromParent = parentIndex.get(entry.slug) ?? []
 
@@ -114,6 +141,15 @@ function buildTreeNode(
   const children = Array.from(mergedChildrenBySlug.values())
     .sort((a, b) => compareEntries(a, b, locale))
     .map((child) => buildTreeNode(child, parentIndex, locale))
+    .filter((node): node is ArticleTreeNode => node !== null)
+
+  if (!entry.isFolder && !entry.availableLocales.includes(locale)) {
+    return null
+  }
+
+  if (entry.isFolder && children.length === 0) {
+    return null
+  }
 
   const localizedMetadata = getLocalizedArticleMetadata(entry, locale)
 
@@ -153,10 +189,25 @@ function compareEntries(
 
 function getNodeTitle(entry: ArticleEntry, locale: ArticleLocale): string {
   const { chapterTitle } = getLocalizedArticleMetadata(entry, locale)
+  const fileTitle = entry.filePath.split("/").pop()?.replace(/\.md$/i, "")
+
+  if (locale === routing.defaultLocale) {
+    return (
+      entry.titleEn?.trim() ||
+      chapterTitle ||
+      entry.title ||
+      fileTitle ||
+      entry.slug.split("/").pop() ||
+      entry.slug
+    )
+  }
 
   if (entry.isPreface) {
     return (
-      entry.title || chapterTitle || entry.slug.split("/").pop() || entry.slug
+      entry.title ||
+      chapterTitle ||
+      entry.slug.split("/").pop() ||
+      entry.slug
     )
   }
 
@@ -168,7 +219,7 @@ function getNodeTitle(entry: ArticleEntry, locale: ArticleLocale): string {
     return (
       chapterTitle ||
       entry.title ||
-      entry.filePath.split("/").pop()?.replace(/\.md$/i, "") ||
+      fileTitle ||
       entry.slug.split("/").pop() ||
       entry.slug
     )
@@ -177,7 +228,7 @@ function getNodeTitle(entry: ArticleEntry, locale: ArticleLocale): string {
   return (
     chapterTitle ||
     entry.title ||
-    entry.filePath.split("/").pop()?.replace(/\.md$/i, "") ||
+    fileTitle ||
     entry.slug.split("/").pop() ||
     entry.slug
   )
