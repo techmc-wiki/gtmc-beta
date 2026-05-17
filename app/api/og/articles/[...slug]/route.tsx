@@ -4,8 +4,12 @@ import { type NextRequest } from "next/server"
 import matter from "gray-matter"
 import mime from "mime-types"
 import { resolveSlug } from "@/lib/slug-resolver"
-import { getLocalizedArticleEntry } from "@/lib/article-manifest"
-import { getRepoFileContent } from "@/lib/github/sync"
+import {
+  type ArticleLocale,
+  getLocalizedArticleEntry,
+  hasArticleLocale,
+} from "@/lib/article-manifest"
+import { getArticleContentBySlug } from "@/lib/article-content-store"
 import { getArticleRemoteBuffer } from "@/lib/article-remote-assets"
 import { calculateReadingMetrics } from "@/lib/markdown"
 import { getSiteUrl } from "@/lib/site-url"
@@ -21,6 +25,13 @@ const BANNER_H = Math.round(H * 0.4)
 const CARD_H = H - BANNER_H
 const META_BAR_H = 36
 const BOTTOM_BAR_H = 24
+const VALID_LOCALES: ArticleLocale[] = ["zh", "en"]
+
+function resolveLocale(rawLocale: string | null): ArticleLocale {
+  return VALID_LOCALES.includes(rawLocale as ArticleLocale)
+    ? (rawLocale as ArticleLocale)
+    : "zh"
+}
 
 function extractBodyHook(raw: string): string {
   const stripped = raw
@@ -47,12 +58,25 @@ export async function GET(
 ) {
   const { slug } = await params
   const slugPath = slug.map((s) => decodeURIComponent(s)).join("/")
+  const locale = resolveLocale(_req.nextUrl.searchParams.get("locale"))
 
-  const filePath = resolveSlug(slugPath)
+  if (!hasArticleLocale(slugPath, locale)) {
+    return new Response("Not Found", { status: 404 })
+  }
+
+  const artifact = (() => {
+    try {
+      return getArticleContentBySlug(slugPath, locale)
+    } catch {
+      return null
+    }
+  })()
+  if (!artifact) return new Response("Not Found", { status: 404 })
+
+  const filePath = artifact.filePath || resolveSlug(slugPath)
   if (!filePath) return new Response("Not Found", { status: 404 })
 
-  const content = await getRepoFileContent(filePath)
-  if (!content) return new Response("Not Found", { status: 404 })
+  const content = artifact.content
 
   const { data } = matter(content)
   const siteUrl = getSiteUrl()
@@ -64,9 +88,9 @@ export async function GET(
     "Untitled"
   const title = rawTitle.length > 60 ? rawTitle.slice(0, 60) + "…" : rawTitle
 
-  const manifestEntry = getLocalizedArticleEntry(slugPath, "en")
+  const manifestEntry = getLocalizedArticleEntry(slugPath, locale)
   const parentEntry = manifestEntry?.parentSlug
-    ? getLocalizedArticleEntry(manifestEntry.parentSlug, "en")
+    ? getLocalizedArticleEntry(manifestEntry.parentSlug, locale)
     : null
   const chapterTitle =
     manifestEntry?.chapterTitle.trim() ||
