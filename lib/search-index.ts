@@ -7,10 +7,9 @@ import {
   ARTICLES_REPO_OWNER,
   ARTICLES_REPO_NAME,
 } from "@/lib/github/articles-repo"
-import { getArticleContent } from "@/lib/article-loader"
-import { resolveSlug } from "@/lib/slug-resolver"
-import { parseFrontMatter } from "@/lib/frontmatter-parser"
+import { getArticleContentBySlug } from "@/lib/article-content-store"
 import type { TreeNode } from "@/types/sidebar-tree"
+import type { ArticleLocale } from "@/lib/article-manifest"
 
 interface IndexedArticle {
   id: string
@@ -46,10 +45,10 @@ function flattenTree(nodes: TreeNode[]): { title: string; slug: string }[] {
   return result
 }
 
-let cachedIndex: MiniSearch<IndexedArticle> | null = null
-let cacheTimestamp = 0
-let cachedCommitSha: string | null = null
-let buildPromise: Promise<MiniSearch<IndexedArticle>> | null = null
+const cachedIndexes = new Map<ArticleLocale, MiniSearch<IndexedArticle>>()
+const cacheTimestamps = new Map<ArticleLocale, number>()
+const cachedCommitShas = new Map<ArticleLocale, string | null>()
+const buildPromises = new Map<ArticleLocale, Promise<MiniSearch<IndexedArticle>>>()
 
 const CACHE_TTL = 1800_000
 const FETCH_CONCURRENCY = 5
@@ -88,8 +87,8 @@ function createMiniSearchIndex(
   return miniSearch
 }
 
-async function buildIndex(): Promise<MiniSearch<IndexedArticle>> {
-  const tree = await getPublicSidebarTree()
+async function buildIndex(locale: ArticleLocale): Promise<MiniSearch<IndexedArticle>> {
+  const tree = await getPublicSidebarTree(locale)
 
   const articles: IndexedArticle[] = []
 
@@ -110,23 +109,22 @@ async function buildIndex(): Promise<MiniSearch<IndexedArticle>> {
       nextIndex += 1
 
       const node = githubNodes[currentIndex]
-      const filePath = resolveSlug(node.slug)
-      if (!filePath) {
-        continue
-      }
-      const markdown = await getArticleContent(filePath)
-      if (!markdown) {
+      const artifact = await getArticleContentBySlug(node.slug, locale)
+      if (!artifact) {
         continue
       }
 
-      const frontMatter = parseFrontMatter(markdown)
-      const title = frontMatter.chapterTitle || node.title
+      const title = 
+        (artifact.frontmatter['chapter-title'] as string) ||
+        (artifact.frontmatter['chapterTitle'] as string) ||
+        (artifact.frontmatter['title'] as string) ||
+        node.title
 
       articles.push({
         id: node.slug,
-        title: title,
+        title,
         slug: node.slug,
-        content: stripMarkdown(markdown),
+        content: stripMarkdown(artifact.content),
       })
     }
   }
@@ -141,8 +139,12 @@ async function buildIndex(): Promise<MiniSearch<IndexedArticle>> {
   return createMiniSearchIndex(articles)
 }
 
-export async function getSearchIndex(): Promise<MiniSearch<IndexedArticle>> {
+export async function getSearchIndex(locale: ArticleLocale): Promise<MiniSearch<IndexedArticle>> {
   const currentSha = await getLatestCommitSha()
+
+  const cachedIndex = cachedIndexes.get(locale)
+  const cacheTimestamp = cacheTimestamps.get(locale) ?? 0
+  const cachedCommitSha = cachedCommitShas.get(locale)
 
   if (
     cachedIndex &&
@@ -153,17 +155,21 @@ export async function getSearchIndex(): Promise<MiniSearch<IndexedArticle>> {
     return cachedIndex
   }
 
-  if (!buildPromise) {
-    buildPromise = (async () => {
-      const index = await buildIndex()
-      cachedIndex = index
-      cacheTimestamp = Date.now()
-      cachedCommitSha = currentSha
-      return index
-    })().finally(() => {
-      buildPromise = null
-    })
+  const existingPromise = buildPromises.get(locale)
+  if (existingPromise) {
+    return existingPromise
   }
 
+  const buildPromise = (async () => {
+    const index = await buildIndex(locale)
+    cachedIndexes.set(locale, index)
+    cacheTimestamps.set(locale, Date.now())
+    cachedCommitShas.set(locale, currentSha)
+    return index
+  })().finally(() => {
+    buildPromises.delete(locale)
+  })
+
+  buildPromises.set(locale, buildPromise)
   return buildPromise
 }
