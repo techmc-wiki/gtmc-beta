@@ -95,7 +95,7 @@ export async function generateMetadata({
   }
 
   try {
-    const artifact = getArticleContentBySlug(target.canonicalSlug ?? slugPath)
+    const artifact = getArticleContentBySlug(target.canonicalSlug ?? slugPath, locale)
     if (!artifact) {
       return {
         title: t("notFound"),
@@ -187,7 +187,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     redirect(`/${locale}/articles/${redirectPath}`)
   }
 
-  const artifact = getArticleContentBySlug(target.canonicalSlug ?? slugPath)
+  const artifact = getArticleContentBySlug(target.canonicalSlug ?? slugPath, locale)
 
   if (!artifact) {
     notFound()
