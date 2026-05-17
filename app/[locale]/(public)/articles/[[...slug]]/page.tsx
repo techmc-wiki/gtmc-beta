@@ -13,6 +13,7 @@ import { getCachedRehypeShiki } from "@/lib/markdown/plugins/rehype-shiki"
 import {
   getArticleTree,
   getLocalizedArticleEntry,
+  hasArticleLocale,
   type ArticleLocale,
 } from "@/lib/article-manifest"
 import { getArticleContentBySlug } from "@/lib/article-content-store"
@@ -37,17 +38,17 @@ import type { ArticleTreeNode as BaseArticleTreeNode } from "@/lib/github/sync"
 export const revalidate = 3600
 
 export async function generateStaticParams(): Promise<{ locale: string; slug: string[] }[]> {
-  const locales = ["zh", "en"]
+  const locales: ArticleLocale[] = ["zh", "en"]
   const params: { locale: string; slug: string[] }[] = []
 
   for (const locale of locales) {
-    const tree = await getArticleTree(locale as ArticleLocale)
+    const tree = await getArticleTree(locale)
 
     const collectArticleSlugs = (nodes: ArticleTreeNode[]): string[] => {
       const slugs: string[] = []
 
       for (const node of nodes) {
-        if (!node.isFolder) {
+        if (!node.isFolder && hasArticleLocale(node.slug, locale)) {
           slugs.push(node.slug)
         }
 
@@ -431,6 +432,10 @@ async function resolveArticleTarget(
     return null
   }
 
+  if (!hasArticleLocale(canonicalSlug, locale)) {
+    return null
+  }
+
   const filePath = getLocalizedArticleEntry(canonicalSlug, locale)?.filePath ?? null
   if (!filePath) {
     return null
@@ -459,7 +464,7 @@ function resolveCanonicalSlugForFolder(
   locale: ArticleLocale
 ): string | null {
   const mapEntry = getLocalizedArticleEntry(targetNode.slug, locale)
-  if (mapEntry?.hasIntro) {
+  if (mapEntry?.hasIntro && hasArticleLocale(targetNode.slug, locale)) {
     return targetNode.slug
   }
 
@@ -490,7 +495,7 @@ function resolveFirstArticleSlug(children: ArticleTreeNode[], locale: ArticleLoc
   }
 
   const chapterEntries = children.map((child) => ({
-      filePath: getLocalizedArticleEntry(child.slug, locale)?.filePath ?? `${child.slug}.md`,
+    filePath: getLocalizedArticleEntry(child.slug, locale)?.filePath ?? `${child.slug}.md`,
     slug: child.slug,
     index: child.index ?? -1,
     isFolder: child.isFolder,
@@ -502,7 +507,7 @@ function resolveFirstArticleSlug(children: ArticleTreeNode[], locale: ArticleLoc
   }
 
   if (!firstEntry.isFolder) {
-    return firstEntry.slug
+    return hasArticleLocale(firstEntry.slug, locale) ? firstEntry.slug : null
   }
 
   const matchedFolder = children.find((child) => child.slug === firstEntry.slug)
@@ -537,6 +542,10 @@ function resolveDisplayedArticleTitle(
 
   if (isReadmeIntro && introTitle) {
     return introTitle
+  }
+
+  if (locale === "en" && slugEntry?.titleEn?.trim()) {
+    return slugEntry.titleEn.trim()
   }
 
   return resolveArticleTitle(rawTitle, fallbackPath)
