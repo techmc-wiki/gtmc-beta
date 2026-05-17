@@ -47,7 +47,7 @@
     "dotenv": "^17.4.2",
     "geist": "^1.7.0",
     "gray-matter": "^4.0.3",
-    "katex": "^0.16.45",
+    "katex": "^0.16.47",
     "mdast-util-find-and-replace": "^3.0.2",
     "micromark-util-character": "^2.1.1",
     "mime-types": "^3.0.2",
