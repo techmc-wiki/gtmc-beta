@@ -616,6 +616,10 @@ function resolveBannerUrl(
   }
   const currentDir = path.dirname("/" + filePath).replace(/^\/+/, "")
   const resolved = path.join(currentDir, bannerSrc).replace(/\\/g, "/")
+  const normalized = path.normalize(resolved)
+  if (normalized.includes("..")) {
+    return null
+  }
   return `${siteUrl}/api/assets?path=${encodeURIComponent(resolved)}`
 }
 
@@ -627,5 +631,10 @@ function resolveBannerPath(
     return null
   }
   const currentDir = path.dirname("/" + filePath).replace(/^\/+/, "")
-  return path.join(currentDir, bannerSrc).replace(/\\/g, "/")
+  const resolved = path.join(currentDir, bannerSrc).replace(/\\/g, "/")
+  const normalized = path.normalize(resolved)
+  if (normalized.includes("..")) {
+    return null
+  }
+  return resolved
 }

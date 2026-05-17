@@ -57,7 +57,16 @@ export async function GET(
   { params }: { params: Promise<{ slug: string[] }> }
 ) {
   const { slug } = await params
-  const slugPath = slug.map((s) => decodeURIComponent(s)).join("/")
+  let slugPath: string
+  try {
+    const decoded = slug.map((s) => decodeURIComponent(s))
+    if (decoded.some((s) => s.includes(".."))) {
+      return new Response("Invalid slug", { status: 400 })
+    }
+    slugPath = decoded.join("/")
+  } catch {
+    return new Response("Invalid slug encoding", { status: 400 })
+  }
   const locale = resolveLocale(_req.nextUrl.searchParams.get("locale"))
 
   if (!hasArticleLocale(slugPath, locale)) {
@@ -127,6 +136,10 @@ export async function GET(
       const resolvedBannerPath = path
         .join(articleDir, bannerSrc)
         .replace(/\\/g, "/")
+      const normalized = path.normalize(resolvedBannerPath)
+      if (normalized.includes("..") || !normalized.startsWith("articles/")) {
+        throw new Error("Invalid banner path")
+      }
       const buf = await getArticleRemoteBuffer(resolvedBannerPath)
       if (buf) {
         const mt = mime.lookup(bannerSrc) || "image/png"
