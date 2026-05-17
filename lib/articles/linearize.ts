@@ -1,6 +1,6 @@
 import type { TreeNode } from "@/types/sidebar-tree"
-import { resolveLocalArticlePath } from "@/lib/article-fs-resolver"
-import { getArticleContent } from "@/lib/article-loader"
+import type { ArticleLocale } from "@/lib/article-manifest"
+import { getArticleContentBySlug } from "@/lib/article-content-store"
 
 /**
  * A flattened, linearized article ready for PDF consumption.
@@ -99,11 +99,8 @@ export function linearizeArticles(tree: TreeNode[]): LinearizedArticle[] {
  */
 export async function getArticleContentForPdf(
   slug: string,
+  locale: ArticleLocale,
 ): Promise<string | null> {
-  const filePath = resolveLocalArticlePath(slug)
-  if (!filePath) {
-    return null
-  }
-
-  return getArticleContent(filePath)
+  const artifact = getArticleContentBySlug(slug, locale)
+  return artifact?.content ?? null
 }
