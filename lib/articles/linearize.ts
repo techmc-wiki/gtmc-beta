@@ -1,6 +1,7 @@
 import type { TreeNode } from "@/types/sidebar-tree"
 import type { ArticleLocale } from "@/lib/article-manifest"
 import { getArticleContentBySlug } from "@/lib/article-content-store"
+import { resolveLocalArticlePath } from "@/lib/article-fs-resolver"
 
 /**
  * A flattened, linearized article ready for PDF consumption.

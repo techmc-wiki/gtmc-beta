@@ -81,23 +81,11 @@ export function getLocalizedArticleEntry(
   }
 }
 
-export function hasArticleLocale(
-  slug: string,
-  locale: ArticleLocale
-): boolean {
-  return ArticleManifest[slug]?.availableLocales.includes(locale) ?? false
-}
-
-export function getArticleAvailableLocales(slug: string): ArticleLocale[] {
-  return ArticleManifest[slug]?.availableLocales ?? []
-}
-
-export function getArticleLocalizedFilePath(
-  slug: string,
-  locale: ArticleLocale
-): string | undefined {
-  return ArticleManifest[slug]?.localizedFilePaths[locale]
-}
+export {
+  hasArticleLocale,
+  getArticleAvailableLocales,
+  getArticleLocalizedFilePath,
+} from "./article-locale"
 
 function buildLocalTree(locale: ArticleLocale): ArticleTreeNode[] {
   const entries = Object.values(ArticleManifest)
