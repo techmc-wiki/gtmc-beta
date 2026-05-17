@@ -12,6 +12,7 @@ import {
 import { getCachedRehypeShiki } from "@/lib/markdown/plugins/rehype-shiki"
 import {
   getArticleTree,
+  getArticleAvailableLocales,
   getLocalizedArticleEntry,
   hasArticleLocale,
   type ArticleLocale,
@@ -137,18 +138,30 @@ export async function generateMetadata({
       data.description as string | undefined
     )
 
-    const ogImageUrl = `${siteUrl}/api/og/articles/${effectiveSlug}`
+    const articlePath = encodeSlug(effectiveSlug)
+    const availableLocales = getArticleAvailableLocales(effectiveSlug)
+    const defaultLocale = availableLocales.includes("zh")
+      ? "zh"
+      : availableLocales[0]
+    const languageAlternates = Object.fromEntries(
+      availableLocales.map((availableLocale) => [
+        availableLocale,
+        `${siteUrl}/${availableLocale}/articles/${articlePath}`,
+      ])
+    )
+
+    if (defaultLocale) {
+      languageAlternates["x-default"] = `${siteUrl}/${defaultLocale}/articles/${articlePath}`
+    }
+
+    const ogImageUrl = `${siteUrl}/api/og/articles/${effectiveSlug}?locale=${locale}`
 
     return {
       title: pageTitle,
       description,
       alternates: {
         canonical: canonicalUrl,
-        languages: {
-          "zh": `${getSiteUrl()}/zh/articles/${encodeSlug(effectiveSlug)}`,
-          "en": `${getSiteUrl()}/en/articles/${encodeSlug(effectiveSlug)}`,
-          "x-default": `${getSiteUrl()}/zh/articles/${encodeSlug(effectiveSlug)}`,
-        },
+        languages: languageAlternates,
       },
       openGraph: {
         title: pageTitle,
