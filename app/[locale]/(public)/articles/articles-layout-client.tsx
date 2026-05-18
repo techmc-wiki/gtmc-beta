@@ -280,7 +280,7 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
         ">
         <div
           className={`
-            sticky top-16 z-30 md:hidden
+            relative z-30 md:hidden
           `}>
           <div
             className="relative"
@@ -297,13 +297,14 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
                   e.stopPropagation()
                   dispatch({ type: "TOGGLE" })
                 }}
-              className="
-                absolute cursor-pointer overflow-hidden
+              className={`
+                cursor-pointer overflow-hidden
                 border border-tech-main/40 bg-white/70 font-mono text-xs
                 font-bold tracking-[0.15em] text-tech-main
                 transition-[background-color,color] duration-150 ease-out
                 hover:bg-tech-main/5
-              "
+                ${isStuck ? "fixed top-20 right-4 z-50" : "absolute"}
+              `}
               style={
                 {
                   width: isStuck ? "5rem" : "100%",
@@ -313,7 +314,7 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
                   boxShadow: isStuck
                     ? "0 1px 2px 0 rgba(0, 0, 0, 0.05)"
                     : "none",
-                  right: isStuck ? "1rem" : 0,
+                  right: isStuck ? undefined : 0,
                 } as React.CSSProperties
               }
               aria-label={tA11y("toggleArticleTree")}
