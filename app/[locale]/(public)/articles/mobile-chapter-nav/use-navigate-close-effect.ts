@@ -7,7 +7,7 @@
  * the state machine transitions back to `closed`.  This covers browser
  * back/forward navigation in addition to explicit link clicks.
  *
- * @module mobile-article-tree/use-navigate-close-effect
+ * @module mobile-chapter-nav/use-navigate-close-effect
  */
 
 import { useEffect, useRef } from "react"

@@ -9,7 +9,7 @@
  * Transitions are driven by user events such as scroll, toggle, navigation,
  * and window resize.
  *
- * @module mobile-article-tree/types
+ * @module mobile-chapter-nav/types
  */
 
 /**

@@ -7,19 +7,19 @@ import { CornerBrackets } from "@/components/ui/corner-brackets"
 
 const emptySubscribe = () => () => {}
 
-interface MobileTreeCardProps {
+interface MobileChapterNavCardProps {
   isOpen: boolean
   onClose: () => void
   children: React.ReactNode
   isFloating?: boolean
 }
 
-export function MobileTreeCard({
+export function MobileChapterNavCard({
   isOpen,
   onClose,
   children,
   isFloating,
-}: MobileTreeCardProps) {
+}: MobileChapterNavCardProps) {
   const t = useTranslations("CommonA11y")
   const isMounted = React.useSyncExternalStore(
     emptySubscribe,

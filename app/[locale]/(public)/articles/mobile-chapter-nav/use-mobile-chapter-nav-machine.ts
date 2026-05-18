@@ -8,7 +8,7 @@ import { useNavigateCloseEffect } from "./use-navigate-close-effect"
 import { useResizeToDesktopEffect } from "./use-resize-to-desktop-effect"
 import { useScrollCrossEffect } from "./use-scroll-cross-effect"
 
-export function useArticleTreeMobileMachine() {
+export function useMobileChapterNavMachine() {
   const [state, dispatch] = useReducer(transition, undefined, () =>
     createInitialState(
       typeof window !== "undefined" && window.scrollY > NAVBAR_HEIGHT,

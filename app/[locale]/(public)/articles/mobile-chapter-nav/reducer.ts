@@ -5,7 +5,7 @@
  * combinations of the four extended states (closed stuck/not-stuck,
  * inline_open, floating_open) and six event types.
  *
- * @module mobile-article-tree/reducer
+ * @module mobile-chapter-nav/reducer
  */
 
 import type { MachineState, MachineEvent } from "./types"
