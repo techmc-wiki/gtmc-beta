@@ -4,7 +4,6 @@ import * as React from "react"
 import { createPortal } from "react-dom"
 import { useTranslations } from "next-intl"
 import { CornerBrackets } from "@/components/ui/corner-brackets"
-import { useModalEffects } from "@/hooks/use-modal-effects"
 
 const emptySubscribe = () => () => {}
 
@@ -27,8 +26,6 @@ export function MobileTreeCard({
     () => true,
     () => false
   )
-
-  useModalEffects({ isOpen: isOpen && Boolean(isFloating), onClose })
 
   if (!isMounted || !isOpen || !isFloating) return null
 

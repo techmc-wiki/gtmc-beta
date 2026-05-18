@@ -5,6 +5,8 @@ import { useState, useRef, useEffect } from "react"
 import { SidebarClient, type SidebarClientHandle } from "./sidebar-client"
 import { SidebarProvider } from "./sidebar/sidebar-context"
 import { MobileTreeCard } from "./mobile-tree-card"
+import { useArticleTreeMobileMachine } from "@/app/[locale]/(public)/articles/mobile-article-tree/use-article-tree-mobile-machine"
+import { LABEL_MORPH_DELAY_MS } from "@/app/[locale]/(public)/articles/mobile-article-tree/config"
 import {
   ScanConfirmOverlay,
   SectionRail,
@@ -157,8 +159,6 @@ function SidebarTreeWrapper({
 export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
   const SIDEBAR_HIDDEN_KEY = "gtmc_sidebar_hidden"
   const isMounted = useMounted()
-  const [isOpen, setIsOpen] = useState(false)
-  const [isStuck, setIsStuck] = useState(false)
   const [showFullText, setShowFullText] = useState(true)
   const [fetchedTreeData, setFetchedTreeData] = useState<TreeNode[]>([])
   const [hasTreeFetchSettled, setHasTreeFetchSettled] = useState(
@@ -177,12 +177,13 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
   })
   const desktopSidebarRef = useRef<SidebarClientHandle>(null)
   const floatingCardSidebarRef = useRef<SidebarClientHandle>(null)
-  const isStuckRef = useRef(false)
+  const machine = useArticleTreeMobileMachine()
+  const { state, dispatch, isOpen: isTreeOpen, isFloating, isStuck } = machine
+  void state
   const locale = useLocale()
   const t = useTranslations("Sidebar")
   const tA11y = useTranslations("CommonA11y")
   const treeData = tree.length > 0 ? tree : fetchedTreeData
-  const isTreeOpen = isOpen
 
   const toggleSidebarHidden = () => {
     setSidebarHidden((prev) => {
@@ -199,30 +200,10 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
       () => {
         setShowFullText(!isStuck)
       },
-      isStuck ? 0 : 250
+      isStuck ? 0 : LABEL_MORPH_DELAY_MS
     )
     return () => clearTimeout(timer)
   }, [isStuck])
-
-  useEffect(() => {
-    const NAVBAR_HEIGHT = 64
-
-    const handleScroll = () => {
-      const currentlyStuck = window.scrollY > NAVBAR_HEIGHT
-      if (!isStuckRef.current && currentlyStuck) {
-        setIsOpen(false)
-      }
-
-      isStuckRef.current = currentlyStuck
-      setIsStuck(currentlyStuck)
-    }
-
-    // Sync immediately on mount in case page is already scrolled
-    handleScroll()
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
 
   useEffect(() => {
     if (tree.length > 0) {
@@ -269,7 +250,7 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
   const isTreeLoading = tree.length === 0 && !hasTreeFetchSettled
   const showTreePlaceholder = isTreeLoading && treeData.length === 0
 
-  const onNavigate = () => setIsOpen(false)
+  const onNavigate = () => dispatch({ type: "NAVIGATE" })
 
   const fixedTreeContent = (
     <SidebarTreeWrapper
@@ -314,11 +295,11 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
             }>
             <button
               type="button"
-              onClick={(e) => {
-                e.preventDefault()
-                 e.stopPropagation()
-                 setIsOpen((current) => !current)
-               }}
+               onClick={(e) => {
+                 e.preventDefault()
+                  e.stopPropagation()
+                  dispatch({ type: "TOGGLE" })
+                }}
               className="
                 absolute cursor-pointer overflow-hidden
                 border border-tech-main/40 bg-white/70 font-mono text-xs
@@ -368,10 +349,10 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
           <div
             className={`
               grid transition-all duration-300 ease-out
-              ${isTreeOpen && !isStuck
-                 ? "grid-rows-[1fr] opacity-100"
-                 : "grid-rows-[0fr] opacity-0"
-               }
+              ${isTreeOpen && !isFloating
+                  ? "grid-rows-[1fr] opacity-100"
+                  : "grid-rows-[0fr] opacity-0"
+                }
             `}>
             <div className="overflow-hidden">
               <div
@@ -388,8 +369,8 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
         {/* Mobile floating tree card */}
         <MobileTreeCard
           isOpen={isTreeOpen}
-          onClose={() => setIsOpen(false)}
-          isFloating={isStuck}>
+          onClose={() => dispatch({ type: "CLOSE" })}
+          isFloating={isFloating}>
           {floatingTreeContent}
         </MobileTreeCard>
 
