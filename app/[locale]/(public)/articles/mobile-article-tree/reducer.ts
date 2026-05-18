@@ -47,7 +47,7 @@ export function transition(state: MachineState, event: MachineEvent): MachineSta
         case "TOGGLE":
           return { value: "closed", isStuck: false } as const
         case "SCROLL_CROSS_DOWN":
-          return { value: "closed", isStuck: true }
+          return { value: "floating_open", isStuck: true }
         case "SCROLL_CROSS_UP":
           return state
         case "CLOSE":

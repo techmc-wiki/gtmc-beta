@@ -16,7 +16,6 @@ import type { TreeNode } from "@/types/sidebar-tree"
 import { useLocale, useTranslations } from "next-intl"
 import { ArticleTocRail } from "@/components/articles/article-toc-rail"
 import { MobileTocBar } from "@/components/articles/mobile-toc-bar"
-import { useMounted } from "@/hooks/use-mounted"
 
 interface ArticlesLayoutProps {
   children: React.ReactNode
@@ -158,7 +157,6 @@ function SidebarTreeWrapper({
 
 export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
   const SIDEBAR_HIDDEN_KEY = "gtmc_sidebar_hidden"
-  const isMounted = useMounted()
   const [showFullText, setShowFullText] = useState(true)
   const [fetchedTreeData, setFetchedTreeData] = useState<TreeNode[]>([])
   const [hasTreeFetchSettled, setHasTreeFetchSettled] = useState(
@@ -282,11 +280,10 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
         ">
         <div
           className={`
-            sticky z-30
-            md:hidden ${isMounted && isStuck ? "top-24" : "top-16"}
+            sticky top-16 z-30 md:hidden
           `}>
           <div
-            className="relative transition-all duration-500 ease-out"
+            className="relative"
             style={
               {
                 padding: isStuck ? "1rem 1rem 0 1rem" : "0",
@@ -303,8 +300,8 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
               className="
                 absolute cursor-pointer overflow-hidden
                 border border-tech-main/40 bg-white/70 font-mono text-xs
-                font-bold tracking-[0.15em] text-tech-main backdrop-blur-sm
-                transition-all duration-400 ease-out
+                font-bold tracking-[0.15em] text-tech-main
+                transition-[background-color,color] duration-150 ease-out
                 hover:bg-tech-main/5
               "
               style={
