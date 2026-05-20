@@ -132,6 +132,7 @@ function main(): void {
           translatedFromRevision: fm["translated-from-revision"],
           translationFreshness:
             entry.translationFreshnessByLocale?.en || undefined,
+          created: entry.created || undefined,
           lastmod: entry.lastmodByLocale?.en || undefined,
           index: entry.index >= 0 ? entry.index : undefined,
           ...(entry.isAdvanced !== undefined && {

@@ -242,8 +242,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   )
 
   const author = data.author as string | undefined
-  const coAuthors = (data["co-authors"] as string[] | undefined) || []
-  const createdAt = data.date as string | undefined
+  const coAuthors = (data.coAuthors as string[] | undefined) || []
+  const createdAt = data.created as string | undefined
   const lastModified = data.lastmod as string | undefined
   const isAdvanced = data["is-advanced"] === true
 
