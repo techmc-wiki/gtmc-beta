@@ -3,7 +3,7 @@ import {
   MANIFEST_FILE_NAME,
   MANIFEST_PATH,
   type ArticleEntry,
-} from "./article-manifest-store"
+} from "./article-manifest"
 
 export { ArticleManifest, MANIFEST_FILE_NAME, MANIFEST_PATH }
 export type { ArticleEntry }

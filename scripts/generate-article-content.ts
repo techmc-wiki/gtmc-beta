@@ -2,8 +2,7 @@ import fs from "fs"
 import path from "path"
 
 import { ARTICLES_PATH } from "@/lib/article-fs"
-import { ArticleManifest } from "@/lib/article-manifest-store"
-import type { ArticleLocale } from "@/lib/article-manifest"
+import { ArticleManifest, type ArticleLocale } from "@/lib/article-manifest"
 import {
   artifactFilename,
   type ArticleContentArtifact,
