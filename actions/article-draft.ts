@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import {
   getMainBranchHeadSha,
-} from "@/lib/article-branch"
+} from "@/lib/articles/branch"
 import {
   parseDraftTempImageRefs,
 } from "@/lib/draft-markdown"

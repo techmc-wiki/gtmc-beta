@@ -4,7 +4,7 @@ import path from "path"
 import { fileURLToPath } from "url"
 import matter from "gray-matter"
 import yaml from "js-yaml"
-import { shouldIgnoreDirectory, shouldIgnoreFile } from "@/lib/article-ignore"
+import { shouldIgnoreDirectory, shouldIgnoreFile } from "@/lib/articles/ignore"
 
 type ArticleLocale = "zh" | "en"
 

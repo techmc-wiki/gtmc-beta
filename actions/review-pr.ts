@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache"
 import { Prisma } from "@prisma/client"
 
 import { revalidatePaths } from "@/lib/revalidate-paths"
-import { forcePushResolvedToPRBranch } from "@/lib/article-conflict"
-import { getMainBranchHeadSha } from "@/lib/article-branch"
+import { forcePushResolvedToPRBranch } from "@/lib/articles/conflict"
+import { getMainBranchHeadSha } from "@/lib/articles/branch"
 import {
   decodeStoredDraftFiles,
   serializeDraftFilesForStorage,

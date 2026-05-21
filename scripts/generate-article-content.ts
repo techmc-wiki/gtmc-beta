@@ -1,12 +1,13 @@
 import fs from "fs"
 import path from "path"
 
-import { ARTICLES_PATH } from "@/lib/article-fs"
-import { getArticleManifest, type ArticleLocale } from "@/lib/article-manifest"
+import { ARTICLES_PATH } from "@/lib/articles/fs"
+import { getArticleManifest, type ArticleLocale } from "@/lib/articles/manifest"
 import {
-  artifactFilename,
-  type ArticleContentArtifact,
-} from "@/lib/article-content"
+  getArticleContentBySlug,
+  getArticleContentBySlugWithoutCache,
+  type ArticleContent,
+} from "@/lib/articles/content"
 import {
   parseSourceFrontMatter,
   parseTranslationFrontMatter,

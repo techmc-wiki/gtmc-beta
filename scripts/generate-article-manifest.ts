@@ -5,10 +5,10 @@ import {
   MANIFEST_FILE_NAME,
   type ArticleLocale,
   type ArticleEntry,
-} from "@/lib/article-manifest"
-import { ARTICLES_PATH } from "@/lib/article-fs"
-import { SLUG_REGEX } from "@/lib/slug-resolver"
-import { shouldIgnoreDirectory, shouldIgnoreFile } from "@/lib/article-ignore"
+} from "@/lib/articles/manifest"
+import { ARTICLES_PATH } from "@/lib/articles/fs"
+
+import { shouldIgnoreDirectory, shouldIgnoreFile } from "@/lib/articles/ignore"
 import {
   parseSourceFrontMatter,
   parseTranslationFrontMatter,

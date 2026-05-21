@@ -5,15 +5,14 @@ import {
   rebaseArticleContentMultiFile,
   rebaseArticleContent,
   abortRebase,
-} from "@/lib/article-rebase"
-import {
-  decodeStoredDraftFiles,
-  getActiveDraftFile,
-  normalizeDraftFileCollection,
-  serializeDraftFilesForStorage,
-  type DraftFileCollection,
-} from "@/lib/draft-files"
-import { upsertFileOnBranch } from "@/lib/article-branch"
+} from "@/lib/articles/rebase"
+import type {
+  RebaseAnalysis,
+  RebaseInput,
+  RebaseResult,
+  RebaseResultMultiFile,
+} from "@/lib/articles/rebase"
+import { upsertFileOnBranch } from "@/lib/articles/branch"
 import { prisma } from "@/lib/prisma"
 import { requireReviewAdminContext } from "@/lib/review/admin-context"
 
@@ -82,7 +81,7 @@ async function persistRebasedBranchFiles(input: {
     throw new Error("GitHub token is required to update multiple files")
   }
 
-  const { upsertFilesOnBranch } = await import("@/lib/article-branch")
+  const { upsertFilesOnBranch } = await import("@/lib/articles/branch")
   await upsertFilesOnBranch(
     input.token,
     input.files.map((file) => ({
