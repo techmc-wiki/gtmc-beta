@@ -12,7 +12,7 @@ import {
   normalizeDraftFileCollection,
   serializeDraftFilesPayload,
   type DraftFileCollection,
-} from "@/lib/draft-files"
+} from "@/lib/drafts/files"
 
 export default function ConflictResolver({
   activeFileId,

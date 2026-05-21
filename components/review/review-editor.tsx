@@ -28,7 +28,7 @@ import { finalizeReviewAction } from "@/actions/review-pr"
 import {
   normalizeDraftFileCollection,
   serializeDraftFilesPayload,
-} from "@/lib/draft-files"
+} from "@/lib/drafts/files"
 import { getReauthLoginUrl, isReauthRequiredError } from "@/lib/admin-reauth"
 import type {
   ConflictMode,

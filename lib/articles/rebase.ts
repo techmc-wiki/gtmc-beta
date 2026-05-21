@@ -3,7 +3,7 @@ import {
   ARTICLES_REPO_OWNER,
   getOctokit,
 } from "@/lib/github/articles-repo"
-import { serializeDraftFilesForStorage } from "@/lib/draft-files"
+import { serializeDraftFilesForStorage } from "@/lib/drafts/files"
 import type { ConflictBlock, MergeConflictBlock } from "@/types/rebase"
 import { Prisma } from "@prisma/client"
 import type {

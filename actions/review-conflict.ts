@@ -21,7 +21,7 @@ import {
   normalizeDraftFileCollection,
   serializeDraftFilesForStorage,
   type DraftFileCollection,
-} from "@/lib/draft-files"
+} from "@/lib/drafts/files"
 import {
   ARTICLES_REPO_NAME,
   ARTICLES_REPO_OWNER,

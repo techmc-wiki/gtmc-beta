@@ -9,9 +9,9 @@ import { getMainBranchHeadSha } from "@/lib/articles/branch"
 import {
   decodeStoredDraftFiles,
   serializeDraftFilesForStorage,
-} from "@/lib/draft-files"
+} from "@/lib/drafts/files"
 import { getOctokit } from "@/lib/github/articles-repo"
-import { reconcileDraftAssetsForPRCompletion } from "@/lib/draft-asset-db"
+import { reconcileDraftAssetsForPRCompletion } from "@/lib/drafts/asset-db"
 import { mergePR } from "@/lib/github/pr-manager"
 import { prisma } from "@/lib/prisma"
 import type { RebaseState } from "@/types/rebase"
