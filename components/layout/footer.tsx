@@ -19,18 +19,22 @@ export default async function Footer() {
     : "—"
 
   return (
-    <footer className="border-tech-line bg-tech-bg/80 relative mt-auto w-full border-t pt-10 pb-12 ">
+    <footer
+      aria-label="Site information"
+      className="border-tech-line bg-tech-bg/80 relative mt-auto w-full border-t pt-10 pb-12 ">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Top status strip */}
-        <div className="text-tech-main/55 flex flex-wrap gap-x-6 gap-y-1 font-mono text-[0.625rem] tracking-[0.18em] uppercase">
-          <span className="inline-flex items-center gap-2">
+        <div className="text-tech-main/55 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs tracking-[0.18em] uppercase">
+          <span className="border-tech-main/30 inline-flex items-center gap-2 border-l pl-4 first:border-l-0 first:pl-0">
             <span className="bg-tech-main/60 motion-safe:animate-pulse inline-block size-1.5" />
             SYS.ONLINE
           </span>
-          <span>|</span>
-          <span>LAST REVISION: {lastRevision}</span>
-          <span>|</span>
-          <span>BUILD {buildSha}</span>
+          <span className="border-tech-main/30 border-l pl-4 first:border-l-0 first:pl-0">
+            LAST REVISION: {lastRevision}
+          </span>
+          <span className="border-tech-main/30 border-l pl-4 first:border-l-0 first:pl-0">
+            BUILD {buildSha}
+          </span>
         </div>
 
         {/* Corner brackets */}
@@ -47,7 +51,7 @@ export default async function Footer() {
             {/* Brand column */}
             <div className="mb-8 md:col-span-4 md:mb-0">
               <Logo size="md" />
-              <p className="text-tech-main-dark mt-4 font-mono text-sm tracking-wider uppercase">
+              <p className="text-tech-main mt-4 font-mono text-xs tracking-wider uppercase">
                 Graduate Texts in Minecraft
               </p>
               <p className="text-tech-main mt-2 max-w-xs text-sm/relaxed">
@@ -57,7 +61,7 @@ export default async function Footer() {
 
             {/* Title-block grid */}
             <div className="md:col-span-8">
-              <div className="bg-tech-main/15 grid grid-cols-2 gap-px md:grid-cols-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4">
                 {[
                   { label: "ARTICLES", value: stats.articleCount },
                   { label: "AUTHORS", value: stats.authorCount },
@@ -65,7 +69,7 @@ export default async function Footer() {
                   {
                     label: "STATUS",
                     value: (
-                      <TechBadge className="border-amber-500/40 bg-amber-500/10 text-amber-700">
+                      <TechBadge className="border-tech-main/30 bg-tech-main/10 text-tech-main-dark">
                         [ BETA ]
                       </TechBadge>
                     ),
@@ -77,7 +81,7 @@ export default async function Footer() {
                         href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-tech-main-dark focus-visible:outline-tech-main text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
+                        className="hover:text-tech-main-dark hover:decoration-tech-main/40 focus-visible:outline-tech-main transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">
                         CC BY-NC-SA 4.0
                       </a>
                     ),
@@ -89,27 +93,27 @@ export default async function Footer() {
                         href="https://github.com/gtmc-dev/gtmc-web/blob/main/LICENSE"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-tech-main-dark focus-visible:outline-tech-main text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
+                        className="hover:text-tech-main-dark hover:decoration-tech-main/40 focus-visible:outline-tech-main transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">
                         Apache-2.0
                       </a>
                     ),
                   },
                   {
                     label: "REVISION",
-                    value: <code className="font-mono text-xs">{buildSha}</code>,
+                    value: <code>{buildSha}</code>,
                   },
                   {
                     label: "LAST UPDATE",
-                    value: <span className="text-xs">{lastRevision}</span>,
+                    value: <span>{lastRevision}</span>,
                   },
                 ].map((cell) => (
                   <div
                     key={cell.label}
-                    className="bg-tech-main/[0.03] border-tech-main/10 border px-3 py-3 font-mono">
+                    className="bg-tech-main/[0.03] border-tech-main/10 border px-4 py-3.5 font-mono">
                     <div className="text-tech-main/50 mb-1 text-[0.625rem] tracking-[0.12em] uppercase">
                       {cell.label}
                     </div>
-                    <div className="text-tech-main-dark text-sm">
+                    <div className="text-tech-main-dark font-mono text-sm break-words">
                       {cell.value}
                     </div>
                   </div>
@@ -117,99 +121,110 @@ export default async function Footer() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Link grid */}
-          <hr className="border-tech-main/15 my-8" />
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            <div>
-              <h3 className="section-label">READ</h3>
-              <ul className="mt-3 flex flex-col gap-2">
-                <li>
-                  <Link
-                    href={articleUrl("Preface")}
-                    className="text-tech-main hover:text-tech-main-dark focus-visible:outline-tech-main text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
-                    {t("linkPreface")}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/articles"
-                    className="text-tech-main hover:text-tech-main-dark focus-visible:outline-tech-main text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
-                    {t("linkArticles")}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="section-label">COMMUNITY</h3>
-              <ul className="mt-3 flex flex-col gap-2">
-                <li>
-                  <a
-                    href="https://github.com/gtmc-dev"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-tech-main hover:text-tech-main-dark focus-visible:outline-tech-main text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
-                    {t("linkTeam")}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/gtmc-dev/gtmc-web/issues"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-tech-main hover:text-tech-main-dark focus-visible:outline-tech-main text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
-                    {t("linkIssues")}
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="section-label">CODE</h3>
-              <ul className="mt-3 flex flex-col gap-2">
-                <li>
-                  <a
-                    href="https://github.com/gtmc-dev/gtmc-web"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-tech-main hover:text-tech-main-dark focus-visible:outline-tech-main text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
-                    {t("linkRepository")}
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="section-label">FORMAT</h3>
-              <ul className="mt-3 flex flex-col gap-2">
-                <li>
-                  <Link
-                    href="/pdf"
-                    className="text-tech-main hover:text-tech-main-dark focus-visible:outline-tech-main text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
-                    {t("offlinePdf")}
-                  </Link>
-                </li>
-              </ul>
-            </div>
+        {/* Link grid */}
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          <nav aria-label="Read">
+            <h3 className="section-label">READ</h3>
+            <ul className="mt-3 flex flex-col gap-2">
+              <li>
+                <Link
+                  href={articleUrl("Preface")}
+                  className="text-tech-main hover:text-tech-main-dark hover:decoration-tech-main/40 focus-visible:outline-tech-main text-sm transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">
+                  {t("linkPreface")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/articles"
+                  className="text-tech-main hover:text-tech-main-dark hover:decoration-tech-main/40 focus-visible:outline-tech-main text-sm transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">
+                  {t("linkArticles")}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <nav aria-label="Community">
+            <h3 className="section-label">COMMUNITY</h3>
+            <ul className="mt-3 flex flex-col gap-2">
+              <li>
+                <a
+                  href="https://github.com/gtmc-dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-tech-main hover:text-tech-main-dark hover:decoration-tech-main/40 focus-visible:outline-tech-main text-sm transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">
+                  {t("linkTeam")}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/gtmc-dev/gtmc-web/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-tech-main hover:text-tech-main-dark hover:decoration-tech-main/40 focus-visible:outline-tech-main text-sm transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">
+                  {t("linkIssues")}
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <nav aria-label="Code">
+            <h3 className="section-label">CODE</h3>
+            <ul className="mt-3 flex flex-col gap-2">
+              <li>
+                <a
+                  href="https://github.com/gtmc-dev/gtmc-web"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-tech-main hover:text-tech-main-dark hover:decoration-tech-main/40 focus-visible:outline-tech-main text-sm transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">
+                  {t("linkRepository")}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/gtmc-dev/gtmc-web/blob/main/LICENSE"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-tech-main hover:text-tech-main-dark hover:decoration-tech-main/40 focus-visible:outline-tech-main text-sm transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">
+                  Apache-2.0
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <nav aria-label="Format">
+            <h3 className="section-label">FORMAT</h3>
+            <ul className="mt-3 flex flex-col gap-2">
+              <li>
+                <Link
+                  href="/pdf"
+                  className="text-tech-main hover:text-tech-main-dark hover:decoration-tech-main/40 focus-visible:outline-tech-main text-sm transition-colors hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2">
+                  {t("offlinePdf")}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div className="border-tech-main/15 my-8 border-t" />
+
+        {/* Colophon */}
+        <div className="gap-6 md:flex md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-tech-main/70 text-xs/relaxed">
+              {t("disclaimer")}
+            </p>
+            <p className="text-tech-main/55 mt-2 text-xs/relaxed">
+              {t("attribution")}
+            </p>
           </div>
-
-          {/* Colophon */}
-          <hr className="border-tech-main/15 my-8" />
-          <div className="gap-6 md:flex md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <p className="text-tech-main/70 text-xs/relaxed">
-                {t("disclaimer")}
-              </p>
-              <p className="text-tech-main/55 mt-2 text-xs/relaxed">
-                {t("attribution")}
-              </p>
-            </div>
-            <div className="mt-6 md:mt-0 md:text-right">
-              <p className="text-tech-main/70 text-xs">
-                {t("copyright", { start: startYear, year: currentYear })}
-              </p>
-              <LanguageSwitcher className="mt-3" />
-            </div>
+          <div className="mt-6 flex flex-col items-start gap-3 md:mt-0 md:items-end">
+            <p className="text-tech-main/70 text-xs">
+              {t("copyright", { start: startYear, year: currentYear })}
+            </p>
+            <LanguageSwitcher />
           </div>
         </div>
+
+        <div className="border-tech-main/15 my-8 border-t" />
       </div>
     </footer>
   )
