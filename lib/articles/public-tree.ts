@@ -3,7 +3,7 @@ import { statSync } from "fs"
 import { shouldIgnoreDirectory, shouldIgnoreFile } from "@/lib/article-ignore"
 import {
   getArticleTree,
-  MANIFEST_PATH,
+  getManifestPath,
   type ArticleLocale,
 } from "@/lib/article-manifest"
 import { getRepoTranslations, type ArticleTreeNode } from "@/lib/github/sync"
@@ -27,7 +27,7 @@ function isReadmeArticle(node: ChapterNavNode): boolean {
 }
 
 function getArticleManifestMtime(): string {
-  const manifestPath = MANIFEST_PATH
+  const manifestPath = getManifestPath()
   return statSync(manifestPath).mtime.getTime().toString()
 }
 

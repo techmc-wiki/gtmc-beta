@@ -1,6 +1,3 @@
-import fs from "fs"
-import path from "path"
-
 import { routing } from "@/i18n/routing"
 import { type ArticleTreeNode } from "@/lib/github"
 
@@ -8,11 +5,25 @@ export type ArticleLocale = "en" | "zh"
 
 export const MANIFEST_FILE_NAME = "manifest.json"
 
-export const MANIFEST_PATH = path.join(
-  process.cwd(),
-  "data",
-  MANIFEST_FILE_NAME
-)
+function getNodeBuiltin<T>(name: string): T {
+  const getBuiltinModule = (
+    process as typeof process & {
+      getBuiltinModule?: (id: string) => unknown
+    }
+  ).getBuiltinModule
+
+  if (getBuiltinModule) {
+    return getBuiltinModule(name) as T
+  }
+
+  const nodeRequire = (0, eval)("require") as NodeRequire
+  return nodeRequire(name) as T
+}
+
+export function getManifestPath(): string {
+  const path = getNodeBuiltin<typeof import("path")>("path")
+  return path.join(process.cwd(), "data", MANIFEST_FILE_NAME)
+}
 
 export interface ArticleEntry {
   filePath: string
@@ -60,26 +71,28 @@ interface LocaleBanner {
 
 export function loadArticleManifest(): Record<string, ArticleEntry> {
   let raw: string
+  const manifestPath = getManifestPath()
+  const fs = getNodeBuiltin<typeof import("fs")>("fs")
 
   try {
-    raw = fs.readFileSync(MANIFEST_PATH, "utf-8")
+    raw = fs.readFileSync(manifestPath, "utf-8")
   } catch (error) {
     if (process.env.NODE_ENV === "development") {
       console.warn(
-        `[article-manifest] Missing article manifest: ${MANIFEST_PATH}`
+        `[article-manifest] Missing article manifest: ${manifestPath}`
       )
       return {}
     }
 
     throw new Error(
-      `[article-manifest] Failed to load article manifest: ${MANIFEST_PATH}`,
+      `[article-manifest] Failed to load article manifest: ${manifestPath}`,
       {
         cause: error,
       }
     )
   }
 
-  return parseArticleManifest(raw, MANIFEST_PATH)
+  return parseArticleManifest(raw, manifestPath)
 }
 
 function isArticleLocale(value: unknown): value is ArticleLocale {
@@ -272,8 +285,12 @@ function parseArticleManifest(
   }
 }
 
-export const ArticleManifest: Record<string, ArticleEntry> =
-  loadArticleManifest()
+let articleManifestCache: Record<string, ArticleEntry> | null = null
+
+export function getArticleManifest(): Record<string, ArticleEntry> {
+  articleManifestCache ??= loadArticleManifest()
+  return articleManifestCache
+}
 
 const localTreeCache = new Map<ArticleLocale, ArticleTreeNode[]>()
 
@@ -306,7 +323,8 @@ export async function getArticleTree(
 }
 
 function buildLocalTree(locale: ArticleLocale): ArticleTreeNode[] {
-  const entries = Object.values(ArticleManifest)
+  const manifest = getArticleManifest()
+  const entries = Object.values(manifest)
   if (entries.length === 0) {
     return []
   }
@@ -320,7 +338,7 @@ function buildLocalTree(locale: ArticleLocale): ArticleTreeNode[] {
   }
 
   const roots = entries
-    .filter((entry) => !entry.parentSlug || !ArticleManifest[entry.parentSlug])
+    .filter((entry) => !entry.parentSlug || !manifest[entry.parentSlug])
     .sort((a, b) => compareEntries(a, b, locale))
 
   return roots
@@ -333,12 +351,13 @@ function buildTreeNode(
   parentIndex: Map<string, ArticleEntry[]>,
   locale: ArticleLocale
 ): ArticleTreeNode | null {
+  const manifest = getArticleManifest()
   const childrenFromSlug = entry.children ?? []
   const childrenFromParent = parentIndex.get(entry.slug) ?? []
 
   const mergedChildrenBySlug = new Map<string, ArticleEntry>()
   for (const child of childrenFromSlug) {
-    mergedChildrenBySlug.set(child.slug, ArticleManifest[child.slug] ?? child)
+    mergedChildrenBySlug.set(child.slug, manifest[child.slug] ?? child)
   }
   for (const child of childrenFromParent) {
     mergedChildrenBySlug.set(child.slug, child)
@@ -464,7 +483,7 @@ export function getLocalizedArticleEntry(
   slugPath: string,
   locale: ArticleLocale = "zh"
 ): (ArticleEntry & LocalizedArticleMetadata) | null {
-  const entry = ArticleManifest[slugPath]
+  const entry = getArticleManifest()[slugPath]
   if (!entry) {
     return null
   }

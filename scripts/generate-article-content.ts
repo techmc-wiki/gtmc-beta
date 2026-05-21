@@ -2,7 +2,7 @@ import fs from "fs"
 import path from "path"
 
 import { ARTICLES_PATH } from "@/lib/article-fs"
-import { ArticleManifest, type ArticleLocale } from "@/lib/article-manifest"
+import { getArticleManifest, type ArticleLocale } from "@/lib/article-manifest"
 import {
   artifactFilename,
   type ArticleContentArtifact,
@@ -37,7 +37,7 @@ function main(): void {
   }
   fs.mkdirSync(TEMP_DIR, { recursive: true })
 
-  const entries = Object.values(ArticleManifest)
+  const entries = Object.values(getArticleManifest())
 
   for (const entry of entries) {
     if (
