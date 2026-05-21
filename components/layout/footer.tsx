@@ -19,8 +19,8 @@ export default async function Footer() {
     : "—"
 
   return (
-    <footer className="border-tech-line bg-tech-bg/80 relative mt-auto w-full border-t pt-10 pb-12 backdrop-blur-md">
-      <div className="container-safe mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="border-tech-line bg-tech-bg/80 relative mt-auto w-full border-t pt-10 pb-12 ">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Top status strip */}
         <div className="text-tech-main/55 flex flex-wrap gap-x-6 gap-y-1 font-mono text-[0.625rem] tracking-[0.18em] uppercase">
           <span className="inline-flex items-center gap-2">
