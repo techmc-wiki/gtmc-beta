@@ -98,7 +98,9 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <FooterProvider>
             {children}
-            <FooterWrapper><Footer /></FooterWrapper>
+            <FooterWrapper>
+              <Footer />
+            </FooterWrapper>
           </FooterProvider>
         </NextIntlClientProvider>
         <script

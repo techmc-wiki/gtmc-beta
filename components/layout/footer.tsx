@@ -48,7 +48,7 @@ export default async function Footer() {
           {/* Main grid — brand column + title-block grid */}
           <div className="md:grid md:grid-cols-12 md:gap-10">
             {/* Brand column */}
-            <div className="mb-8 md:p-4 md:col-span-4 md:mb-0">
+            <div className="mb-8 md:col-span-4 md:mb-0 md:p-4">
               <Logo size="md" />
               <p className="text-tech-main mt-4 font-mono text-xs tracking-wider uppercase">
                 Graduate Texts in Minecraft
