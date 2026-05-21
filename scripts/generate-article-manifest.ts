@@ -15,7 +15,7 @@ import {
   isAncestor,
   getHeadSha,
 } from "@/lib/git-metadata"
-import { ARTICLES_PATH } from "@/lib/article-fs-constants"
+import { ARTICLES_PATH } from "@/lib/article-fs"
 import { MANIFEST_FILE_NAME } from "@/lib/article-manifest-constants"
 import type { ArticleEntry } from "@/lib/article-manifest-store"
 import type { ArticleLocale } from "@/lib/article-manifest"
