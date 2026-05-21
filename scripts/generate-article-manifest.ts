@@ -7,7 +7,7 @@ import {
   type ArticleEntry,
 } from "@/lib/article-manifest"
 import { ARTICLES_PATH } from "@/lib/article-fs"
-import { SLUG_REGEX } from "@/lib/slug-validator"
+import { SLUG_REGEX } from "@/lib/slug-resolver"
 import { shouldIgnoreDirectory, shouldIgnoreFile } from "@/lib/article-ignore"
 import {
   parseSourceFrontMatter,

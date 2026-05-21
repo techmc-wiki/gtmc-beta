@@ -64,3 +64,35 @@ export function getSlugForFilePath(filePath: string): string | null {
 export function getArticleEntry(slugPath: string): ArticleEntry | null {
   return ArticleManifest[slugPath] ?? null
 }
+
+export function encodeSlug(slug: string): string {
+  return slug.split("/").map(encodeURIComponent).join("/")
+}
+
+export function decodeSlugPath(segments: string[]): string {
+  return segments.map(decodeURIComponent).join("/")
+}
+
+export function getSlugTail(slug: string): string {
+  return slug.split("/").pop() ?? slug
+}
+
+/**
+ * Slug validation regex and utility function.
+ *
+ * Valid slug format:
+ * - Lowercase letters and numbers only
+ * - Hyphens allowed between segments (not at start/end)
+ * - Examples: "tree-farm", "basics", "advanced-techniques", "01-introduction"
+ */
+
+export const SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+/**
+ * Validates if a string is a valid slug.
+ * @param slug - The string to validate
+ * @returns true if valid slug format, false otherwise
+ */
+export function validateSlug(slug: string): boolean {
+  return SLUG_REGEX.test(slug)
+}
