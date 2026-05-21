@@ -19,8 +19,7 @@ import {
   rebaseArticleContent,
   resumeRebase,
 } from "@/lib/article-rebase"
-import { requireAuth } from "@/lib/auth-helpers"
-import { getGithubPatForUser, requireAdmin } from "@/lib/auth-context"
+import { getGithubPatForUser, requireAdmin, requireAuth } from "@/lib/auth-context"
 import {
   decodeStoredDraftFiles,
   deserializeDraftFilesPayload,
