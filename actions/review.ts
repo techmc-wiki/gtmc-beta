@@ -34,7 +34,7 @@ import {
   ARTICLES_REPO_OWNER,
   getOctokit,
 } from "@/lib/github/articles-repo"
-import { reconcileDraftAssetsForPRCompletion } from "@/lib/draft-asset-reconciler"
+import { reconcileDraftAssetsForPRCompletion } from "@/lib/draft-asset-db"
 import { mergePR } from "@/lib/github/pr-manager"
 import { prisma } from "@/lib/prisma"
 import {
