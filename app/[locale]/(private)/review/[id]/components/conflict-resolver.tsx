@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import type { RebaseState } from "@/types/rebase"
+import type { RebaseState } from "@/lib/review/rebase-types"
 
 import { resolveConflictAction } from "@/actions/review-conflict"
 import { abortRebaseAction } from "@/actions/review-rebase"

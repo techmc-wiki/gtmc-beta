@@ -31,9 +31,9 @@ import {
   parseConflictBlocks,
   SIMPLE_CONFLICT_BLOCK_RE,
   storeRerere,
-} from "@/lib/rerere"
-import type { RebaseState } from "@/types/rebase"
-import type { ConflictMode } from "@/types/review"
+} from "@/lib/review/rerere"
+import type { RebaseState } from "@/lib/review/rebase-types"
+import type { ConflictMode } from "@/lib/review/review-types"
 import { reviewLog, reviewError, summarizeSha } from "@/lib/review/logging"
 import {
   requireReviewAdminContext,

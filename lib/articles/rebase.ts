@@ -4,13 +4,13 @@ import {
   getOctokit,
 } from "@/lib/github/articles-repo"
 import { serializeDraftFilesForStorage } from "@/lib/drafts/files"
-import type { ConflictBlock, MergeConflictBlock } from "@/types/rebase"
+import type { ConflictBlock, MergeConflictBlock } from "@/lib/review/rebase-types"
 import { Prisma } from "@prisma/client"
 import type {
   FileRebaseState,
   RebaseCommitInfo,
   RebaseState,
-} from "@/types/rebase"
+} from "@/lib/review/rebase-types"
 import { prisma } from "@/lib/prisma"
 import { reviewLog, summarizeSha } from "@/lib/review/logging"
 import {

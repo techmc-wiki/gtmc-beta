@@ -37,8 +37,8 @@ import type {
   ReviewFile,
   ReviewMergeMethod,
   ReviewSessionState,
-} from "@/types/review"
-import type { RebaseState } from "@/types/rebase"
+} from "@/lib/review/review-types"
+import type { RebaseState } from "@/lib/review/rebase-types"
 import { useMounted } from "@/hooks/use-mounted"
 
 const CONFLICT_BLOCK_REGEX =
