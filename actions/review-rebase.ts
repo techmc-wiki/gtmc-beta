@@ -9,12 +9,17 @@ import {
 import type {
   RebaseAnalysis,
   RebaseInput,
-  RebaseResult,
-  RebaseResultMultiFile,
 } from "@/lib/articles/rebase"
 import { upsertFileOnBranch } from "@/lib/articles/branch"
 import { prisma } from "@/lib/prisma"
 import { requireReviewAdminContext } from "@/lib/review/admin-context"
+import {
+  serializeDraftFilesForStorage,
+  normalizeDraftFileCollection,
+  decodeStoredDraftFiles,
+  getActiveDraftFile,
+} from "@/lib/draft-files"
+import type { DraftFileCollection } from "@/lib/draft-files"
 
 function formatErrorMessage(message: string, error: unknown): string {
   if (error instanceof Error) {

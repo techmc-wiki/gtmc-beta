@@ -10,8 +10,8 @@ import {
 } from "@/lib/articles/conflict"
 import {
   getMainBranchHeadSha,
+  getArticleFileContent,
   upsertFileOnBranch,
-  type BranchInfo,
 } from "@/lib/articles/branch"
 import { abortRebase, resumeRebase } from "@/lib/articles/rebase"
 import {

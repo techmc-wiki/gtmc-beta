@@ -23,6 +23,7 @@ import {
   isAncestor,
   getHeadSha,
 } from "@/lib/git-metadata"
+import { SLUG_REGEX } from "@/lib/slug-resolver"
 
 const OUTPUT_FILE = path.join(process.cwd(), "data", MANIFEST_FILE_NAME)
 const MAX_DEPTH = 3

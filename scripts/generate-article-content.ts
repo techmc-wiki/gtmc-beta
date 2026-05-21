@@ -3,11 +3,8 @@ import path from "path"
 
 import { ARTICLES_PATH } from "@/lib/articles/fs"
 import { getArticleManifest, type ArticleLocale } from "@/lib/articles/manifest"
-import {
-  getArticleContentBySlug,
-  getArticleContentBySlugWithoutCache,
-  type ArticleContent,
-} from "@/lib/articles/content"
+import { artifactFilename } from "@/lib/articles/content"
+import type { ArticleContentArtifact } from "@/lib/articles/content"
 import {
   parseSourceFrontMatter,
   parseTranslationFrontMatter,

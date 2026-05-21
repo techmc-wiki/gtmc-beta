@@ -4,6 +4,7 @@ import { shouldIgnoreDirectory, shouldIgnoreFile } from "@/lib/articles/ignore"
 import {
   getArticleManifest,
   getArticleTree,
+  getManifestPath,
   getLocalizedArticleEntry,
   type ArticleLocale,
 } from "@/lib/articles/manifest"
