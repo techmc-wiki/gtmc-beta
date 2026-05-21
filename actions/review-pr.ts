@@ -21,7 +21,10 @@ import {
   requireReviewAdminContext,
   getReviewRevalidatePaths,
 } from "@/lib/review/admin-context"
-import { ARTICLES_REPO_NAME, ARTICLES_REPO_OWNER } from "@/lib/github/articles-repo"
+import {
+  ARTICLES_REPO_NAME,
+  ARTICLES_REPO_OWNER,
+} from "@/lib/github/articles-repo"
 
 const owner = ARTICLES_REPO_OWNER
 const repo = ARTICLES_REPO_NAME
@@ -210,7 +213,8 @@ export async function finalizeReviewAction(
       }
 
       const hasSimpleConflictMarkers = (content: string) => {
-        const SIMPLE_CONFLICT_MARKER_RE = /^<<<<<<< .*\n[\s\S]*?^=======\n[\s\S]*?^>>>>>>> .*$/gm
+        const SIMPLE_CONFLICT_MARKER_RE =
+          /^<<<<<<< .*\n[\s\S]*?^=======\n[\s\S]*?^>>>>>>> .*$/gm
         SIMPLE_CONFLICT_MARKER_RE.lastIndex = 0
         return SIMPLE_CONFLICT_MARKER_RE.test(content)
       }

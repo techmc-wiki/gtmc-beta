@@ -930,7 +930,8 @@ export async function selectModeAction(revisionId: string, mode: ConflictMode) {
         throw new Error("The revision is missing main SHA metadata")
       }
 
-      const { rebaseArticleContent, rebaseArticleContentMultiFile } = await import("@/lib/articles/rebase")
+      const { rebaseArticleContent, rebaseArticleContentMultiFile } =
+        await import("@/lib/articles/rebase")
       const result =
         storedDraftFiles.files.length === 1
           ? await rebaseArticleContent({
