@@ -21,12 +21,12 @@ export default async function Footer() {
   return (
     <footer
       aria-label="Site information"
-      className="border-tech-line bg-tech-bg/80 relative mt-auto w-full border-t pt-10 pb-12 ">
+      className="border-tech-line bg-tech-bg/80 relative mt-auto w-full border-t pt-10 pb-12">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Top status strip */}
         <div className="text-tech-main/55 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs tracking-[0.18em] uppercase">
           <span className="border-tech-main/30 inline-flex items-center gap-2 border-l pl-4 first:border-l-0 first:pl-0">
-            <span className="bg-tech-main/60 motion-safe:animate-pulse inline-block size-1.5" />
+            <span className="bg-tech-main/60 inline-block size-1.5 motion-safe:animate-pulse" />
             SYS.ONLINE
           </span>
           <span className="border-tech-main/30 border-l pl-4 first:border-l-0 first:pl-0">
@@ -37,8 +37,7 @@ export default async function Footer() {
           </span>
         </div>
 
-        {/* Corner brackets */}
-        <div className="relative mt-6">
+        <div className="relative mt-12">
           <CornerBrackets
             variant="static"
             size="size-2"
@@ -49,7 +48,7 @@ export default async function Footer() {
           {/* Main grid — brand column + title-block grid */}
           <div className="md:grid md:grid-cols-12 md:gap-10">
             {/* Brand column */}
-            <div className="mb-8 md:col-span-4 md:mb-0">
+            <div className="mb-8 md:p-4 md:col-span-4 md:mb-0">
               <Logo size="md" />
               <p className="text-tech-main mt-4 font-mono text-xs tracking-wider uppercase">
                 Graduate Texts in Minecraft
@@ -109,11 +108,11 @@ export default async function Footer() {
                 ].map((cell) => (
                   <div
                     key={cell.label}
-                    className="bg-tech-main/[0.03] border-tech-main/10 border px-4 py-3.5 font-mono">
+                    className="bg-tech-main/3 border-tech-main/10 border px-4 py-3.5 font-mono">
                     <div className="text-tech-main/50 mb-1 text-[0.625rem] tracking-[0.12em] uppercase">
                       {cell.label}
                     </div>
-                    <div className="text-tech-main-dark font-mono text-sm break-words">
+                    <div className="text-tech-main-dark font-mono text-sm wrap-break-word">
                       {cell.value}
                     </div>
                   </div>
@@ -124,7 +123,7 @@ export default async function Footer() {
         </div>
 
         {/* Link grid */}
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+        <div className="my-12 grid grid-cols-2 gap-6 sm:grid-cols-4">
           <nav aria-label="Read">
             <h3 className="section-label">READ</h3>
             <ul className="mt-3 flex flex-col gap-2">
@@ -167,8 +166,8 @@ export default async function Footer() {
               </li>
             </ul>
           </nav>
-          <nav aria-label="Code">
-            <h3 className="section-label">CODE</h3>
+          <nav aria-label="Source">
+            <h3 className="section-label">SOURCE</h3>
             <ul className="mt-3 flex flex-col gap-2">
               <li>
                 <a
@@ -190,8 +189,8 @@ export default async function Footer() {
               </li>
             </ul>
           </nav>
-          <nav aria-label="Format">
-            <h3 className="section-label">FORMAT</h3>
+          <nav aria-label="Download">
+            <h3 className="section-label">DOWNLOAD</h3>
             <ul className="mt-3 flex flex-col gap-2">
               <li>
                 <Link
