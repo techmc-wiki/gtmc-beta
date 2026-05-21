@@ -3,7 +3,6 @@ import path from "path"
 import Ajv2020, { type AnySchema } from "ajv/dist/2020"
 import {
   MANIFEST_FILE_NAME,
-  type ArticleLocale,
   type ArticleEntry,
 } from "@/lib/articles/manifest"
 import { ARTICLES_PATH } from "@/lib/articles/fs"
@@ -13,7 +12,6 @@ import {
   parseSourceFrontMatter,
   parseTranslationFrontMatter,
   type SourceFrontMatter,
-  type TranslationFrontMatter,
 } from "@/lib/frontmatter-parser"
 import {
   loadMaintainers,
