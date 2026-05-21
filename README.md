@@ -13,6 +13,13 @@ Tutorials, explanations on game mechanics, and source-code reading. Collaborativ
 
 [Visit the Site](https://beta.techmc.wiki) · [Browse Raw Articles](https://beta.techmc.wiki/articles) · [More GTMC Projects](https://github.com/orgs/gtmc-dev/repositories)
 
+
+<!-- README-I18N:START -->
+
+**English** | [汉语](./README.zh.md)
+
+<!-- README-I18N:END -->
+
 </div>
 
 ---
