@@ -1,6 +1,6 @@
 import type { ChapterNavNode } from "@/types/chapter-nav"
 import type { ArticleLocale } from "@/lib/article-manifest"
-import { getArticleContentBySlug } from "@/lib/article-content-store"
+import { getArticleContentBySlug } from "@/lib/article-content"
 import { resolveLocalArticlePath } from "@/lib/article-fs"
 
 /**
