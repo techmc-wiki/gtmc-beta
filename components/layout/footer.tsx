@@ -49,6 +49,13 @@ export default function Footer() {
                     {t("articles")}
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/pdf"
+                    className="hover:text-tech-main-dark transition-colors">
+                    {t("offlinePdf")}
+                  </Link>
+                </li>
               </ul>
             </nav>
 

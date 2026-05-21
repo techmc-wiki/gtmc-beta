@@ -18,7 +18,8 @@
     "legalInfo": "Legal & Info",
     "legalNav": "Legal",
     "preface": "Preface",
-    "articles": "Articles"
+    "articles": "Articles",
+    "offlinePdf": "Offline (PDF)"
   },
   "Article": {
     "notFound": "Article Not Found"

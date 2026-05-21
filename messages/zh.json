@@ -18,7 +18,8 @@
     "legalInfo": "法律信息",
     "legalNav": "法律",
     "preface": "前言",
-    "articles": "文章"
+    "articles": "文章",
+    "offlinePdf": "离线版 (PDF)"
   },
   "Article": {
     "notFound": "文章未找到"
