@@ -90,7 +90,7 @@ export function GlossarySearch({
       <div className="border-tech-main/40 focus-within:border-tech-main/70 flex flex-1 items-stretch border bg-white/50 transition-colors">
         <span
           aria-hidden="true"
-          className="text-tech-main/60 flex select-none items-center px-3 font-mono text-sm">
+          className="text-tech-main/60 flex items-center px-3 font-mono text-sm select-none">
           &gt;
         </span>
         <input
@@ -104,7 +104,7 @@ export function GlossarySearch({
           spellCheck={false}
           className="text-tech-main-dark placeholder:text-tech-main/50 w-full bg-transparent py-2.5 pr-3 font-mono text-sm outline-none sm:py-3"
         />
-        <span className="text-tech-main/50 hidden select-none items-center pr-3 font-mono text-xs whitespace-nowrap sm:flex">
+        <span className="text-tech-main/50 hidden items-center pr-3 font-mono text-xs whitespace-nowrap select-none sm:flex">
           {resultCount} of {totalCount}
         </span>
       </div>
@@ -122,7 +122,7 @@ export function GlossarySearch({
         [{scopeLabel}]
       </button>
 
-      <span className="text-tech-main/50 select-none font-mono text-xs sm:hidden">
+      <span className="text-tech-main/50 font-mono text-xs select-none sm:hidden">
         {resultCount} of {totalCount}
       </span>
     </div>

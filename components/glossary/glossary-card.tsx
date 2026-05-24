@@ -24,10 +24,7 @@ export function GlossaryCard({
   locale,
   className,
 }: GlossaryCardProps) {
-  const visible = React.useMemo(
-    () => new Set(visibleColumns),
-    [visibleColumns]
-  )
+  const visible = React.useMemo(() => new Set(visibleColumns), [visibleColumns])
 
   const relatedTokens = React.useMemo(
     () => parseRelated(entry.related),
@@ -50,7 +47,7 @@ export function GlossaryCard({
         <Link
           href={`/glossary/${entry.slug}`}
           locale={locale as "en" | "zh"}
-          className="text-tech-main-dark hover:text-tech-main font-mono text-base font-medium leading-snug underline-offset-2 hover:underline">
+          className="text-tech-main-dark hover:text-tech-main font-mono text-base leading-snug font-medium underline-offset-2 hover:underline">
           {entry.fullFormEn}
           {entry.isControversial && (
             <span
@@ -92,11 +89,7 @@ export function GlossaryCard({
       {visible.has("related") && relatedTokens.length > 0 && (
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <span className={labelClass}>REL</span>
-          <CrossRefChips
-            related={relatedTokens}
-            mode="index"
-            locale={locale}
-          />
+          <CrossRefChips related={relatedTokens} mode="index" locale={locale} />
         </div>
       )}
     </article>

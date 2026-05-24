@@ -4,9 +4,7 @@ import * as React from "react"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/cn"
 import { EmptyState } from "@/components/ui/empty-state"
-import {
-  buildGlossarySearchIndex,
-} from "@/lib/glossary/search"
+import { buildGlossarySearchIndex } from "@/lib/glossary/search"
 import type { GlossaryEntry } from "@/lib/glossary/manifest"
 import { GlossaryTableRow, type GlossaryDensity } from "./glossary-table-row"
 import { GlossaryCard } from "./glossary-card"
@@ -83,10 +81,7 @@ export function GlossaryTable({
 
     return categoryFiltered
       .filter((e) => hitOrder.has(e.slug))
-      .sort(
-        (a, b) =>
-          (hitOrder.get(a.slug) ?? 0) - (hitOrder.get(b.slug) ?? 0)
-      )
+      .sort((a, b) => (hitOrder.get(a.slug) ?? 0) - (hitOrder.get(b.slug) ?? 0))
   }, [categoryFiltered, trimmedQuery, searchScope, indexLocale])
 
   const grouped = React.useMemo(() => {
@@ -126,7 +121,9 @@ export function GlossaryTable({
     <div className={cn("flex flex-col gap-8", className)}>
       {grouped.map((group) => {
         const sectionId =
-          group.letter === "_results" ? "letter-results" : `letter-${group.letter}`
+          group.letter === "_results"
+            ? "letter-results"
+            : `letter-${group.letter}`
 
         return (
           <section

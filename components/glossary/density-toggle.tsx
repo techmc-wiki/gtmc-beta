@@ -43,7 +43,9 @@ export function DensityToggle({
       if (isDensity(raw) && raw !== value) {
         onChange(raw)
       }
-    } catch {}
+    } catch {
+      // SSR / private browsing — localStorage unavailable, use defaults
+    }
   }, [onChange, value])
 
   const handleChange = React.useCallback(
@@ -51,7 +53,9 @@ export function DensityToggle({
       onChange(next)
       try {
         localStorage.setItem(STORAGE_KEY, next)
-      } catch {}
+      } catch {
+        // SSR / private browsing
+      }
     },
     [onChange]
   )

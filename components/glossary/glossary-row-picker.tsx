@@ -153,7 +153,7 @@ export function GlossaryRowPicker({
       <div className="border-tech-main/40 focus-within:border-tech-main/70 flex items-stretch border bg-white/50 transition-colors">
         <span
           aria-hidden="true"
-          className="text-tech-main/60 flex select-none items-center px-3 font-mono text-sm">
+          className="text-tech-main/60 flex items-center px-3 font-mono text-sm select-none">
           &gt;
         </span>
         <input
@@ -197,9 +197,7 @@ export function GlossaryRowPicker({
                       onMouseEnter={() => setHighlightedIndex(index)}
                       tabIndex={-1}
                       className={`block w-full cursor-pointer px-4 py-2 text-left transition-colors ${
-                        isActive
-                          ? "bg-tech-main/10"
-                          : "hover:bg-tech-accent/10"
+                        isActive ? "bg-tech-main/10" : "hover:bg-tech-accent/10"
                       }`}>
                       <div className="text-tech-main-dark font-mono text-sm">
                         {entry.fullFormEn}

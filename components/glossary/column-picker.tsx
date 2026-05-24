@@ -58,7 +58,9 @@ export function ColumnPicker({
           return
         }
       }
-    } catch {}
+    } catch {
+      // SSR / private browsing — localStorage unavailable
+    }
     onChange(defaultColumns)
   }, [defaultColumns, onChange])
 
@@ -80,12 +82,17 @@ export function ColumnPicker({
     }
   }, [open])
 
-  const persist = React.useCallback((next: string[]) => {
-    onChange(next)
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
-    } catch {}
-  }, [onChange])
+  const persist = React.useCallback(
+    (next: string[]) => {
+      onChange(next)
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+      } catch {
+        // SSR / private browsing
+      }
+    },
+    [onChange]
+  )
 
   const toggle = React.useCallback(
     (column: string) => {
@@ -143,7 +150,7 @@ export function ColumnPicker({
         aria-expanded={open}
         aria-label={t("columnPickerLabel")}
         onClick={() => setOpen((value) => !value)}
-        className="border-tech-main/40 bg-white/70 text-tech-main hover:bg-tech-main/10 focus-visible:outline-tech-main inline-flex min-h-9 cursor-pointer items-center border px-3 py-1.5 font-mono text-xs font-bold tracking-widest uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
+        className="border-tech-main/40 text-tech-main hover:bg-tech-main/10 focus-visible:outline-tech-main inline-flex min-h-9 cursor-pointer items-center border bg-white/70 px-3 py-1.5 font-mono text-xs font-bold tracking-widest uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-2">
         [§ COLUMNS]
       </button>
 
@@ -172,7 +179,7 @@ export function ColumnPicker({
             <details className="group mt-3">
               <summary className="border-tech-line/30 text-tech-main/70 hover:text-tech-main flex cursor-pointer list-none items-center justify-between border-b pb-1.5 font-mono text-[0.6875rem] font-bold tracking-widest uppercase transition-colors [&::-webkit-details-marker]:hidden">
                 <span>{t("columnLanguageGroup")}</span>
-                <span className="text-tech-main/40 group-open:rotate-90 transition-transform">
+                <span className="text-tech-main/40 transition-transform group-open:rotate-90">
                   ▸
                 </span>
               </summary>

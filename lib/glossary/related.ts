@@ -12,7 +12,9 @@ for (const entry of glossaryEntries) {
 }
 
 function resolveTermToken(token: string): GlossaryEntry | undefined {
-  const stripped = token.includes(":") ? token.slice(token.indexOf(":") + 1) : token
+  const stripped = token.includes(":")
+    ? token.slice(token.indexOf(":") + 1)
+    : token
   const normalized = stripped.trim()
   if (!normalized) return undefined
 

@@ -132,14 +132,13 @@ export function GlossaryEditCard({
 
   const headerTerm = isDelete
     ? (operation.before?.["Full Form (English)"] ?? operation.slug)
-    : (row?.["Full Form (English)"]?.trim()
-        ? row["Full Form (English)"]
-        : operation.slug)
+    : row?.["Full Form (English)"]?.trim()
+      ? row["Full Form (English)"]
+      : operation.slug
 
   const badge = KIND_BADGE[operation.kind]
 
-  const englishMissing =
-    isAdd && !(row?.["Full Form (English)"] ?? "").trim()
+  const englishMissing = isAdd && !(row?.["Full Form (English)"] ?? "").trim()
 
   const otherLanguageCodes = React.useMemo(
     () => LANGUAGE_CODES.filter((code) => code !== activeLocale),
@@ -276,15 +275,13 @@ function DeleteSummary({
         <div className="border border-yellow-500/40 bg-yellow-500/10 p-3">
           <p
             className={cn(
-              "mb-1 font-mono text-xs tracking-widest uppercase text-yellow-800"
+              "mb-1 font-mono text-xs tracking-widest text-yellow-800 uppercase"
             )}>
             ⚠ Dangling references
           </p>
           <p className="font-mono text-xs text-yellow-900">
             Removing this term will orphan references in:{" "}
-            {danglingRefs
-              .map((ref) => ref.fullFormEn || ref.slug)
-              .join(", ")}
+            {danglingRefs.map((ref) => ref.fullFormEn || ref.slug).join(", ")}
           </p>
         </div>
       )}
@@ -318,9 +315,7 @@ function EnglishFields({
             multiline={field.multiline}
             error={fieldError}
             onValueChange={(value) => onChange(field.column, value)}
-            errorMessage={
-              fieldError ? "English term is required." : undefined
-            }
+            errorMessage={fieldError ? "English term is required." : undefined}
           />
         )
       })}

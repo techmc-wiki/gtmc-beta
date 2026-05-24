@@ -67,11 +67,13 @@ export const LANGUAGE_CODES: GlossaryLocale[] = [
   "es",
 ]
 
-export const LOCALE_TO_CSV_LANGUAGE: Record<"en" | "zh", GlossaryLocale | null> =
-  {
-    en: null,
-    zh: "zh",
-  }
+export const LOCALE_TO_CSV_LANGUAGE: Record<
+  "en" | "zh",
+  GlossaryLocale | null
+> = {
+  en: null,
+  zh: "zh",
+}
 
 export const LANGUAGE_DISPLAY: Record<GlossaryLocale, string> = {
   ar: "العربية",

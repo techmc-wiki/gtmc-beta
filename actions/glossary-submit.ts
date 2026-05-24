@@ -63,7 +63,7 @@ export async function submitGlossaryDraftAction(
   }
 
   try {
-    const githubLogin = (session as any).user?.githubLogin
+    const githubLogin = session.user.githubLogin
     const account = await prisma.account.findFirst({
       where: { userId: session.user.id, provider: "github" },
       select: { providerAccountId: true },

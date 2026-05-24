@@ -32,10 +32,7 @@ export function GlossaryTableRow({
   locale,
 }: GlossaryTableRowProps) {
   const padding = densityRowPadding[density]
-  const visible = React.useMemo(
-    () => new Set(visibleColumns),
-    [visibleColumns]
-  )
+  const visible = React.useMemo(() => new Set(visibleColumns), [visibleColumns])
 
   const relatedTokens = React.useMemo(
     () => parseRelated(entry.related),
@@ -51,7 +48,7 @@ export function GlossaryTableRow({
   return (
     <tr
       data-density={density}
-      className="border-tech-line/10 border-b transition-colors duration-150 hover:bg-tech-accent/5">
+      className="border-tech-line/10 hover:bg-tech-accent/5 border-b transition-colors duration-150">
       {visible.has("term") && (
         <td className={cn(cellBase, padding, "min-w-[10rem]")}>
           <Link
@@ -102,11 +99,7 @@ export function GlossaryTableRow({
 
       {visible.has("translation") && (
         <td
-          className={cn(
-            cellBase,
-            padding,
-            "text-tech-main/80 max-w-[24rem]"
-          )}>
+          className={cn(cellBase, padding, "text-tech-main/80 max-w-[24rem]")}>
           {translation ? (
             <span className="line-clamp-2">{translation.value}</span>
           ) : (

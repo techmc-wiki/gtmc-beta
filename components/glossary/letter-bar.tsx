@@ -102,7 +102,7 @@ export function LetterBar({ availableLetters, className }: LetterBarProps) {
       role="navigation"
       aria-label={t("letterBarLabel")}
       className={cn(
-        "sticky top-0 z-10 border-b border-tech-line/30 bg-white/85 backdrop-blur-sm",
+        "border-tech-line/30 sticky top-0 z-10 border-b bg-white/85 backdrop-blur-sm",
         className
       )}>
       <div className="relative">
@@ -141,12 +141,12 @@ export function LetterBar({ availableLetters, className }: LetterBarProps) {
                     "flex h-9 min-w-9 items-center justify-center border-l-2 px-2 font-mono text-xs tracking-[0.18em] transition-colors duration-200 select-none",
                     "focus-visible:outline-tech-main focus-visible:outline-2 focus-visible:outline-offset-2",
                     isActive &&
-                      "border-tech-main bg-tech-main/10 font-bold text-tech-main-dark",
+                      "border-tech-main bg-tech-main/10 text-tech-main-dark font-bold",
                     !isActive &&
                       isAvailable &&
-                      "cursor-pointer border-transparent text-tech-main hover:bg-tech-main/5",
+                      "text-tech-main hover:bg-tech-main/5 cursor-pointer border-transparent",
                     !isAvailable &&
-                      "cursor-default border-transparent text-tech-main opacity-30"
+                      "text-tech-main cursor-default border-transparent opacity-30"
                   )}>
                   {letter}
                 </button>

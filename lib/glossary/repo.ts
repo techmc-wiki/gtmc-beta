@@ -1,8 +1,5 @@
 import { GLOSSARY_REPO, getGlossaryWriteToken } from "@/lib/github/repos"
-import {
-  getMainBranchHeadSha,
-  getFileSnapshot,
-} from "@/lib/github/branch"
+import { getMainBranchHeadSha, getFileSnapshot } from "@/lib/github/branch"
 
 export const GLOSSARY_MAIN_BRANCH = "main"
 export const GLOSSARY_CSV_PATH = "TechMC Glossary.csv"

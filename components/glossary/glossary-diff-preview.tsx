@@ -51,7 +51,9 @@ function changedColumns(
   before: GlossaryRow,
   after: GlossaryRow
 ): readonly (typeof GLOSSARY_COLUMNS)[number][] {
-  return GLOSSARY_COLUMNS.filter((col) => (before[col] ?? "") !== (after[col] ?? ""))
+  return GLOSSARY_COLUMNS.filter(
+    (col) => (before[col] ?? "") !== (after[col] ?? "")
+  )
 }
 
 function populatedColumns(
@@ -72,7 +74,7 @@ function EditOperationCard({ operation }: OperationCardProps) {
   return (
     <article
       aria-label={`Edit ${operation.slug}`}
-      className="border-tech-line/40 border border-l-4 border-l-tech-main bg-white/70 p-4 backdrop-blur-sm">
+      className="border-tech-line/40 border-l-tech-main border border-l-4 bg-white/70 p-4 backdrop-blur-sm">
       <header className="mb-3 flex items-baseline gap-2 font-mono text-xs">
         <span className="text-tech-main font-bold tracking-widest uppercase">
           [EDIT]
@@ -118,9 +120,7 @@ function AddOperationCard({ operation }: OperationCardProps) {
       </header>
 
       {fields.length === 0 ? (
-        <p className="text-tech-main/60 font-mono text-xs italic">
-          Empty row.
-        </p>
+        <p className="text-tech-main/60 font-mono text-xs italic">Empty row.</p>
       ) : (
         <dl className="flex flex-col gap-1.5 font-mono text-sm">
           {fields.map((field) => (
@@ -159,9 +159,7 @@ function DeleteOperationCard({ operation }: OperationCardProps) {
       </header>
 
       {fields.length === 0 ? (
-        <p className="text-tech-main/60 font-mono text-xs italic">
-          Empty row.
-        </p>
+        <p className="text-tech-main/60 font-mono text-xs italic">Empty row.</p>
       ) : (
         <dl className="flex flex-col gap-1 font-mono text-sm opacity-50">
           {fields.map((field) => (
@@ -171,7 +169,7 @@ function DeleteOperationCard({ operation }: OperationCardProps) {
               <dt className="text-tech-main/70 text-[0.7rem] tracking-widest uppercase line-through sm:w-48 sm:shrink-0">
                 {field}
               </dt>
-              <dd className="text-tech-main-dark leading-relaxed line-through break-words whitespace-pre-wrap">
+              <dd className="text-tech-main-dark leading-relaxed break-words whitespace-pre-wrap line-through">
                 {before[field]}
               </dd>
             </div>
@@ -256,7 +254,7 @@ export function GlossaryDiffPreview({
             checked={useRealEmail}
             onChange={(event) => setUseRealEmail(event.target.checked)}
             disabled={isSubmitting}
-            className="border-tech-main/60 size-4 cursor-pointer accent-tech-main disabled:cursor-not-allowed"
+            className="border-tech-main/60 accent-tech-main size-4 cursor-pointer disabled:cursor-not-allowed"
           />
           <span className="text-tech-main tracking-widest uppercase">
             USE REAL EMAIL

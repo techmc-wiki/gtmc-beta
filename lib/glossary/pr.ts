@@ -21,8 +21,15 @@ export interface GlossaryPrResult {
 export async function openGlossaryPullRequest(
   input: GlossaryPrInput
 ): Promise<GlossaryPrResult> {
-  const { csvContent, title, body, branchName, authorName, authorEmail, token } =
-    input
+  const {
+    csvContent,
+    title,
+    body,
+    branchName,
+    authorName,
+    authorEmail,
+    token,
+  } = input
   const octokit = getOctokit(token)
 
   const mainSha = await getMainBranchHeadSha(token, GLOSSARY_REPO)

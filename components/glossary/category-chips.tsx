@@ -21,8 +21,7 @@ export interface CategoryChipsProps {
 const CHIP_BASE =
   "flex shrink-0 cursor-pointer items-center border px-3 py-1.5 font-mono text-xs tracking-widest uppercase whitespace-nowrap transition-colors select-none focus-visible:outline-tech-main focus-visible:outline-2 focus-visible:outline-offset-2"
 
-const CHIP_ACTIVE =
-  "border-tech-main/60 bg-tech-main/10 text-tech-main-dark"
+const CHIP_ACTIVE = "border-tech-main/60 bg-tech-main/10 text-tech-main-dark"
 
 const CHIP_INACTIVE =
   "border-tech-main/30 bg-white/50 text-tech-main/70 hover:border-tech-main/60 hover:bg-tech-accent/10"
@@ -75,7 +74,7 @@ function ChipsList({
       className={cn(
         "flex gap-2",
         layout === "row"
-          ? "overflow-x-auto [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          ? "[scrollbar-width:none] overflow-x-auto [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
           : "flex-wrap"
       )}>
       <Chip
