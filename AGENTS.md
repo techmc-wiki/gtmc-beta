@@ -99,6 +99,9 @@ pnpm lint                 # oxlint (alias of lint:check)
 pnpm lint:fix             # oxlint --fix
 pnpm style                # prettier --check (alias of style:check)
 pnpm style:fix            # prettier --write
+pnpm build:content        # Generate content artifacts (manifest, glossary, articles, PDF)
+pnpm build:next           # Next.js production build
+pnpm build                # Both phases: content generation then Next build
 pnpm analyze              # ANALYZE=true pnpm build (bundle analyzer)
 pnpm lighthouse           # Run Lighthouse CI locally (requires running server)
 ```
@@ -177,13 +180,23 @@ When working on UI:
 ## Build and Deployment
 
 ```bash
-pnpm build          # tsx generate-manifest && generate-content && generate-pdf && next build
+pnpm build:content  # Generate static content artifacts (manifest, glossary, articles, PDF)
+pnpm build:next     # Next.js production build
+pnpm build          # Both phases in order: build:content && build:next
 pnpm analyze        # Same build with @next/bundle-analyzer enabled
 ```
 
+**Two-phase build model:**
+
+- **Phase 1 (`build:content`)**: Generates static content artifacts — `data/manifest.json`, `data/glossary*.json`, rendered article content, and `public/gtmc.pdf` (via Playwright + Chromium).
+- **Phase 2 (`build:next`)**: Runs `next build`, consuming the artifacts from phase 1.
+- **`pnpm build`**: Runs both phases in order.
+
+This is not a multi-package split or monorepo; it's a formalized build phase boundary within a single Next.js project. The content phase produces static artifacts that the Next.js build consumes.
+
 Notes:
 
-- `pnpm build` is **non-trivial** — it regenerates `data/manifest.json`, rendered article content, and `public/gtmc.pdf` (via Playwright + Chromium) before invoking `next build`. Allow time and disk space accordingly.
+- `pnpm build` is **non-trivial** — phase 1 regenerates all content artifacts before phase 2 invokes `next build`. Allow time and disk space accordingly.
 - `next.config.ts` configures `outputFileTracingIncludes` / `Excludes` so search and litematica endpoints get the right files but article binaries are not pulled into every lambda. Keep these patterns in sync if you add similar routes. (Future: glossary manifests may need similar treatment if served from dedicated API routes.)
 - Vercel uses `vercel.json` to install Chromium system libraries on Amazon Linux before `pnpm install`, then runs `pnpm build` exactly as above.
 - CI workflows (`.github/workflows/`):
