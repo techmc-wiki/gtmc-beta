@@ -125,7 +125,7 @@ export function GlossaryToolbar({
 
   return (
     <div className={cn("flex flex-col gap-6", className)}>
-      <section aria-label={t("letterBarLabel")} className="relative">
+      <section aria-label={t("letterBarLabel")} className="relative z-30">
         <CornerBrackets size="size-2" color="border-tech-main/30" />
         <div className="border-tech-main/30 relative flex flex-col gap-3 border bg-white/60 p-3 backdrop-blur-sm sm:p-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
