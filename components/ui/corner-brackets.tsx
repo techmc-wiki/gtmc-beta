@@ -7,11 +7,7 @@ interface CornerBracketsProps {
   /** Base corner color (Tailwind border class). Default: "border-tech-main/40" */
   color?: string
   /** Which corners to render. Default: "all" */
-  corners?:
-    | "all"
-    | "top-bottom"
-    | "diagonal-tlbr"
-    | "diagonal-trbl"
+  corners?: "all" | "top-bottom" | "diagonal-tlbr" | "diagonal-trbl"
   /** Behavior variant. Default: "static" */
   variant?: "static" | "hover" | "hover-expand" | "hover-only"
   /** Hover scale factor for hover-expand variant. Default: 1.5 */
@@ -43,16 +39,16 @@ export const CornerBrackets = React.forwardRef<
     },
     ref
   ) => {
-    const showTopBottom = corners === "all" || corners === "top-bottom"
-    const showDiagonalTLBR = corners === "all" || corners === "diagonal-tlbr"
-    const showDiagonalTRBL = corners === "all" || corners === "diagonal-trbl"
-
     const showTopLeft =
-      corners === "all" || corners === "top-bottom" || corners === "diagonal-tlbr"
+      corners === "all" ||
+      corners === "top-bottom" ||
+      corners === "diagonal-tlbr"
     const showTopRight = corners === "all" || corners === "diagonal-trbl"
     const showBottomLeft = corners === "all" || corners === "diagonal-trbl"
     const showBottomRight =
-      corners === "all" || corners === "top-bottom" || corners === "diagonal-tlbr"
+      corners === "all" ||
+      corners === "top-bottom" ||
+      corners === "diagonal-tlbr"
 
     const posTopLeft = "-translate-px border-t-2 border-l-2"
     const posTopRight = "translate-x-px -translate-y-px border-t-2 border-r-2"
