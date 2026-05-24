@@ -24,6 +24,7 @@
     "linkIssues": "议题"
   },
   "Glossary": {
+    "backToTop": "回到顶部",
     "pageTitle": "术语表",
     "pageDescription": "浏览技术性 Minecraft 术语、定义及 12 种语言的翻译。",
     "searchPlaceholder": "> 筛选…",
@@ -31,8 +32,11 @@
     "searchScopeAll": "全部术语",
     "letterBarLabel": "跳转到字母",
     "categoryAll": "全部分类",
+    "categoryScrollLeft": "向左滚动分类",
+    "categoryScrollRight": "向右滚动分类",
     "columnPickerLabel": "列可见性",
     "densityCompact": "紧凑",
+    "densityIconLabel": "将行密度设为 {density}",
     "densityNormal": "正常",
     "densityComfortable": "舒适",
     "columnTerm": "术语",
