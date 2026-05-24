@@ -66,9 +66,41 @@ function ChipsList({
   layout,
   ariaLabel,
 }: ChipsListProps) {
+  const t = useTranslations("Glossary")
   const noneSelected = selected.length === 0
-  return (
+  const scrollRef = React.useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = React.useState(false)
+  const [canScrollRight, setCanScrollRight] = React.useState(false)
+
+  React.useEffect(() => {
+    if (layout !== "row") return
+    const el = scrollRef.current
+    if (!el) return
+
+    const update = () => {
+      setCanScrollLeft(el.scrollLeft > 0)
+      setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1)
+    }
+    update()
+
+    el.addEventListener("scroll", update, { passive: true })
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    return () => {
+      el.removeEventListener("scroll", update)
+      ro.disconnect()
+    }
+  }, [layout, categories])
+
+  const nudge = React.useCallback((dir: -1 | 1) => {
+    const el = scrollRef.current
+    if (!el) return
+    el.scrollBy({ left: dir * 200, behavior: "smooth" })
+  }, [])
+
+  const list = (
     <div
+      ref={scrollRef}
       role="group"
       aria-label={ariaLabel}
       className={cn(
@@ -92,6 +124,45 @@ function ChipsList({
           onClick={() => onToggle(c.name)}
         />
       ))}
+    </div>
+  )
+
+  if (layout !== "row") return list
+
+  return (
+    <div className="relative">
+      {list}
+      <div
+        aria-hidden="true"
+        className={cn(
+          "pointer-events-none absolute top-0 right-0 bottom-0 w-12 bg-gradient-to-l from-white via-white/80 to-transparent transition-opacity duration-200",
+          canScrollRight ? "opacity-100" : "opacity-0"
+        )}
+      />
+      <button
+        type="button"
+        aria-label={t("categoryScrollLeft")}
+        onClick={() => nudge(-1)}
+        tabIndex={canScrollLeft ? 0 : -1}
+        aria-hidden={!canScrollLeft}
+        className={cn(
+          "border-tech-main/40 bg-white/80 text-tech-main hover:bg-tech-main/10 absolute top-1/2 left-0 z-10 flex h-6 w-6 -translate-y-1/2 cursor-pointer items-center justify-center border text-xs transition-opacity duration-200",
+          canScrollLeft ? "opacity-100" : "pointer-events-none opacity-0"
+        )}>
+        [◂]
+      </button>
+      <button
+        type="button"
+        aria-label={t("categoryScrollRight")}
+        onClick={() => nudge(1)}
+        tabIndex={canScrollRight ? 0 : -1}
+        aria-hidden={!canScrollRight}
+        className={cn(
+          "border-tech-main/40 bg-white/80 text-tech-main hover:bg-tech-main/10 absolute top-1/2 right-0 z-10 flex h-6 w-6 -translate-y-1/2 cursor-pointer items-center justify-center border text-xs transition-opacity duration-200",
+          canScrollRight ? "opacity-100" : "pointer-events-none opacity-0"
+        )}>
+        [▸]
+      </button>
     </div>
   )
 }
