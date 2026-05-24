@@ -159,7 +159,7 @@ export function ColumnPicker({
           role="dialog"
           aria-label={t("columnPickerLabel")}
           className="border-tech-line/30 absolute right-0 z-40 mt-2 w-72 border bg-white/95 backdrop-blur-md">
-          <div className="max-h-[60vh] overflow-y-auto p-3">
+          <div className="custom-vertical-scrollbar max-h-[60vh] overflow-y-auto p-3">
             <ColumnGroup
               title="CORE"
               entries={coreEntries}

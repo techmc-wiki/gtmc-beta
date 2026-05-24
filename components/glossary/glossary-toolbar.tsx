@@ -136,7 +136,7 @@ export function GlossaryToolbar({
               totalCount={totalCount}
               className="flex-1"
             />
-            <div className="flex items-stretch gap-2">
+            <div className="flex items-stretch gap-2 [&>[role=radiogroup]>button]:min-h-9">
               <ColumnPicker
                 locale={locale}
                 visibleColumns={visibleColumns}

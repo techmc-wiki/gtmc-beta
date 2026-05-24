@@ -114,7 +114,7 @@ export function GlossarySearch({
         onClick={toggleScope}
         aria-pressed={!isActiveScope}
         aria-label={scopeLabel}
-        className={`tracking-tech-wide flex cursor-pointer items-center justify-center border px-3 py-2 font-mono text-xs uppercase transition-colors sm:px-4 ${
+        className={`tracking-tech-wide flex min-h-9 cursor-pointer items-center justify-center border px-3 py-2 font-mono text-xs uppercase transition-colors sm:px-4 ${
           isActiveScope
             ? "border-tech-main/60 bg-tech-main/10 text-tech-main-dark"
             : "border-tech-main/20 text-tech-main/70 hover:border-tech-main/40"
