@@ -4,6 +4,7 @@ import * as React from "react"
 import { useTranslations } from "next-intl"
 
 import { SegmentedControl } from "@/components/ui/segmented-control"
+import { cn } from "@/lib/cn"
 
 export type GlossaryDensity = "compact" | "normal" | "comfortable"
 
@@ -24,6 +25,22 @@ function isDensity(value: unknown): value is GlossaryDensity {
   return (
     typeof value === "string" &&
     (DENSITY_VALUES as readonly string[]).includes(value)
+  )
+}
+
+function DensityIcon({ variant }: { variant: GlossaryDensity }) {
+  const gap =
+    variant === "compact"
+      ? "gap-px"
+      : variant === "normal"
+        ? "gap-0.5"
+        : "gap-1"
+  return (
+    <span aria-hidden="true" className={cn("inline-flex flex-col", gap)}>
+      <span className="h-px w-3.5 bg-current" />
+      <span className="h-px w-3.5 bg-current" />
+      <span className="h-px w-3.5 bg-current" />
+    </span>
   )
 }
 
@@ -63,9 +80,23 @@ export function DensityToggle({
   const options = React.useMemo(
     () =>
       [
-        { value: "compact" as const, label: t("densityCompact") },
-        { value: "normal" as const, label: t("densityNormal") },
-        { value: "comfortable" as const, label: t("densityComfortable") },
+        {
+          value: "compact" as const,
+          label: <DensityIcon variant="compact" />,
+          ariaLabel: t("densityIconLabel", { density: t("densityCompact") }),
+        },
+        {
+          value: "normal" as const,
+          label: <DensityIcon variant="normal" />,
+          ariaLabel: t("densityIconLabel", { density: t("densityNormal") }),
+        },
+        {
+          value: "comfortable" as const,
+          label: <DensityIcon variant="comfortable" />,
+          ariaLabel: t("densityIconLabel", {
+            density: t("densityComfortable"),
+          }),
+        },
       ] as const,
     [t]
   )
@@ -78,7 +109,10 @@ export function DensityToggle({
       controlRole="radiogroup"
       ariaLabel={t("densityNormal")}
       size="sm"
-      className={className}
+      className={cn(
+        "[&>button]:min-h-9 [&>button]:min-w-9 [&>button]:px-2.5",
+        className
+      )}
     />
   )
 }
