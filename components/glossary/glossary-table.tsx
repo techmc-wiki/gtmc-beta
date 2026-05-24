@@ -195,6 +195,7 @@ export function GlossaryTable({
                   entry={entry}
                   visibleColumns={visibleColumns}
                   locale={locale}
+                  density={density}
                   onOpenDetail={onOpenDetail}
                 />
               ))}

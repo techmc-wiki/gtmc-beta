@@ -24,7 +24,8 @@ const densityRowPadding = {
   comfortable: "py-3",
 } as const satisfies Record<GlossaryDensity, string>
 
-const cellBase = "px-3 align-top text-sm"
+const cellBase =
+  "px-3 align-top text-sm transition-[padding] duration-300 ease-out motion-reduce:transition-none"
 const termTriggerClass =
   "text-tech-main-dark hover:text-tech-main focus-visible:outline-tech-main cursor-pointer text-left font-mono font-medium tracking-tight underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
 
