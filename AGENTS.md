@@ -23,7 +23,7 @@ This file is the agent contract for the **GTMC website** repo. It complements `R
 - **Lint / Format**: oxlint (not ESLint), Prettier with Tailwind plugin
 - **Tests**: Vitest, Playwright, Lighthouse CI
 
-The articles themselves live in a separate repo and are pulled in via a Git submodule at `articles/`.
+The articles themselves live in a separate repo and are pulled in via a Git submodule at `articles/`, and the glossary CSV data is pulled in via a submodule at `glossary/`.
 
 ### Repository layout
 
@@ -42,7 +42,8 @@ The articles themselves live in a separate repo and are pulled in via a Git subm
 ├── lib/                    Article pipeline, auth, db, search, GitHub helpers
 │   └── __tests__/          Vitest specs
 ├── articles/               Article content (Git submodule)
-├── data/                   Generated manifest + rendered article content
+├── glossary/               Glossary CSV data (Git submodule)
+├── data/                   Generated manifest + rendered article content + glossary*.json
 ├── i18n/                   next-intl request config + routing
 ├── messages/               i18n catalogs (en.json, zh.json)
 ├── public/                 Static assets including generated gtmc.pdf
@@ -82,6 +83,8 @@ pnpm dev                # http://localhost:3000
 | `GITHUB_FEATURES_ISSUES_PAT` | PAT used to read/comment on feature issues |
 | `GITHUB_FEATURES_WRITE_PAT` | PAT used to open/edit feature issues |
 | `GITHUB_REPO_OWNER` / `GITHUB_REPO_NAME` | Target repo for article submission flows |
+| `GITHUB_GLOSSARY_REPO_OWNER` / `GITHUB_GLOSSARY_REPO_NAME` | Target repo for glossary submodule (defaults to TechMC-Glossary/TechMC-Glossary) |
+| `GITHUB_GLOSSARY_WRITE_PAT` | PAT for opening glossary PRs (requires Contents + Pull requests read/write) |
 | `BLOB_READ_WRITE_TOKEN` | Vercel Blob token for uploads ≥ 4.5 MB |
 | `BLOB_STORE_HOSTNAME` | Hostname of the Vercel Blob store |
 
@@ -119,6 +122,17 @@ pnpm articles:pdf           # Re-render the offline PDF (public/gtmc.pdf)
 ```
 
 Vercel checkouts use whatever commit is pinned by this repo; to ship updated article content, commit the new submodule pointer here. **Do not mix submodule pointer updates into feature/fix commits** (see `CONTRIBUTING.md`).
+
+### Glossary submodule
+
+```bash
+pnpm glossary:status            # Show submodule status
+pnpm glossary:init              # Reinitialize at the pinned commit
+pnpm glossary:update            # Pull the latest glossary commit
+pnpm generate:glossary-manifest # Rebuild data/glossary*.json
+```
+
+The glossary submodule works similarly to articles: Vercel uses the pinned commit, and updates require committing the new pointer. The generated `data/glossary*.json` files are used by the glossary page and search index.
 
 ## Testing Instructions
 
@@ -170,7 +184,7 @@ pnpm analyze        # Same build with @next/bundle-analyzer enabled
 Notes:
 
 - `pnpm build` is **non-trivial** — it regenerates `data/manifest.json`, rendered article content, and `public/gtmc.pdf` (via Playwright + Chromium) before invoking `next build`. Allow time and disk space accordingly.
-- `next.config.ts` configures `outputFileTracingIncludes` / `Excludes` so search and litematica endpoints get the right files but article binaries are not pulled into every lambda. Keep these patterns in sync if you add similar routes.
+- `next.config.ts` configures `outputFileTracingIncludes` / `Excludes` so search and litematica endpoints get the right files but article binaries are not pulled into every lambda. Keep these patterns in sync if you add similar routes. (Future: glossary manifests may need similar treatment if served from dedicated API routes.)
 - Vercel uses `vercel.json` to install Chromium system libraries on Amazon Linux before `pnpm install`, then runs `pnpm build` exactly as above.
 - CI workflows (`.github/workflows/`):
   - `build.yml` — runs on every push and PR; installs deps with `--frozen-lockfile`, generates the Prisma client with a placeholder `DATABASE_URL`, then runs `pnpm typecheck` and `pnpm build`.
