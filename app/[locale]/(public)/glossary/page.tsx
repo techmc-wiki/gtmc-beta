@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/page-header"
 import { GlossaryToolbar } from "@/components/glossary/glossary-toolbar"
 import { loadGlossaryManifest } from "@/lib/glossary/manifest"
 import { toAbsoluteUrl } from "@/lib/site-url"
+import { BackToTop } from "@/components/ui/back-to-top"
 
 const DEFAULT_COLUMNS: Record<string, string[]> = {
   en: ["Full Form (English)", "Short Form", "Description", "Related"],
@@ -72,6 +73,8 @@ export default async function GlossaryIndexPage({
           defaultColumns={DEFAULT_COLUMNS}
         />
       </div>
+
+      <BackToTop />
     </div>
   )
 }
