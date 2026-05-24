@@ -7,8 +7,6 @@ import {
   type BranchFileEntry,
 } from "@/lib/github/branch"
 
-const MAIN_BRANCH = "main"
-
 export type { BranchFileEntry }
 
 export async function getMainBranchHeadSha(token?: string) {

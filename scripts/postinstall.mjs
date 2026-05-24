@@ -42,9 +42,7 @@ if (isGitWorkTree()) {
     process.stdout.write(
       "Skipping glossary submodule checkout because glossary/ already exists\n"
     )
-    process.stdout.write(
-      "  Generating glossary manifest...\n"
-    )
+    process.stdout.write("  Generating glossary manifest...\n")
     run("tsx", ["scripts/generate-glossary-manifest.ts"])
   }
 } else {
