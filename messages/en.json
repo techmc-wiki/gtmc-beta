@@ -36,6 +36,7 @@
     "categoryScrollRight": "Scroll categories right",
     "columnPickerLabel": "COLUMN VISIBILITY",
     "densityCompact": "COMPACT",
+    "densityCycleLabel": "Row density: {density}. Switch to {nextDensity}.",
     "densityIconLabel": "Set row density to {density}",
     "densityNormal": "NORMAL",
     "densityComfortable": "COMFORTABLE",
