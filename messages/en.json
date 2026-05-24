@@ -52,6 +52,7 @@
     "noResults": "NO MATCHING TERMS",
     "mobileTapToOpen": "TAP TO EXPAND",
     "detailBackToIndex": "← BACK TO INDEX",
+    "detailPanelClose": "Close term detail",
     "detailEditCta": "EDIT TERM",
     "detailRegexLabel": "REGEX PATTERN:",
     "detailRelatedLabel": "RELATED TERMS:",

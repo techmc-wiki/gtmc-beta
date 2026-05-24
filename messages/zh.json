@@ -52,6 +52,7 @@
     "noResults": "无匹配术语",
     "mobileTapToOpen": "点击展开",
     "detailBackToIndex": "← 返回索引",
+    "detailPanelClose": "关闭术语详情",
     "detailEditCta": "编辑术语",
     "detailRegexLabel": "正则表达式：",
     "detailRelatedLabel": "相关术语：",
