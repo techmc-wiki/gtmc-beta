@@ -2,11 +2,7 @@ import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { PageHeader } from "@/components/ui/page-header"
 import { GlossaryToolbar } from "@/components/glossary/glossary-toolbar"
-import {
-  loadGlossarySummary,
-  type GlossaryEntry,
-  type GlossarySummaryEntry,
-} from "@/lib/glossary/manifest"
+import { loadGlossaryManifest } from "@/lib/glossary/manifest"
 import { toAbsoluteUrl } from "@/lib/site-url"
 
 const DEFAULT_COLUMNS: Record<string, string[]> = {
@@ -18,20 +14,6 @@ const DEFAULT_COLUMNS: Record<string, string[]> = {
     "Chinese",
     "Related",
   ],
-}
-
-function summaryToEntry(summary: GlossarySummaryEntry): GlossaryEntry {
-  return {
-    slug: summary.slug,
-    fullFormEn: summary.fullFormEn,
-    shortForm: summary.shortForm,
-    category: summary.category,
-    regex: "",
-    description: "",
-    related: "",
-    isControversial: false,
-    translations: {},
-  }
 }
 
 export async function generateMetadata({
@@ -71,8 +53,7 @@ export default async function GlossaryIndexPage({
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "Glossary" })
 
-  const summary = loadGlossarySummary()
-  const entries = summary.map(summaryToEntry)
+  const { entries } = loadGlossaryManifest()
   const totalCount = entries.length
 
   return (
