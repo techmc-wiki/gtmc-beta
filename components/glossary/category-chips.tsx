@@ -146,7 +146,7 @@ function ChipsList({
         tabIndex={canScrollLeft ? 0 : -1}
         aria-hidden={!canScrollLeft}
         className={cn(
-          "border-tech-main/40 bg-white/80 text-tech-main hover:bg-tech-main/10 absolute top-1/2 left-0 z-10 flex h-6 w-6 -translate-y-1/2 cursor-pointer items-center justify-center border text-xs transition-opacity duration-200",
+          "border-tech-main/40 text-tech-main hover:bg-tech-main/10 absolute top-1/2 left-0 z-10 flex h-6 w-6 -translate-y-1/2 cursor-pointer items-center justify-center border bg-white/80 text-xs transition-opacity duration-200",
           canScrollLeft ? "opacity-100" : "pointer-events-none opacity-0"
         )}>
         [◂]
@@ -158,7 +158,7 @@ function ChipsList({
         tabIndex={canScrollRight ? 0 : -1}
         aria-hidden={!canScrollRight}
         className={cn(
-          "border-tech-main/40 bg-white/80 text-tech-main hover:bg-tech-main/10 absolute top-1/2 right-0 z-10 flex h-6 w-6 -translate-y-1/2 cursor-pointer items-center justify-center border text-xs transition-opacity duration-200",
+          "border-tech-main/40 text-tech-main hover:bg-tech-main/10 absolute top-1/2 right-0 z-10 flex h-6 w-6 -translate-y-1/2 cursor-pointer items-center justify-center border bg-white/80 text-xs transition-opacity duration-200",
           canScrollRight ? "opacity-100" : "pointer-events-none opacity-0"
         )}>
         [▸]

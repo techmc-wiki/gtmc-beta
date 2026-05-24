@@ -49,15 +49,15 @@ export function BackToTop({ threshold = 400, className = "" }: BackToTopProps) {
       className={cn(
         "fixed right-6 bottom-6 z-30",
         "inline-flex min-h-[44px] min-w-[44px] items-center justify-center",
-        "border border-tech-main/40 bg-white/80 text-tech-main backdrop-blur-sm",
+        "border-tech-main/40 text-tech-main border bg-white/80 backdrop-blur-sm",
         "px-3 py-2 font-mono text-xs tracking-widest uppercase",
         "transition-opacity duration-300 motion-reduce:transition-none",
         "hover:bg-tech-main/10",
-        "focus:outline-none focus-visible:outline-tech-main focus-visible:outline-2 focus-visible:outline-offset-2",
+        "focus-visible:outline-tech-main focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2",
         isVisible
           ? "pointer-events-auto opacity-100"
           : "pointer-events-none opacity-0",
-        className,
+        className
       )}>
       [ ↑ TOP ]
     </button>
