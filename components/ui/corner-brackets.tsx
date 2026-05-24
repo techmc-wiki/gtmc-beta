@@ -10,8 +10,6 @@ interface CornerBracketsProps {
   corners?:
     | "all"
     | "top-bottom"
-    | "left"
-    | "right"
     | "diagonal-tlbr"
     | "diagonal-trbl"
   /** Behavior variant. Default: "static" */
@@ -45,16 +43,16 @@ export const CornerBrackets = React.forwardRef<
     },
     ref
   ) => {
-    const showLeftSide = corners === "all" || corners === "left"
-    const showRightSide = corners === "all" || corners === "right"
     const showTopBottom = corners === "all" || corners === "top-bottom"
     const showDiagonalTLBR = corners === "all" || corners === "diagonal-tlbr"
     const showDiagonalTRBL = corners === "all" || corners === "diagonal-trbl"
 
-    const showTopLeft = showLeftSide || showTopBottom || showDiagonalTLBR
-    const showTopRight = showRightSide || showDiagonalTRBL
-    const showBottomLeft = showLeftSide || showDiagonalTRBL
-    const showBottomRight = showRightSide || showTopBottom || showDiagonalTLBR
+    const showTopLeft =
+      corners === "all" || corners === "top-bottom" || corners === "diagonal-tlbr"
+    const showTopRight = corners === "all" || corners === "diagonal-trbl"
+    const showBottomLeft = corners === "all" || corners === "diagonal-trbl"
+    const showBottomRight =
+      corners === "all" || corners === "top-bottom" || corners === "diagonal-tlbr"
 
     const posTopLeft = "-translate-px border-t-2 border-l-2"
     const posTopRight = "translate-x-px -translate-y-px border-t-2 border-r-2"
