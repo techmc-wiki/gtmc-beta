@@ -388,7 +388,9 @@
     "inProgress": "IN PROGRESS",
     "resolved": "RESOLVED",
     "merged": "MERGED",
-    "approved": "APPROVED"
+    "approved": "APPROVED",
+    "draftPending": "PENDING",
+    "draftSubmitted": "SUBMITTED"
   },
   "Loading": {
     "saving": "SAVING...",

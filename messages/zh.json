@@ -388,7 +388,9 @@
     "inProgress": "进行中",
     "resolved": "已解决",
     "merged": "已合并",
-    "approved": "已通过"
+    "approved": "已通过",
+    "draftPending": "待审核",
+    "draftSubmitted": "已提交"
   },
   "Loading": {
     "saving": "保存中...",

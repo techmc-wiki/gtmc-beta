@@ -18,6 +18,7 @@ model User {
   image         String?
   role          String    @default("USER")
   githubPat     String?
+  githubLogin   String?
 
 
   accounts      Account[]
