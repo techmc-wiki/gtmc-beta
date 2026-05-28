@@ -81,8 +81,8 @@ export function ForegroundLayer({
         </Link>
         <Link href="/login" className="w-full sm:w-auto">
           <TechButton
-            variant="ghost"
-            className="text-tech-main-dark hover:border-tech-main hover:bg-tech-main/10 bg-surface-overlay flex h-12 w-full items-center justify-center text-xs font-medium tracking-widest uppercase shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-102 sm:w-auto sm:text-sm">
+            variant="secondary"
+            className="flex h-12 w-full items-center justify-center text-xs font-medium tracking-widest uppercase shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-102 sm:w-auto sm:text-sm">
             {"//"} {t("loginGithub")}
           </TechButton>
         </Link>
