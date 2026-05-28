@@ -166,15 +166,16 @@ export function LetterBar({ availableLetters, className }: LetterBarProps) {
                   aria-disabled={!isAvailable || undefined}
                   onClick={isAvailable ? handleLetterClick : undefined}
                   className={cn(
-                    "flex h-9 min-w-9 items-center justify-center border-l-2 px-2 font-mono text-xs tracking-[0.18em] transition-colors duration-200 select-none",
+                    "relative flex h-9 min-w-9 items-center justify-center px-2 font-mono text-xs tracking-[0.18em] transition-colors duration-200 select-none",
+                    "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:transition-colors after:duration-200",
                     "focus-visible:outline-tech-main focus-visible:outline-2 focus-visible:outline-offset-2",
                     isActive &&
-                      "border-tech-main bg-tech-main/10 text-tech-main-dark font-bold",
+                      "after:bg-tech-main bg-tech-main/10 text-tech-main-dark font-bold",
                     !isActive &&
                       isAvailable &&
-                      "text-tech-main hover:bg-tech-main/5 cursor-pointer border-transparent",
+                      "text-tech-main after:bg-transparent hover:bg-tech-main/5 cursor-pointer",
                     !isAvailable &&
-                      "text-tech-main cursor-default border-transparent opacity-30"
+                      "text-tech-main after:bg-transparent cursor-default opacity-30"
                   )}>
                   {letter}
                 </button>
