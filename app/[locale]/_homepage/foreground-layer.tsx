@@ -65,11 +65,11 @@ export function ForegroundLayer({
           href="/articles"
           prefetch
           onClick={handleArticlesClick}
-          className="w-full sm:w-auto">
+          className="w-full sm:w-96">
           <TechButton
             variant="primary"
             disabled={isAccessingDatabase}
-            className="flex h-12 w-full items-center justify-center text-xs tracking-widest uppercase shadow-md transition-transform duration-300 hover:scale-102 active:scale-95 disabled:cursor-wait disabled:opacity-90 sm:w-auto sm:text-sm">
+            className="flex h-12 w-full items-center justify-center text-xs tracking-widest uppercase shadow-md transition-transform duration-300 hover:scale-102 active:scale-95 disabled:cursor-wait disabled:opacity-90 sm:text-sm">
             {isAccessingDatabase ? (
               <>
                 <span className="bg-surface inline-block size-2 animate-pulse motion-reduce:animate-none" />
@@ -80,10 +80,10 @@ export function ForegroundLayer({
             )}
           </TechButton>
         </Link>
-        <Link href="/login" className="w-full sm:w-auto">
+        <Link href="/login" className="w-full sm:w-96">
           <TechButton
             variant="secondary"
-            className="flex h-12 w-full items-center justify-center text-xs font-medium tracking-widest uppercase shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-102 sm:w-auto sm:text-sm">
+            className="flex h-12 w-full items-center justify-center text-xs font-medium tracking-widest uppercase shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-102 sm:text-sm">
             {"//"} {t("loginGithub")} <GithubIcon className="size-4" />
           </TechButton>
         </Link>
