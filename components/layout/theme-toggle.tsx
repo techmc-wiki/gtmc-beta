@@ -10,17 +10,21 @@ type Mode = "light" | "dark" | "system"
 
 const CYCLE_ORDER: readonly Mode[] = ["system", "light", "dark"] as const
 
-const TOGGLE_LABEL_KEY: Record<Mode, "toggleLight" | "toggleDark" | "toggleSystem"> = {
+const TOGGLE_LABEL_KEY: Record<
+  Mode,
+  "toggleLight" | "toggleDark" | "toggleSystem"
+> = {
   light: "toggleLight",
   dark: "toggleDark",
   system: "toggleSystem",
 }
 
-const MENU_LABEL_KEY: Record<Mode, "labelLight" | "labelDark" | "labelSystem"> = {
-  light: "labelLight",
-  dark: "labelDark",
-  system: "labelSystem",
-}
+const MENU_LABEL_KEY: Record<Mode, "labelLight" | "labelDark" | "labelSystem"> =
+  {
+    light: "labelLight",
+    dark: "labelDark",
+    system: "labelSystem",
+  }
 
 const MENU_CLOSE_DELAY_MS = 180
 const LONG_PRESS_MS = 500
