@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useCallback } from "react"
 import type { RebaseState } from "@/lib/review/rebase-types"
 
 import { resolveConflictAction } from "@/actions/review-conflict"
@@ -110,7 +110,7 @@ export default function ConflictResolver({
     updateActiveFileContent(newContent)
   }
 
-  async function handleAbort() {
+  const handleAbort = useCallback(async () => {
     if (!revisionId) return
     if (
       !confirm(
@@ -135,9 +135,9 @@ export default function ConflictResolver({
       )
       setIsAborting(false)
     }
-  }
+  }, [revisionId])
 
-  async function handleResolve(formData: FormData) {
+  const handleResolve = useCallback(async (formData: FormData) => {
     setIsSubmitting(true)
     try {
       await resolveConflictAction(prNumber, formData)
@@ -155,7 +155,28 @@ export default function ConflictResolver({
     } finally {
       setIsSubmitting(false)
     }
-  }
+  }, [prNumber])
+
+  const handleContentChange = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement>) =>
+      updateActiveFileContent(event.target.value),
+    []
+  )
+
+  const handleSelectFile = useCallback((fileId: string) => {
+    setDraftCollection((current) => ({
+      ...current,
+      activeFileId: fileId,
+    }))
+  }, [])
+
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      void handleResolve(new FormData(e.currentTarget))
+    },
+    [handleResolve]
+  )
 
   return (
     <div className="space-y-4">
@@ -211,17 +232,13 @@ export default function ConflictResolver({
                 const fileLabel =
                   file.filePath.split("/").filter(Boolean).at(-1) ||
                   `UNTITLED_FILE_${index + 1}`
+                const selectFile = () => handleSelectFile(file.id)
 
                 return (
                   <button
                     key={file.id}
                     type="button"
-                    onClick={() =>
-                      setDraftCollection((current) => ({
-                        ...current,
-                        activeFileId: file.id,
-                      }))
-                    }
+                    onClick={selectFile}
                     className={`flex min-h-11 w-full flex-col items-start gap-1 border px-3 py-2 text-left transition-colors ${
                       isActive
                         ? `border-tech-main bg-tech-main/10`
@@ -251,7 +268,8 @@ export default function ConflictResolver({
           </div>
 
           <div className="border-tech-main/30 bg-tech-main/5 mb-8 space-y-2 border p-2">
-            {blocks.map((block) => (
+            {blocks.map((block) => {
+              return (
               <div key={block.id}>
                 {block.type === "ok" ? (
                   <pre className="text-tech-main-dark p-4 font-mono text-sm whitespace-pre-wrap opacity-70">
@@ -307,14 +325,12 @@ export default function ConflictResolver({
                   </div>
                 )}
               </div>
-            ))}
+              )
+            })}
           </div>
 
           <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              void handleResolve(new FormData(e.currentTarget))
-            }}
+            onSubmit={handleFormSubmit}
             className="space-y-4">
             <input
               type="hidden"
@@ -331,10 +347,9 @@ export default function ConflictResolver({
                 <textarea
                   name="content"
                   value={content}
-                  onChange={(event) =>
-                    updateActiveFileContent(event.target.value)
-                  }
+                  onChange={handleContentChange}
                   className="text-tech-main-dark min-h-[300px] w-full resize-y bg-transparent p-4 font-mono text-sm outline-none"
+                  aria-label="Raw editor fallback"
                 />
               </div>
             </div>

@@ -41,6 +41,26 @@ export default async function ProfilePage() {
     account?.access_token || ""
   )
 
+  const emailLabel = (
+    <span className="flex items-center gap-2">
+      {t("emailLabel")}{" "}
+      <span className="border-tech-main/30 bg-tech-main/5 text-tech-main/60 border px-1 text-[0.5rem] sm:text-[0.5625rem]">
+        {t("readOnlyBadge")}
+      </span>
+      {emailVisibility === "private" && (
+        <span className="border border-amber-400/60 bg-amber-50 px-1 text-[0.5rem] text-amber-600 sm:text-[0.5625rem]">
+          {t("privateBadge")}
+        </span>
+      )}
+    </span>
+  )
+
+  const roleValue = (
+    <span className="text-tech-main-dark font-mono text-xs font-bold tracking-widest uppercase sm:text-sm">
+      [{user.role}]
+    </span>
+  )
+
   return (
     <div className="page-container animate-fade-in mt-4 sm:mt-8">
       <div className="border-tech-main/40 flex flex-col items-start justify-between border-b-2 pb-4 md:flex-row md:items-end">
@@ -128,19 +148,7 @@ export default async function ProfilePage() {
               />
             </FormField>
             <FormField
-              label={
-                <span className="flex items-center gap-2">
-                  {t("emailLabel")}{" "}
-                  <span className="border-tech-main/30 bg-tech-main/5 text-tech-main/60 border px-1 text-[0.5rem] sm:text-[0.5625rem]">
-                    {t("readOnlyBadge")}
-                  </span>
-                  {emailVisibility === "private" && (
-                    <span className="border border-amber-400/60 bg-amber-50 px-1 text-[0.5rem] text-amber-600 sm:text-[0.5625rem]">
-                      {t("privateBadge")}
-                    </span>
-                  )}
-                </span>
-              }>
+              label={emailLabel}>
               <InputBox
                 defaultValue={user.email || ""}
                 disabled
@@ -158,11 +166,7 @@ export default async function ProfilePage() {
             <div className="bg-tech-main/20 absolute top-0 right-0 size-2" />
             <MetadataRow
               label={t("assignedRole")}
-              value={
-                <span className="text-tech-main-dark font-mono text-xs font-bold tracking-widest uppercase sm:text-sm">
-                  [{user.role}]
-                </span>
-              }
+              value={roleValue}
             />
           </div>
 

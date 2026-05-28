@@ -1,7 +1,7 @@
 "use client"
 
 import { getReauthLoginUrl, isReauthRequiredError } from "@/lib/admin-reauth"
-import React, { ReactNode, useEffect, useRef, useState } from "react"
+import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react"
 
 type ActionFeedbackState = "idle" | "running" | "success" | "error"
 
@@ -33,7 +33,7 @@ export function ActionForm({
     }
   }, [])
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (isPending) return
 
@@ -67,7 +67,7 @@ export function ActionForm({
     } finally {
       setIsPending(false)
     }
-  }
+  }, [action, isPending])
 
   return (
     <>
