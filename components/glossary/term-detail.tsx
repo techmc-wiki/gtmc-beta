@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { SessionProvider, useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { PageHeader } from "@/components/ui/page-header"
@@ -46,7 +46,7 @@ function EditTermCta({ locale, slug }: { locale: string; slug: string }) {
   )
 }
 
-function TermDetailContent({ entry, locale, slug }: TermDetailProps) {
+export function TermDetail({ entry, locale, slug }: TermDetailProps) {
   const t = useTranslations("Glossary")
   const parsedRelated = React.useMemo(
     () => parseRelated(entry.related),
@@ -117,13 +117,5 @@ function TermDetailContent({ entry, locale, slug }: TermDetailProps) {
 
       <EditTermCta locale={locale} slug={slug} />
     </div>
-  )
-}
-
-export function TermDetail(props: TermDetailProps) {
-  return (
-    <SessionProvider>
-      <TermDetailContent {...props} />
-    </SessionProvider>
   )
 }
