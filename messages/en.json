@@ -55,6 +55,7 @@
     "detailBackToIndex": "← BACK TO INDEX",
     "detailPanelClose": "Close term detail",
     "detailEditCta": "EDIT TERM",
+    "proposeEditsCta": "+ PROPOSE EDITS",
     "detailRegexLabel": "REGEX PATTERN:",
     "detailRelatedLabel": "RELATED TERMS:",
     "detailTranslationsLabel": "TRANSLATIONS:",

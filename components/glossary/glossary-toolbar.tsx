@@ -16,6 +16,7 @@ import {
 import { GlossaryTable } from "@/components/glossary/glossary-table"
 import { GlossaryDetailPanel } from "@/components/glossary/glossary-detail-panel"
 import { CornerBrackets } from "@/components/ui/corner-brackets"
+import { Link } from "@/i18n/navigation"
 import { LOCALE_TO_COLUMN } from "@/lib/glossary/locales"
 import type { GlossaryEntry } from "@/lib/glossary/manifest"
 import { cn } from "@/lib/cn"
@@ -154,6 +155,12 @@ export function GlossaryToolbar({
                 defaultColumns={localeDefaults}
               />
               <DensityToggle value={density} onChange={setDensity} />
+              <Link
+                href="/glossary/edit/new"
+                locale={locale as "en" | "zh"}
+                className="border-tech-main/40 hover:bg-tech-main/10 hidden items-center border px-3 font-mono text-xs tracking-widest whitespace-nowrap uppercase transition-colors sm:flex">
+                {t("proposeEditsCta")}
+              </Link>
             </div>
           </div>
 
