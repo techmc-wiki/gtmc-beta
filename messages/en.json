@@ -35,6 +35,7 @@
     "categoryScrollLeft": "Scroll categories left",
     "categoryScrollRight": "Scroll categories right",
     "columnPickerLabel": "COLUMN VISIBILITY",
+    "columnPickerToggle": "FIELDS",
     "densityCompact": "COMPACT",
     "densityCycleLabel": "Row density: {density}. Switch to {nextDensity}.",
     "densityIconLabel": "Set row density to {density}",

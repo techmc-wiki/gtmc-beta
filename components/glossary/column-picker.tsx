@@ -155,7 +155,7 @@ export function ColumnPicker({
         aria-label={t("columnPickerLabel")}
         onClick={toggleOpen}
         className="border-tech-main/40 text-tech-main hover:bg-tech-main/10 focus-visible:outline-tech-main inline-flex min-h-9 w-full cursor-pointer items-center justify-center border bg-white/70 px-3 py-1.5 font-mono text-xs font-bold tracking-widest uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-auto">
-        [§ COLUMNS]
+        [§ {t("columnPickerToggle")}]
       </button>
 
       {mounted && open ? (
