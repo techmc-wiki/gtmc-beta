@@ -42,8 +42,9 @@ function readInitialResolvedTheme(): ResolvedTheme {
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(readInitialTheme)
-  const [resolvedTheme, setResolvedTheme] =
-    useState<ResolvedTheme>(readInitialResolvedTheme)
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(
+    readInitialResolvedTheme
+  )
   const hasExplicitChoice = useRef(false)
   const [, startTransition] = useTransition()
 
