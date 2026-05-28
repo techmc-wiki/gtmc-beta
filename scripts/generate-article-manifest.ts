@@ -240,10 +240,10 @@ async function processTranslationFile(
     allowTitlelessFolder: isReadmeLocaleFile(path.basename(translatesPath)),
   })
   const sourceSlug = sourceFm.slug
-  const resolvedSourceSlug = resolveSourceSlug(
-    getParentSlugFromRelPath(translatesRelPath),
-    sourceSlug
-  )
+  const sourceParentSlug = getParentSlugFromRelPath(translatesRelPath)
+  const resolvedSourceSlug = isReadmeLocaleFile(path.basename(translatesPath))
+    ? sourceParentSlug
+    : resolveSourceSlug(sourceParentSlug, sourceSlug)
 
   const entry = manifest[resolvedSourceSlug]
   if (!entry) {
