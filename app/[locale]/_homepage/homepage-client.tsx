@@ -113,7 +113,7 @@ export function HomepageClient() {
             href="/articles"
             prefetch
             onClick={handleArticlesClick}
-            className="w-full sm:w-96">
+            className="w-full sm:w-72">
             <TechButton
               variant="primary"
               disabled={isAccessingDatabase}
@@ -128,7 +128,7 @@ export function HomepageClient() {
               )}
             </TechButton>
           </Link>
-          <Link href="/login" className="w-full sm:w-96">
+          <Link href="/login" className="w-full sm:w-72">
             <TechButton
               variant="secondary"
               className="flex h-12 w-full items-center justify-center text-xs font-medium tracking-widest uppercase shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-102 sm:text-sm">
