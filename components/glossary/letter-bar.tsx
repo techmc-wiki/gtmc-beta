@@ -173,9 +173,9 @@ export function LetterBar({ availableLetters, className }: LetterBarProps) {
                       "after:bg-tech-main bg-tech-main/10 text-tech-main-dark font-bold",
                     !isActive &&
                       isAvailable &&
-                      "text-tech-main after:bg-transparent hover:bg-tech-main/5 cursor-pointer",
+                      "text-tech-main hover:bg-tech-main/5 cursor-pointer after:bg-transparent",
                     !isAvailable &&
-                      "text-tech-main after:bg-transparent cursor-default opacity-30"
+                      "text-tech-main cursor-default opacity-30 after:bg-transparent"
                   )}>
                   {letter}
                 </button>
@@ -186,14 +186,14 @@ export function LetterBar({ availableLetters, className }: LetterBarProps) {
         <div
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute top-0 right-0 bottom-0 w-10 bg-gradient-to-l from-surface-overlay/90 via-surface-overlay/60 to-transparent transition-opacity duration-200",
+            "from-surface-overlay/90 via-surface-overlay/60 pointer-events-none absolute top-0 right-0 bottom-0 w-10 bg-gradient-to-l to-transparent transition-opacity duration-200",
             canScrollRight ? "opacity-100" : "opacity-0"
           )}
         />
         <div
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute top-0 bottom-0 left-0 w-8 bg-gradient-to-r from-surface-overlay/80 to-transparent transition-opacity duration-200",
+            "from-surface-overlay/80 pointer-events-none absolute top-0 bottom-0 left-0 w-8 bg-gradient-to-r to-transparent transition-opacity duration-200",
             canScrollLeft ? "opacity-100" : "opacity-0"
           )}
         />
