@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/cn"
 
@@ -33,6 +34,10 @@ const ROW_ACTIVE = "border-tech-main/60 bg-tech-main/10 text-tech-main-dark"
 
 const ROW_INACTIVE =
   "border-tech-main/30 bg-surface-overlay/50 text-tech-main/80 hover:border-tech-main/60 hover:bg-tech-accent/10"
+
+const PANEL_COLLAPSED = { gridTemplateRows: "0fr", opacity: 0 }
+const PANEL_EXPANDED = { gridTemplateRows: "1fr", opacity: 1 }
+const PANEL_EASE = [0.32, 0.72, 0, 1] as const
 
 interface RowProps {
   label: string
@@ -111,6 +116,11 @@ export function CategoryFilter({
   const allLabel = t("categoryAll")
   const reactId = React.useId()
   const panelId = `${reactId}-panel`
+  const reduceMotion = useReducedMotion()
+  const panelTransition = React.useMemo(
+    () => ({ duration: reduceMotion ? 0 : 0.18, ease: PANEL_EASE }),
+    [reduceMotion]
+  )
 
   const [isOpen, setIsOpen] = React.useState(false)
   const noneSelected = selected.length === 0
@@ -163,32 +173,43 @@ export function CategoryFilter({
         <Chevron open={isOpen} />
       </button>
 
-      {isOpen ? (
-        <div
-          id={panelId}
-          className="border-tech-main/30 bg-surface-overlay/60 flex flex-col gap-2 border p-2 backdrop-blur-sm sm:p-3">
-          <Row
-            label={allLabel}
-            count={totalCount}
-            active={noneSelected}
-            onClick={handleSelectAll}
-          />
-          {categories.length > 0 ? (
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {categories.map((category) => (
+      <AnimatePresence initial={false}>
+        {isOpen ? (
+          <motion.div
+            key="panel"
+            id={panelId}
+            initial={PANEL_COLLAPSED}
+            animate={PANEL_EXPANDED}
+            exit={PANEL_COLLAPSED}
+            transition={panelTransition}
+            className="grid">
+            <div className="overflow-hidden">
+              <div className="border-tech-main/30 bg-surface-overlay/60 flex flex-col gap-2 border p-2 backdrop-blur-sm sm:p-3">
                 <Row
-                  key={category.name}
-                  label={category.name}
-                  name={category.name}
-                  count={category.count}
-                  active={selected.includes(category.name)}
-                  onToggle={handleToggle}
+                  label={allLabel}
+                  count={totalCount}
+                  active={noneSelected}
+                  onClick={handleSelectAll}
                 />
-              ))}
+                {categories.length > 0 ? (
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {categories.map((category) => (
+                      <Row
+                        key={category.name}
+                        label={category.name}
+                        name={category.name}
+                        count={category.count}
+                        active={selected.includes(category.name)}
+                        onToggle={handleToggle}
+                      />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             </div>
-          ) : null}
-        </div>
-      ) : null}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   )
 }
