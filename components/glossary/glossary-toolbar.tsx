@@ -158,7 +158,7 @@ export function GlossaryToolbar({
               <Link
                 href="/glossary/edit/new"
                 locale={locale as "en" | "zh"}
-                className="border-tech-main/40 hover:bg-tech-main/10 hidden items-center border px-3 font-mono text-xs tracking-widest whitespace-nowrap uppercase transition-colors sm:flex">
+                className="bg-tech-main hover:bg-tech-main-dark hidden items-center border border-transparent px-3 font-mono text-xs tracking-widest whitespace-nowrap text-white uppercase transition-colors sm:flex">
                 {t("proposeEditsCta")}
               </Link>
             </div>
