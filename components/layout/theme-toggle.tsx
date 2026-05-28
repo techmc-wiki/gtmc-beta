@@ -36,13 +36,6 @@ function readModeFromCookie(): Mode {
   return "system"
 }
 
-function getSystemTheme(): "light" | "dark" {
-  if (typeof window === "undefined") return "light"
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light"
-}
-
 function clearThemeCookie() {
   if (typeof document === "undefined") return
   document.cookie = `${THEME_COOKIE}=; path=/; max-age=0; SameSite=Lax`
@@ -201,18 +194,15 @@ export function ThemeToggle({ className }: { className?: string }) {
     (next: Mode) => {
       setMode(next)
       if (next === "system") {
-        // No-op the hook's cookie write by clearing afterwards. The provider
-        // can't be instructed to re-follow system pref in this session, but
-        // the cookie state persists for next reload (when no-flash script
-        // falls back to prefers-color-scheme).
-        const systemTheme = getSystemTheme()
-        setTheme(systemTheme)
+        // Use the provider's resolvedTheme (which already tracks system pref)
+        // then clear the cookie so next reload falls back to prefers-color-scheme.
+        setTheme(resolvedTheme)
         clearThemeCookie()
       } else {
         setTheme(next)
       }
     },
-    [setTheme]
+    [setTheme, resolvedTheme]
   )
 
   const onClickToggle = React.useCallback(() => {
