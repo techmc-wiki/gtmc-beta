@@ -15,12 +15,10 @@ import { hasLocale } from "next-intl"
 import { getMessages, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
-import { noFlashScript } from "@/lib/theme/no-flash-script"
+
 import React from "react"
 
 const siteUrl = getSiteUrl()
-
-const noFlashHtml = { __html: noFlashScript }
 
 const jsonLd = {
   __html: JSON.stringify([
@@ -117,7 +115,7 @@ export default async function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
-        <script dangerouslySetInnerHTML={noFlashHtml} />
+        <script src="/theme-init.js" />
         <meta
           name="theme-color"
           media="(prefers-color-scheme: light)"

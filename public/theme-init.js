@@ -1,10 +1,3 @@
-/**
- * Inline <head> script that prevents flash of wrong theme (FOWT).
- *
- * Reads the `theme` cookie and resolves the theme before React hydrates.
- * Must be synchronous — no async, defer, or type="module".
- */
-export const noFlashScript = `
 (function() {
   try {
     var cookies = document.cookie.split(';');
@@ -25,4 +18,3 @@ export const noFlashScript = `
     document.documentElement.setAttribute('data-theme', resolved);
   } catch (e) {}
 })();
-`
