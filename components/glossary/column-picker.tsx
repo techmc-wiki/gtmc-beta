@@ -220,7 +220,7 @@ function coreLabel(
     case "Related":
       return t("columnRelated")
     case "Category":
-      return "CATEGORY"
+      return t("columnCategory")
   }
 }
 
