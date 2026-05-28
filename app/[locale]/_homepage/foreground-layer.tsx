@@ -1,3 +1,4 @@
+import { GithubIcon } from "@/components/markdown/people-mention"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { TechButton } from "@/components/ui/tech-button"
@@ -83,7 +84,7 @@ export function ForegroundLayer({
           <TechButton
             variant="secondary"
             className="flex h-12 w-full items-center justify-center text-xs font-medium tracking-widest uppercase shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-102 sm:w-auto sm:text-sm">
-            {"//"} {t("loginGithub")}
+            {"//"} {t("loginGithub")} <GithubIcon className="size-4" />
           </TechButton>
         </Link>
       </div>
