@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type MouseEvent } from "react"
 import { CornerBrackets } from "@/components/ui/corner-brackets"
+import { useTheme } from "@/lib/theme"
 
 // Interfaces for schematic-renderer library
 interface SchematicManager {
@@ -65,6 +66,7 @@ interface LitematicaRenderer {
   targetFPS?: number
   idleFPS?: number
   enableAdaptiveFPS?: boolean
+  setBackgroundColor?: (color: string | number) => void
 }
 
 export interface LitematicaViewerProps {
@@ -137,6 +139,11 @@ export default function LitematicaViewer({
   const schematicIdRef = useRef<string | null>(null)
   const loadTokenRef = useRef(0)
   const lastPointerUnlockAtRef = useRef(Number.NEGATIVE_INFINITY)
+
+  const { resolvedTheme } = useTheme()
+  const backgroundColor = resolvedTheme === "dark" ? 0x0e1525 : 0xf8f9fc
+  const backgroundColorRef = useRef(backgroundColor)
+  backgroundColorRef.current = backgroundColor
 
   const [maxLayer, setMaxLayer] = useState(0)
   const [sliderLayer, setSliderLayer] = useState(0)
@@ -322,7 +329,7 @@ export default function LitematicaViewer({
           },
           {
             showGrid: true,
-            backgroundColor: 0xf8f9fc,
+            backgroundColor: backgroundColorRef.current,
             enableInteraction: false,
             enableDragAndDrop: false,
             enableGizmos: false,
@@ -507,6 +514,17 @@ export default function LitematicaViewer({
       rendererRef.current = null
     }
   }, [url])
+
+  useEffect(() => {
+    const renderer = rendererRef.current
+    if (!renderer) return
+    try {
+      renderer.setBackgroundColor?.(backgroundColor)
+      renderer.renderManager?.render?.()
+    } catch {
+      // setBackgroundColor is best-effort; failures are non-critical.
+    }
+  }, [backgroundColor])
 
   useEffect(() => {
     if (!schematicReady || !rendererRef.current) {
