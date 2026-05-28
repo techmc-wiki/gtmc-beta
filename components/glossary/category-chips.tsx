@@ -231,6 +231,7 @@ export function CategoryChips({
           aria-expanded={isSheetOpen}
           className={cn(
             CHIP_BASE,
+            "w-full justify-center",
             selected.length > 0 ? CHIP_ACTIVE : CHIP_INACTIVE
           )}>
           {filterButtonLabel}

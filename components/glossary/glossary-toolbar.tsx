@@ -138,15 +138,15 @@ export function GlossaryToolbar({
       <section aria-label={t("letterBarLabel")} className="relative z-30">
         <CornerBrackets size="size-2" color="border-tech-main/30" />
         <div className="border-tech-main/30 relative flex flex-col gap-3 border bg-white/60 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+          <div className="grid gap-3 sm:flex sm:flex-row sm:items-stretch">
             <GlossarySearch
               onQueryChange={setQuery}
               onScopeChange={setSearchScope}
               resultCount={resultCount}
               totalCount={totalCount}
-              className="flex-1"
+              className="min-w-0 sm:flex-1"
             />
-            <div className="flex items-stretch gap-2">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-stretch gap-2 sm:flex">
               <ColumnPicker
                 locale={locale}
                 visibleColumns={visibleColumns}
