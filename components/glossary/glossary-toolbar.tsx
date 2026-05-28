@@ -139,7 +139,7 @@ export function GlossaryToolbar({
       <section aria-label={t("letterBarLabel")} className="relative z-30">
         <CornerBrackets size="size-2" color="border-tech-main/30" />
         <div className="border-tech-main/30 relative flex flex-col gap-3 border bg-white/60 p-3 backdrop-blur-sm sm:p-4">
-          <div className="grid gap-3 sm:flex sm:flex-row sm:items-stretch">
+          <div className="grid gap-3 sm:flex sm:flex-row sm:items-center">
             <GlossarySearch
               onQueryChange={setQuery}
               onScopeChange={setSearchScope}
@@ -147,7 +147,7 @@ export function GlossaryToolbar({
               totalCount={totalCount}
               className="min-w-0 sm:flex-1"
             />
-            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-stretch gap-2 sm:flex">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 sm:flex">
               <ColumnPicker
                 locale={locale}
                 visibleColumns={visibleColumns}
@@ -158,7 +158,7 @@ export function GlossaryToolbar({
               <Link
                 href="/glossary/edit/new"
                 locale={locale as "en" | "zh"}
-                className="bg-tech-main hover:bg-tech-main-dark hidden items-center border border-transparent px-3 font-mono text-xs tracking-widest whitespace-nowrap text-white uppercase transition-colors sm:flex">
+                className="bg-tech-main hover:bg-tech-main-dark hidden h-9 items-center border border-transparent px-3 font-mono text-xs tracking-widest whitespace-nowrap text-white uppercase transition-colors sm:flex">
                 {t("proposeEditsCta")}
               </Link>
             </div>
