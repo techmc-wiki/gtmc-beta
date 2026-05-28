@@ -392,26 +392,28 @@ async function processDirectory(
   }
 
   const sourceFileResults = await Promise.all(
-    sourceFileJobs.map(async ({ sourcePath, relPath, compositeSlug, parentSlug }) => {
-      try {
-        const entry = await processSourceFile(
-          sourcePath,
-          relPath,
-          compositeSlug,
-          false,
-          parentSlug,
-          repoCwd,
-          maintainers,
-          aliases
-        )
-        return { compositeSlug, entry: entry as ArticleEntry, error: false }
-      } catch (err) {
-        process.stderr.write(
-          `Error: ${err instanceof Error ? err.message : String(err)}\n`
-        )
-        return { compositeSlug, entry: null, error: true }
+    sourceFileJobs.map(
+      async ({ sourcePath, relPath, compositeSlug, parentSlug }) => {
+        try {
+          const entry = await processSourceFile(
+            sourcePath,
+            relPath,
+            compositeSlug,
+            false,
+            parentSlug,
+            repoCwd,
+            maintainers,
+            aliases
+          )
+          return { compositeSlug, entry: entry as ArticleEntry, error: false }
+        } catch (err) {
+          process.stderr.write(
+            `Error: ${err instanceof Error ? err.message : String(err)}\n`
+          )
+          return { compositeSlug, entry: null, error: true }
+        }
       }
-    })
+    )
   )
   for (const result of sourceFileResults) {
     if (result.entry) {

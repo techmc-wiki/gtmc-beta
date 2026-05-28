@@ -147,8 +147,7 @@ export default async function ProfilePage() {
                 className="border-tech-main/30 focus:border-tech-main w-full rounded-none border bg-white font-mono text-xs shadow-none transition-colors sm:text-sm"
               />
             </FormField>
-            <FormField
-              label={emailLabel}>
+            <FormField label={emailLabel}>
               <InputBox
                 defaultValue={user.email || ""}
                 disabled
@@ -164,10 +163,7 @@ export default async function ProfilePage() {
 
           <div className="border-tech-main/30 bg-tech-main/5 relative mt-6 flex flex-col items-start justify-between gap-3 border p-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4 sm:p-4">
             <div className="bg-tech-main/20 absolute top-0 right-0 size-2" />
-            <MetadataRow
-              label={t("assignedRole")}
-              value={roleValue}
-            />
+            <MetadataRow label={t("assignedRole")} value={roleValue} />
           </div>
 
           <div className="border-tech-main/30 flex justify-start border-b border-dashed pt-4 pb-2">

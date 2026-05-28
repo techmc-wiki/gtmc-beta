@@ -102,9 +102,7 @@ export default async function EditDraftPage({
           <div className="bg-tech-main/10 absolute inset-x-0 top-0 h-[2px] animate-[tree-drop-in_10s_ease-in-out_infinite] shadow-[0_0_10px_rgb(var(--color-tech-main)/0.2)]" />
         </div>
 
-        <DraftEditor
-          initialData={draftEditorInitialData}
-        />
+        <DraftEditor initialData={draftEditorInitialData} />
       </div>
     </div>
   )

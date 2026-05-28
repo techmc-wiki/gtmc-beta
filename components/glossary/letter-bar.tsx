@@ -78,7 +78,9 @@ export function LetterBar({ availableLetters, className }: LetterBarProps) {
         // The section closest to the top trigger band is the active one.
         const visible = entries
           .filter((entry) => entry.isIntersecting)
-          .toSorted((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+          .toSorted(
+            (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+          )
         const topEntry = visible[0]
         if (!topEntry) return
         const id = topEntry.target.id

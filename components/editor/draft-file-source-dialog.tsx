@@ -501,7 +501,14 @@ function TreeNode({
     if (!node.isFolder && isSelectableFile) {
       onSelectFile(node.path)
     }
-  }, [node.isFolder, node.path, isSelectableFolder, isSelectableFile, onSelectFolder, onSelectFile])
+  }, [
+    node.isFolder,
+    node.path,
+    isSelectableFolder,
+    isSelectableFile,
+    onSelectFolder,
+    onSelectFile,
+  ])
 
   return (
     <div className="space-y-0.5">

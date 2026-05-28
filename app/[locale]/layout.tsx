@@ -125,10 +125,7 @@ export default async function RootLayout({
             </FooterWrapper>
           </FooterProvider>
         </NextIntlClientProvider>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={jsonLd}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd} />
       </body>
     </html>
   )

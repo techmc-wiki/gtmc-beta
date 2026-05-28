@@ -117,7 +117,6 @@ function testAssert(condition: boolean, label: string): void {
 }
 
 function runTests(): void {
-
   // --- classifyImagePath ---
   console.log("\nclassifyImagePath:")
 
@@ -198,7 +197,10 @@ function runTests(): void {
     "data:image/png;base64,abc123",
     "/project/articles/any/article.md"
   )
-  testAssert(r5 === "data:image/png;base64,abc123", `data URI passthrough → ${r5}`)
+  testAssert(
+    r5 === "data:image/png;base64,abc123",
+    `data URI passthrough → ${r5}`
+  )
 
   // Empty src
   const r6 = resolveImagePath("", "/project/articles/any/article.md")
@@ -249,7 +251,10 @@ function runTests(): void {
     "data:image/png;base64,abc123",
     "/project/articles/any/article.md"
   )
-  testAssert(u3 === "data:image/png;base64,abc123", `data URI passthrough → ${u3}`)
+  testAssert(
+    u3 === "data:image/png;base64,abc123",
+    `data URI passthrough → ${u3}`
+  )
 
   const u4 = resolveImageUrl(
     "./img/4gt%20birch%20layout1.png",

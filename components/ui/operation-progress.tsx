@@ -285,7 +285,7 @@ export function OperationProgress({
       </div>
 
       <progress
-        className="guide-line bg-tech-main/5 relative mt-3 block h-2 w-full overflow-hidden border appearance-none [&::-webkit-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-transparent [&::-moz-progress-bar]:bg-transparent"
+        className="guide-line bg-tech-main/5 relative mt-3 block h-2 w-full appearance-none overflow-hidden border [&::-moz-progress-bar]:bg-transparent [&::-webkit-progress-bar]:bg-transparent [&::-webkit-progress-value]:bg-transparent"
         aria-label={title}
         max={100}
         value={percent}>

@@ -246,8 +246,6 @@ export function SearchCommand() {
     [query]
   )
 
-
-
   // Platform-aware shortcut label
   const shortcutLabel = useMemo(() => {
     if (typeof navigator === "undefined") return "Ctrl+K"

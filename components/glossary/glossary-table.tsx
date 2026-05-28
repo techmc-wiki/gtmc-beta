@@ -83,7 +83,9 @@ export function GlossaryTable({
 
     return categoryFiltered
       .filter((e) => hitOrder.has(e.slug))
-      .toSorted((a, b) => (hitOrder.get(a.slug) ?? 0) - (hitOrder.get(b.slug) ?? 0))
+      .toSorted(
+        (a, b) => (hitOrder.get(a.slug) ?? 0) - (hitOrder.get(b.slug) ?? 0)
+      )
   }, [categoryFiltered, trimmedQuery, searchScope, indexLocale])
 
   const grouped = React.useMemo(() => {

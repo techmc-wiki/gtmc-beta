@@ -12,10 +12,7 @@ import {
 } from "@/components/ui/loading-shell-primitives"
 import { CornerBrackets } from "@/components/ui/corner-brackets"
 
-const ALPHABET_NAV_KEYS = Array.from(
-  { length: 14 },
-  (_, i) => `alpha-nav-${i}`
-)
+const ALPHABET_NAV_KEYS = Array.from({ length: 14 }, (_, i) => `alpha-nav-${i}`)
 
 export default function GlossaryLoading() {
   const t = useTranslations("Glossary")

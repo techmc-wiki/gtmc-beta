@@ -106,10 +106,7 @@ function findDanglingRefsFor(
         .map((token) => token.trim().toLowerCase())
         .filter(Boolean)
     )
-    if (
-      tokens.has(slug) ||
-      (fullFormLower && tokens.has(fullFormLower))
-    ) {
+    if (tokens.has(slug) || (fullFormLower && tokens.has(fullFormLower))) {
       found.push({ slug: entry.slug, fullFormEn: entry.fullFormEn })
     }
   }

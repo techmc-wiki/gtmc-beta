@@ -18,9 +18,7 @@ const AuthorNameTag = (chunks: React.ReactNode) => (
 )
 
 const AuthorEmailTag = (chunks: React.ReactNode) => (
-  <span className="text-tech-main/70 font-mono text-xs">
-    &lt;{chunks}&gt;
-  </span>
+  <span className="text-tech-main/70 font-mono text-xs">&lt;{chunks}&gt;</span>
 )
 
 export function AttributionWarning({

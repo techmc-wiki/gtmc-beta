@@ -182,9 +182,7 @@ function PRActionButtonsContent({
           )}
         </ActionForm>
 
-        <ActionForm
-          action={handleMerge}
-          className="flex-1">
+        <ActionForm action={handleMerge} className="flex-1">
           {({ isPending, state }) => (
             <div className="space-y-3">
               <TechButton

@@ -244,7 +244,9 @@ function walkMarkdownFiles(
   assertInsideRepo(repoRoot, directory)
   const entries = fs
     .readdirSync(directory, { withFileTypes: true })
-    .toSorted((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
+    .toSorted((a, b) =>
+      a.name.localeCompare(b.name, undefined, { numeric: true })
+    )
   const isRoot = directory === repoRoot
   const files: MarkdownFile[] = []
 
