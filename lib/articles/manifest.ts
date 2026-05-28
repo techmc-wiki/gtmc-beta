@@ -411,7 +411,11 @@ function buildTreeNode(
     return null
   }
 
-  if (entry.isFolder && children.length === 0) {
+  if (
+    entry.isFolder &&
+    children.length === 0 &&
+    !entry.availableLocales.includes(locale)
+  ) {
     return null
   }
 

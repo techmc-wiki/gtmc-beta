@@ -334,7 +334,7 @@ async function processDirectory(
         const entry = await processSourceFile(
           readmePath,
           `${relFromArticles}/${readmeSource.name}`,
-          readmeSlug,
+          slugPrefix,
           true,
           parentSlug,
           repoCwd,
