@@ -137,6 +137,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   const t = useTranslations("Theme")
   const { resolvedTheme, setTheme } = useTheme()
   const [mode, setMode] = React.useState<Mode>("system")
+  const [isMounted, setIsMounted] = React.useState(false)
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
   const closeTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -147,6 +148,7 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   React.useEffect(() => {
     setMode(readModeFromCookie())
+    setIsMounted(true)
   }, [])
 
   const clearCloseTimer = React.useCallback(() => {
@@ -246,7 +248,11 @@ export function ThemeToggle({ className }: { className?: string }) {
   )
 
   const displayedMode: Mode = mode === "system" ? "system" : mode
-  const displayedIcon: Mode = mode === "system" ? resolvedTheme : mode
+  const displayedIcon: Mode = isMounted
+    ? mode === "system"
+      ? resolvedTheme
+      : mode
+    : "system"
   const toggleAriaLabel = t(TOGGLE_LABEL_KEY[displayedMode])
 
   return (
