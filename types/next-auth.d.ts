@@ -1,4 +1,5 @@
 import type { DefaultSession, DefaultUser } from "next-auth"
+// eslint-disable-next-line import/no-unassigned-import
 import "next-auth/jwt"
 
 declare module "next-auth" {

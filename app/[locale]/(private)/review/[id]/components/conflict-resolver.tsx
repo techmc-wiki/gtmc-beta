@@ -234,6 +234,7 @@ export default function ConflictResolver({
               {draftCollection.files.map((file, index) => {
                 const isActive = file.id === draftCollection.activeFileId
                 const fileLabel =
+                  // eslint-disable-next-line unicorn/prefer-array-find -- .at(-1) semantics differ from .find()
                   file.filePath.split("/").filter(Boolean).at(-1) ||
                   `UNTITLED_FILE_${index + 1}`
                 const selectFile = () => handleSelectFile(file.id)

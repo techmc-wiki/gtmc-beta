@@ -55,6 +55,7 @@ export function ActionForm({
         resetTimerRef.current = window.setTimeout(() => {
           setState("idle")
         }, 1400)
+      // eslint-disable-next-line no-shadow, unicorn/catch-error-name -- catch param must match outer state name
       } catch (error) {
         if (isReauthRequiredError(error)) {
           window.location.href = getReauthLoginUrl(

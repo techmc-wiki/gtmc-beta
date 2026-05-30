@@ -42,6 +42,7 @@ export function NewGlossaryDraftStarter({
         }
         clearPendingDraftCreation = null
       }, 5000)
+    // eslint-disable-next-line no-shadow, unicorn/catch-error-name -- catch param must match outer state name
     } catch (error) {
       inFlightRef.current = false
       pendingDraftCreation = null

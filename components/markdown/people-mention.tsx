@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, useId } from "react"
+import { useState, useEffect, useRef, useId, useMemo } from "react"
 import { createPortal } from "react-dom"
 import { useTranslations } from "next-intl"
 import { resolvePerson } from "@/lib/markdown/people"
@@ -216,17 +216,21 @@ export function PeopleMention({ children, ...props }: MarkdownComponentProps) {
 
   const hasSocial = !person.isFallback && Object.keys(person.social).length > 0
 
-  const portalStyle: React.CSSProperties | undefined = triggerRect
-    ? {
-        position: "fixed",
-        top: `${triggerRect.bottom + 8}px`,
-        left: `${Math.max(
-          8,
-          Math.min(triggerRect.left, window.innerWidth - 328)
-        )}px`,
-        zIndex: 50,
-      }
-    : undefined
+  const portalStyle = useMemo(
+    (): React.CSSProperties | undefined =>
+      triggerRect
+        ? {
+            position: "fixed",
+            top: `${triggerRect.bottom + 8}px`,
+            left: `${Math.max(
+              8,
+              Math.min(triggerRect.left, window.innerWidth - 328)
+            )}px`,
+            zIndex: 50,
+          }
+        : undefined,
+    [triggerRect]
+  )
 
   const popupContent = (
     <dialog

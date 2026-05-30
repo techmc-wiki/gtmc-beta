@@ -41,24 +41,19 @@ export default async function ProfilePage() {
     account?.access_token || ""
   )
 
+  // oxlint-disable-next-line react-perf/jsx-no-jsx-as-prop -- server component, no re-renders
   const emailLabel = (
-    <span className="flex items-center gap-2">
-      {t("emailLabel")}{" "}
-      <span className="border-tech-main/30 bg-tech-main/5 text-tech-main/60 border px-1 text-[0.5rem] sm:text-[0.5625rem]">
-        {t("readOnlyBadge")}
-      </span>
-      {emailVisibility === "private" && (
-        <span className="border border-amber-400/60 bg-amber-50 px-1 text-[0.5rem] text-amber-600 sm:text-[0.5625rem]">
-          {t("privateBadge")}
-        </span>
-      )}
-    </span>
+    <EmailLabel
+      label={t("emailLabel")}
+      readOnlyBadge={t("readOnlyBadge")}
+      privateBadge={t("privateBadge")}
+      isPrivate={emailVisibility === "private"}
+    />
   )
 
+  // oxlint-disable-next-line react-perf/jsx-no-jsx-as-prop -- server component, no re-renders
   const roleValue = (
-    <span className="text-tech-main-dark font-mono text-xs font-bold tracking-widest uppercase sm:text-sm">
-      [{user.role}]
-    </span>
+    <RoleValue role={user.role} />
   )
 
   return (
@@ -187,5 +182,39 @@ export default async function ProfilePage() {
         </form>
       </div>
     </div>
+  )
+}
+
+function EmailLabel({
+  label,
+  readOnlyBadge,
+  privateBadge,
+  isPrivate,
+}: {
+  label: string
+  readOnlyBadge: string
+  privateBadge: string
+  isPrivate: boolean
+}) {
+  return (
+    <span className="flex items-center gap-2">
+      {label}{" "}
+      <span className="border-tech-main/30 bg-tech-main/5 text-tech-main/60 border px-1 text-[0.5rem] sm:text-[0.5625rem]">
+        {readOnlyBadge}
+      </span>
+      {isPrivate && (
+        <span className="border border-amber-400/60 bg-amber-50 px-1 text-[0.5rem] text-amber-600 sm:text-[0.5625rem]">
+          {privateBadge}
+        </span>
+      )}
+    </span>
+  )
+}
+
+function RoleValue({ role }: { role: string }) {
+  return (
+    <span className="text-tech-main-dark font-mono text-xs font-bold tracking-widest uppercase sm:text-sm">
+      [{role}]
+    </span>
   )
 }

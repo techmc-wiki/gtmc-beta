@@ -11,6 +11,7 @@ import {
 import type { GithubIssueResponse } from "./normalize"
 import { normalizeIssue } from "./normalize"
 
+// eslint-disable-next-line no-underscore-dangle
 async function _listAllIssuesUncached(
   state: "open" | "closed" | "all" = "open"
 ): Promise<GithubIssue[]> {
@@ -21,6 +22,7 @@ async function _listAllIssuesUncached(
   let nextUrl: string | null = `${baseUrl}?state=${state}&per_page=100&page=1`
 
   while (nextUrl) {
+    // eslint-disable-next-line no-await-in-loop -- sequential pagination: nextUrl depends on previous response
     const { data, response } = await requestGithub<GithubIssueResponse[]>(
       nextUrl,
       {
@@ -50,6 +52,7 @@ export const listIssues = listAllIssues
 
 const ISSUE_TTL = 60
 
+// eslint-disable-next-line no-underscore-dangle
 async function _getIssueUncached(
   issueNumber: number
 ): Promise<GithubIssue | null> {

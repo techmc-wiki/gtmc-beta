@@ -9,9 +9,8 @@ const buildSha: string = (() => {
     return process.env.VERCEL_GIT_COMMIT_SHA.slice(0, 7)
   }
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { execSync } =
-      require("child_process") as typeof import("child_process")
+    // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/consistent-type-imports
+    const { execSync } = require("child_process") as typeof import("child_process")
     return execSync("git rev-parse --short=7 HEAD", {
       stdio: ["ignore", "pipe", "ignore"],
     })

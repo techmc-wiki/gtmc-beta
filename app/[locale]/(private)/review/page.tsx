@@ -91,6 +91,7 @@ async function analyzePRConflictStatus(prNumber: number, token?: string) {
           (f.filename.endsWith(".md") || f.filename.endsWith(".mdx"))
         ) {
           try {
+            // eslint-disable-next-line no-await-in-loop -- sequential: early-exit on first conflict found
             const { data: contentData } = await octokit.repos.getContent({
               owner: ARTICLES_REPO_OWNER,
               repo: ARTICLES_REPO_NAME,

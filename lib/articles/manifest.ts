@@ -21,6 +21,7 @@ function getNodeBuiltin<T>(name: string): T {
 }
 
 export function getManifestPath(): string {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const path = getNodeBuiltin<typeof import("path")>("path")
   return path.join(process.cwd(), "data", MANIFEST_FILE_NAME)
 }
@@ -72,6 +73,7 @@ interface LocaleBanner {
 export function loadArticleManifest(): Record<string, ArticleEntry> {
   let raw: string
   const manifestPath = getManifestPath()
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const fs = getNodeBuiltin<typeof import("fs")>("fs")
 
   try {

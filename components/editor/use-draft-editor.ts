@@ -641,7 +641,7 @@ export function useDraftEditor(initialData?: {
   const handlePaste = (e: React.ClipboardEvent) => {
     if (isReadOnly || isUploading) return
     const items = e.clipboardData.items
-    for (const item of [...items]) {
+    for (const item of items) {
       if (item.type.indexOf("image") !== -1) {
         e.preventDefault()
         const file = item.getAsFile()
