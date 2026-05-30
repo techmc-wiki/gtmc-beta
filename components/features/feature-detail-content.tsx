@@ -128,11 +128,27 @@ export async function FeatureDetailContent({
             />
             <MetadataRow
               label="Author:"
-              value={<WordBreakSpan text={feature.author.name || feature.author.email || "Unknown"} />}
+              value={
+                <WordBreakSpan
+                  text={
+                    feature.author.name || feature.author.email || "Unknown"
+                  }
+                />
+              }
             />
             <MetadataRow
               label={`${t("detailAssignee")}:`}
-              value={<WordBreakSpan text={feature.assignee ? (feature.assignee.name || feature.assignee.email || t("unknownUser")) : t("unknownUser")} />}
+              value={
+                <WordBreakSpan
+                  text={
+                    feature.assignee
+                      ? feature.assignee.name ||
+                        feature.assignee.email ||
+                        t("unknownUser")
+                      : t("unknownUser")
+                  }
+                />
+              }
             />
             <MetadataRow
               label="Created:"
@@ -141,7 +157,12 @@ export async function FeatureDetailContent({
             {feature.issueNumber && feature.htmlUrl && (
               <MetadataRow
                 label="GitHub:"
-                value={<GithubIssueLink url={feature.htmlUrl} number={feature.issueNumber} />}
+                value={
+                  <GithubIssueLink
+                    url={feature.htmlUrl}
+                    number={feature.issueNumber}
+                  />
+                }
               />
             )}
           </div>
@@ -162,9 +183,7 @@ export async function FeatureDetailContent({
       <RevealSection delay={300}>
         <div>
           {!isClosed && canEdit ? (
-            <FeatureEditor
-              initialData={editorInitialData}
-            />
+            <FeatureEditor initialData={editorInitialData} />
           ) : (
             <FeatureReadonlyView
               title={feature.title}
@@ -184,10 +203,7 @@ export async function FeatureDetailContent({
         />
       </RevealSection>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={jsonLdHtml}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml} />
     </div>
   )
 }
@@ -202,7 +218,9 @@ function buildEditorInitialData(feature: FeatureDetailContentProps["feature"]) {
   }
 }
 
-function buildJsonLdHtml(structuredData: FeatureDetailContentProps["structuredData"]) {
+function buildJsonLdHtml(
+  structuredData: FeatureDetailContentProps["structuredData"]
+) {
   return {
     __html: JSON.stringify({
       "@context": "https://schema.org",
@@ -222,11 +240,7 @@ function WordBreakSpan({ text }: { text: string }) {
 }
 
 function DateDisplay({ date }: { date: Date }) {
-  return (
-    <span suppressHydrationWarning>
-      {new Date(date).toLocaleString()}
-    </span>
-  )
+  return <span suppressHydrationWarning>{new Date(date).toLocaleString()}</span>
 }
 
 function GithubIssueLink({ url, number }: { url: string; number: number }) {

@@ -138,11 +138,12 @@ export const CornerBrackets = React.forwardRef<
 
     const basePx = sizeToPx[size] ?? 8
     const bracketStyle = React.useMemo(
-      (): React.CSSProperties => ({
-        width: "var(--bracket-size)",
-        height: "var(--bracket-size)",
-        "--bracket-size": `${basePx}px`,
-      } as React.CSSProperties),
+      (): React.CSSProperties =>
+        ({
+          width: "var(--bracket-size)",
+          height: "var(--bracket-size)",
+          "--bracket-size": `${basePx}px`,
+        }) as React.CSSProperties,
       [basePx]
     )
 

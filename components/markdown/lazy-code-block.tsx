@@ -91,7 +91,7 @@ export function LazyCodeBlock({ lineCount, children }: LazyCodeBlockProps) {
             <div className="animate-blueprint-sweep via-tech-accent/30 pointer-events-none absolute inset-0 bg-linear-to-r from-transparent to-transparent motion-reduce:animate-none" />
             {Array.from({ length: numLines }).map((_, i) => (
               <div
-              // oxlint-disable-next-line react/no-array-index-key
+                // oxlint-disable-next-line react/no-array-index-key
                 key={String(i)}
                 className={`my-1.5 h-2 ${lineWidths[i % lineWidths.length]} `}
               />

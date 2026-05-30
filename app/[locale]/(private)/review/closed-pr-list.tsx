@@ -113,7 +113,7 @@ export function ClosedPRList({ getClosedPRsAction }: ClosedPRListProps) {
         )
         setPage(nextPage)
         setHasMore(nextPRs.length === PAGE_SIZE)
-      // eslint-disable-next-line no-shadow, unicorn/catch-error-name -- catch param must match outer state name
+        // eslint-disable-next-line no-shadow, unicorn/catch-error-name -- catch param must match outer state name
       } catch (error) {
         setError(error instanceof Error ? error.message : String(error))
       } finally {

@@ -232,7 +232,13 @@ export function FeatureEditor({ initialData }: FeatureEditorProps) {
         disabled={isReadOnly}
       />
     ),
-    [fileInputRef, handleUploadWithCheck, isUploading, isCompressing, isReadOnly]
+    [
+      fileInputRef,
+      handleUploadWithCheck,
+      isUploading,
+      isCompressing,
+      isReadOnly,
+    ]
   )
 
   return (

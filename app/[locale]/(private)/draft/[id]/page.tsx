@@ -10,12 +10,16 @@ import { readFile } from "fs/promises"
 import path from "path"
 import { ARTICLES_PATH } from "@/lib/articles/fs"
 
-function buildDraftEditorData(draft: {
-  id: string
-  title: string
-  status: string
-  githubPrUrl: string | null
-}, draftFiles: ReturnType<typeof decodeStoredDraftFiles>, contributingGuides: Awaited<ReturnType<typeof loadContributingGuides>>) {
+function buildDraftEditorData(
+  draft: {
+    id: string
+    title: string
+    status: string
+    githubPrUrl: string | null
+  },
+  draftFiles: ReturnType<typeof decodeStoredDraftFiles>,
+  contributingGuides: Awaited<ReturnType<typeof loadContributingGuides>>
+) {
   return {
     activeFileId: draftFiles.activeFileId,
     id: draft.id,

@@ -23,7 +23,9 @@ export function InlineDiff({
           if (part.added) {
             return (
               // eslint-disable-next-line react/no-array-index-key
-              <span key={index} className="rounded-xs border-b border-blue-400 bg-blue-300/80 px-0.5 font-bold text-blue-950">
+              <span
+                key={index}
+                className="rounded-xs border-b border-blue-400 bg-blue-300/80 px-0.5 font-bold text-blue-950">
                 {part.value}
               </span>
             )
@@ -39,7 +41,9 @@ export function InlineDiff({
           if (part.removed) {
             return (
               // eslint-disable-next-line react/no-array-index-key
-              <span key={index} className="rounded-xs border-b border-green-500 bg-green-400/80 px-0.5 font-bold text-green-950">
+              <span
+                key={index}
+                className="rounded-xs border-b border-green-500 bg-green-400/80 px-0.5 font-bold text-green-950">
                 {part.value}
               </span>
             )

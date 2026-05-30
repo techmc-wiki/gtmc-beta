@@ -52,9 +52,7 @@ export default async function ProfilePage() {
   )
 
   // oxlint-disable-next-line react-perf/jsx-no-jsx-as-prop -- server component, no re-renders
-  const roleValue = (
-    <RoleValue role={user.role} />
-  )
+  const roleValue = <RoleValue role={user.role} />
 
   return (
     <div className="page-container animate-fade-in mt-4 sm:mt-8">

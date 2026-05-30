@@ -31,9 +31,10 @@ export function CodeBlockPre({ children, ...props }: CodeBlockPreProps) {
     digitCount === 1 ? "2.5rem" : digitCount === 2 ? "3rem" : "3.5rem"
 
   const codeBlockStyle = useMemo(
-    (): React.CSSProperties => ({
-      "--line-num-width": lineNumWidth,
-    } as React.CSSProperties),
+    (): React.CSSProperties =>
+      ({
+        "--line-num-width": lineNumWidth,
+      }) as React.CSSProperties,
     [lineNumWidth]
   )
 

@@ -31,8 +31,18 @@ const DEFAULT_MODE_ANALYSIS: ModeAnalysis = {
 } as const
 
 function buildReviewFiles(
-  linkedDraftFiles: { files: Array<{ id: string; filePath: string; content: string; conflictContent?: string | null }> } | null,
-  prFileMap: Map<string, { additions?: number; deletions?: number; status?: string }>,
+  linkedDraftFiles: {
+    files: Array<{
+      id: string
+      filePath: string
+      content: string
+      conflictContent?: string | null
+    }>
+  } | null,
+  prFileMap: Map<
+    string,
+    { additions?: number; deletions?: number; status?: string }
+  >,
   prFileContents: Record<string, string | null>
 ): ReviewFile[] {
   if (!linkedDraftFiles) return EMPTY_REVIEW_FILES
@@ -54,13 +64,22 @@ function buildReviewFiles(
     content: prFileContents[file.filePath] ?? file.content,
     originalContent: file.content,
     conflictContent: file.conflictContent ?? undefined,
-    status: file.conflictContent
-      ? ("conflict" as const)
-      : ("clean" as const),
+    status: file.conflictContent ? ("conflict" as const) : ("clean" as const),
   }))
 }
 
-function buildPrProps(pr: { number: number; title: string; html_url: string; base: { ref: string }; head: { ref: string }; commits: number; changed_files: number; additions: number; deletions: number; user?: { login: string } | null }) {
+function buildPrProps(pr: {
+  number: number
+  title: string
+  html_url: string
+  base: { ref: string }
+  head: { ref: string }
+  commits: number
+  changed_files: number
+  additions: number
+  deletions: number
+  user?: { login: string } | null
+}) {
   return {
     number: pr.number,
     title: pr.title,
@@ -75,7 +94,10 @@ function buildPrProps(pr: { number: number; title: string; html_url: string; bas
   }
 }
 
-function buildRevisionProps(linkedDraft: { id: string; rebaseState: unknown } | null, effectiveConflictMode: string | null) {
+function buildRevisionProps(
+  linkedDraft: { id: string; rebaseState: unknown } | null,
+  effectiveConflictMode: string | null
+) {
   return {
     id: linkedDraft?.id ?? "",
     conflictMode: effectiveConflictMode,
@@ -83,7 +105,11 @@ function buildRevisionProps(linkedDraft: { id: string; rebaseState: unknown } | 
   }
 }
 
-function buildSquashCommitDefaults(title: string, body: string, coauthorLines: string[]) {
+function buildSquashCommitDefaults(
+  title: string,
+  body: string,
+  coauthorLines: string[]
+) {
   return { title, body, coauthorLines }
 }
 
@@ -283,7 +309,11 @@ export default async function ReviewDetailPage({
     }
   }
 
-  const reviewFiles = buildReviewFiles(linkedDraftFiles, prFileMap, prFileContents)
+  const reviewFiles = buildReviewFiles(
+    linkedDraftFiles,
+    prFileMap,
+    prFileContents
+  )
   console.log(
     "[review/page] reviewFiles",
     reviewFiles.map((f) => ({
