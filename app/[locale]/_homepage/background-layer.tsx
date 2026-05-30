@@ -1,4 +1,4 @@
-import type { MotionValue } from "motion/react";
+import type { MotionValue } from "motion/react"
 import { motion } from "motion/react"
 import { useMemo } from "react"
 import { DecorElement } from "./decor-element"

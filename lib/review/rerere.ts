@@ -61,7 +61,7 @@ export function applyAutoAppliedResolutions(
 }
 
 function normalizeInput(input: string): string {
-  return input.replaceAll(/\r\n/g, "\n").replaceAll(/\r/g, "\n").trimEnd()
+  return input.replaceAll("\r\n", "\n").replaceAll("\r", "\n").trimEnd()
 }
 
 export function computeConflictHash(

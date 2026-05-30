@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useCallback, useMemo } from "react"
-import type { MotionValue } from "motion/react";
+import type { MotionValue } from "motion/react"
 import { motion, useTransform } from "motion/react"
 import { HOMEPAGE_MOTION } from "./homepage-constants"
 

@@ -365,7 +365,8 @@ export function ReviewEditor({
 
   const rebaseState = revision.rebaseState as RebaseState | null
 
-  React.useEffect(() => () => {
+  React.useEffect(
+    () => () => {
       if (autosaveTimeoutRef.current) {
         clearTimeout(autosaveTimeoutRef.current)
       }
@@ -373,7 +374,9 @@ export function ReviewEditor({
       if (finalizeProgressResetRef.current !== null) {
         window.clearTimeout(finalizeProgressResetRef.current)
       }
-    }, [])
+    },
+    []
+  )
 
   React.useEffect(() => {
     if (!conflictSignature) {

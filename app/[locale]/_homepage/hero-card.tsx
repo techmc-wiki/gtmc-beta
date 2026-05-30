@@ -1,8 +1,8 @@
 "use client"
 
-import type { MotionValue } from "motion/react";
+import type { MotionValue } from "motion/react"
 import { motion } from "motion/react"
-import type { ForwardedRef} from "react";
+import type { ForwardedRef } from "react"
 import { useMemo } from "react"
 import { CornerBrackets } from "@/components/ui/corner-brackets"
 

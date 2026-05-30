@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { TechButton } from "@/components/ui/tech-button"
 import { HeroCard } from "./hero-card"
-import type { ForwardedRef} from "react";
+import type { ForwardedRef } from "react"
 import { useCallback } from "react"
 import type { MotionValue } from "motion/react"
 

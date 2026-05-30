@@ -8,7 +8,7 @@ export function UnchangedBlock({
   onChange: (val: string) => void
 }) {
   const [expanded, setExpanded] = useState(false)
-  const contentFixed = content.replaceAll(/\r\n/g, "\n").replaceAll(/\r/g, "\n")
+  const contentFixed = content.replaceAll("\r\n", "\n").replaceAll("\r", "\n")
   const lines = contentFixed.split("\n")
 
   const handleChange = useCallback(

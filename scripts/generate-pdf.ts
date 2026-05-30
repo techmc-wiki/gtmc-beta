@@ -14,7 +14,7 @@
  */
 
 import { chromium } from "playwright"
-import type { PDFDict} from "pdf-lib";
+import type { PDFDict } from "pdf-lib"
 import { PDFDocument, PDFName } from "pdf-lib"
 import fs from "node:fs"
 import path from "node:path"
@@ -332,8 +332,9 @@ async function writePdfOutlines(
   for (let i = 0; i < topLevelItems.length; i++) {
     const dict = topLevelItems[i].dict
     if (i > 0) dict.set(PDFName.of("Prev"), topLevelItems[i - 1].ref)
-    if (i < topLevelItems.length - 1)
-      {dict.set(PDFName.of("Next"), topLevelItems[i + 1].ref)}
+    if (i < topLevelItems.length - 1) {
+      dict.set(PDFName.of("Next"), topLevelItems[i + 1].ref)
+    }
   }
 
   // Link children within each parent
@@ -341,8 +342,9 @@ async function writePdfOutlines(
     for (let i = 0; i < top.children.length; i++) {
       const dict = top.children[i].dict
       if (i > 0) dict.set(PDFName.of("Prev"), top.children[i - 1].ref)
-      if (i < top.children.length - 1)
-        {dict.set(PDFName.of("Next"), top.children[i + 1].ref)}
+      if (i < top.children.length - 1) {
+        dict.set(PDFName.of("Next"), top.children[i + 1].ref)
+      }
     }
   }
 

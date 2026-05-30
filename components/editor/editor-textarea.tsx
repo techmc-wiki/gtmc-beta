@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useTranslations } from "next-intl"
-import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
+import type { ReactCodeMirrorRef } from "@uiw/react-codemirror"
 import CodeMirror from "@uiw/react-codemirror"
 import {
   autocompletion,

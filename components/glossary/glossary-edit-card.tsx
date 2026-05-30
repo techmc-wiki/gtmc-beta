@@ -107,11 +107,14 @@ export function GlossaryEditCard({
 
   const debounceRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  React.useEffect(() => () => {
+  React.useEffect(
+    () => () => {
       if (debounceRef.current) {
         clearTimeout(debounceRef.current)
       }
-    }, [])
+    },
+    []
+  )
 
   const updateField = React.useCallback(
     (column: GlossaryColumn, value: string) => {

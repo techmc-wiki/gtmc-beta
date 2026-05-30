@@ -1,4 +1,4 @@
-import type { NextRequest} from "next/server";
+import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
 import { auth } from "@/lib/auth"
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Missing path" }, { status: 400 })
   }
 
-  const normalizedPath = filePath.replaceAll(/\\/g, "/").replace(/^\/+/, "")
+  const normalizedPath = filePath.replaceAll("\\", "/").replace(/^\/+/, "")
 
   if (normalizedPath.includes("..")) {
     return NextResponse.json({ error: "Invalid path" }, { status: 400 })

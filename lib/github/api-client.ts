@@ -154,7 +154,8 @@ export async function requestGithub<T>(
 
   const response = await executeWithRetry<Response>({
     retries: 1,
-    operation: async () => await fetch(url, {
+    operation: async () =>
+      await fetch(url, {
         ...init,
         headers: {
           Accept: GITHUB_ACCEPT_HEADER,
@@ -164,13 +165,13 @@ export async function requestGithub<T>(
         },
       }),
     onError: (error) => ({
-        type: "throw",
-        error: new GithubFeaturesError({
-          code: "NETWORK_ERROR",
-          message: "GitHub API request failed due to a network error.",
-          details: error,
-        }),
+      type: "throw",
+      error: new GithubFeaturesError({
+        code: "NETWORK_ERROR",
+        message: "GitHub API request failed due to a network error.",
+        details: error,
       }),
+    }),
   })
 
   const text = await response.text()

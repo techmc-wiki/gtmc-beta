@@ -141,7 +141,7 @@ function normalizeUrlParam(input: string) {
 
 function normalizeArticleRepoPath(input: string) {
   const withoutQuery = input.split("?")[0]?.split("#")[0] ?? ""
-  const normalized = path.posix.normalize(withoutQuery.replaceAll(/\\/g, "/"))
+  const normalized = path.posix.normalize(withoutQuery.replaceAll("\\", "/"))
   const safePath = normalized.replace(/^\.\.\/+/, "").replace(/^\/+/, "")
 
   if (!safePath || safePath.startsWith("../")) {

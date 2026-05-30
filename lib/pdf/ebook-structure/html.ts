@@ -42,10 +42,10 @@ function loadPrintCss(): string {
 
 function escapeHtml(text: string): string {
   return text
-    .replaceAll(/&/g, "&amp;")
-    .replaceAll(/</g, "&lt;")
-    .replaceAll(/>/g, "&gt;")
-    .replaceAll(/"/g, "&quot;")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
 }
 
 function renderCoverHtml(options: EbookOptions): string {

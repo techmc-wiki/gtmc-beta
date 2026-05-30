@@ -19,7 +19,8 @@ export const GLOSSARY_REPO: RepoTarget = {
   name: process.env.GITHUB_GLOSSARY_REPO_NAME || "TechMC-Glossary",
 }
 
-export const getOctokit = (token?: string, silent404 = false) => new Octokit({
+export const getOctokit = (token?: string, silent404 = false) =>
+  new Octokit({
     auth: token || resolveGithubArticlesReadToken(),
     log: silent404
       ? {

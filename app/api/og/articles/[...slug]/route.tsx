@@ -165,7 +165,7 @@ export async function GET(
   const rawTitle =
     manifestEntry?.titleByLocale[locale] ??
     manifestEntry?.titleByLocale["zh"] ??
-    slug[slug.length - 1]?.replaceAll(/-/g, " ") ??
+    slug[slug.length - 1]?.replaceAll('-', " ") ??
     "Untitled"
   const title = rawTitle.length > 60 ? rawTitle.slice(0, 60) + "…" : rawTitle
 

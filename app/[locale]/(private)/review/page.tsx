@@ -112,7 +112,10 @@ async function analyzePRConflictStatus(prNumber: number, token?: string) {
               }
             }
           } catch (error) {
-            console.error("Failed to fetch file content for conflict check:", error)
+            console.error(
+              "Failed to fetch file content for conflict check:",
+              error
+            )
           }
         }
       }

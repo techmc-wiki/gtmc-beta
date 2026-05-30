@@ -1,14 +1,8 @@
 "use client"
 
 import { getReauthLoginUrl, isReauthRequiredError } from "@/lib/admin-reauth"
-import type {
-  ReactNode} from "react";
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react"
+import type { ReactNode } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 
 type ActionFeedbackState = "idle" | "running" | "success" | "error"
 
@@ -32,11 +26,14 @@ export function ActionForm({
   const [state, setState] = useState<ActionFeedbackState>("idle")
   const resetTimerRef = useRef<number | null>(null)
 
-  useEffect(() => () => {
+  useEffect(
+    () => () => {
       if (resetTimerRef.current !== null) {
         window.clearTimeout(resetTimerRef.current)
       }
-    }, [])
+    },
+    []
+  )
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {

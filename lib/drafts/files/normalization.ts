@@ -1,5 +1,5 @@
 export function normalizeDraftFilePath(filePath: string) {
-  return filePath.trim().replaceAll(/\\/g, "/").replace(/^\/+/, "")
+  return filePath.trim().replaceAll("\\", "/").replace(/^\/+/, "")
 }
 
 export function normalizeDraftFolderPath(folderPath: string) {

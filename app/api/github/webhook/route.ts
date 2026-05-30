@@ -1,5 +1,5 @@
 import { createHmac, timingSafeEqual } from "crypto"
-import type { NextRequest} from "next/server";
+import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
 import { reconcileDraftAssetsForPRCompletion } from "@/lib/drafts/asset-db"

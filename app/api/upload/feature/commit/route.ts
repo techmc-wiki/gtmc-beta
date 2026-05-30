@@ -1,4 +1,4 @@
-import type { NextRequest} from "next/server";
+import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 import { del } from "@vercel/blob"
 import { auth } from "@/lib/auth"
@@ -77,13 +77,14 @@ export async function POST(req: NextRequest) {
     }
 
     const relativeSegments = relativePath.split("/")
-    const hasInvalidSegment = relativeSegments.some((segment) => (
+    const hasInvalidSegment = relativeSegments.some(
+      (segment) =>
         !segment ||
         segment === "." ||
         segment === ".." ||
         // Only allow safe path characters in each segment
         !/^[A-Za-z0-9._-]+$/.test(segment)
-      ))
+    )
     if (hasInvalidSegment) {
       return NextResponse.json({ error: "Invalid blob URL" }, { status: 400 })
     }

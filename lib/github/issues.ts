@@ -1,7 +1,6 @@
 import { unstable_cache } from "next/cache"
 
-import type {
-  GithubIssue} from "./api-client";
+import type { GithubIssue } from "./api-client"
 import {
   getGithubRepoConfig,
   getRepoIssuesBaseUrl,
@@ -9,7 +8,7 @@ import {
   parseNextLink,
   requestGithub,
 } from "./api-client"
-import type { GithubIssueResponse} from "./normalize";
+import type { GithubIssueResponse } from "./normalize"
 import { normalizeIssue } from "./normalize"
 
 async function _listAllIssuesUncached(
