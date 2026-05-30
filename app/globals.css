@@ -5,6 +5,9 @@
   color-scheme: light;
   --background: var(--color-tech-bg);
   --foreground: var(--color-tech-main);
+  --font-markdown-title:
+    var(--font-geist-sans), var(--font-noto-sans-sc), "PingFang SC",
+    "Microsoft YaHei", "微软雅黑", sans-serif;
 }
 
 html {
@@ -344,6 +347,12 @@ body {
 
 @utility section-label {
   @apply border-tech-main/30 tracking-tech-wide text-tech-main mb-2 inline-block border-b pb-1 font-mono text-sm uppercase;
+}
+
+@utility markdown-title {
+  font-family: var(--font-markdown-title);
+  letter-spacing: -0.01em;
+  text-transform: none;
 }
 
 @utility animate-skeleton-exit {
