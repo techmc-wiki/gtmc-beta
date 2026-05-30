@@ -73,12 +73,21 @@ pnpm dev
 
 ```bash
 pnpm dev              # 启动开发服务器
-pnpm build            # 生成 manifest + content + PDF，再执行 `next build`
+pnpm build:content    # 生成内容产物（manifest、glossary、文章、PDF）
+pnpm build:next       # Next.js 生产构建
+pnpm build            # 两阶段：内容生成再到 Next 构建
+pnpm build:pdf        # 仅重新生成离线 PDF
 pnpm typecheck        # tsc --noEmit
 pnpm lint             # oxlint
 pnpm style            # prettier --check
 pnpm lighthouse       # 本地运行 Lighthouse CI
 ```
+
+**构建阶段：**
+
+- `build:content` —— 生成静态内容产物（manifest、glossary、渲染后的文章、PDF）
+- `build:next` —— 消费这些产物执行 Next.js 构建
+- `build` —— 按顺序执行以上两个阶段
 
 ### 目录结构
 
