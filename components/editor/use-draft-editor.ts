@@ -169,16 +169,14 @@ export function useDraftEditor(initialData?: {
     [progressT]
   )
 
-  React.useEffect(() => {
-    return () => {
+  React.useEffect(() => () => {
       if (autoSaveTimeoutRef.current !== null)
         window.clearTimeout(autoSaveTimeoutRef.current)
       if (saveProgressResetRef.current !== null)
         window.clearTimeout(saveProgressResetRef.current)
       if (submitProgressResetRef.current !== null)
         window.clearTimeout(submitProgressResetRef.current)
-    }
-  }, [])
+    }, [])
 
   const updateSaveProgressState = (
     nextState: Exclude<OperationProgressState, "idle">
@@ -397,7 +395,7 @@ export function useDraftEditor(initialData?: {
 
     const result = await saveDraftAction(formData)
     if (!result.success || !result.revisionId)
-      throw new Error("Failed to save draft")
+      {throw new Error("Failed to save draft")}
 
     setDraftCollection(normalizedDraftCollection)
     setLastSavedDraftCollection(normalizedDraftCollection)
@@ -502,7 +500,7 @@ export function useDraftEditor(initialData?: {
   const draftUploadAdapter = React.useCallback(
     async (file: File) => {
       if (!revisionId)
-        throw new Error("Save draft first before uploading files.")
+        {throw new Error("Save draft first before uploading files.")}
       const formData = new FormData()
       formData.append("file", file)
       formData.append("revisionId", revisionId)
@@ -528,7 +526,7 @@ export function useDraftEditor(initialData?: {
     onInsertContent: (text: string) => {
       if (text === "") {
         updateActiveFile({
-          content: activeFileContent.replace(
+          content: activeFileContent.replaceAll(
             /<!-- UPLOAD_PENDING_[a-f0-9-]+ -->\n?/g,
             ""
           ),
@@ -560,7 +558,7 @@ export function useDraftEditor(initialData?: {
     }
     if (isSaving || isSubmittingReview || isUploading) return
     if (autoSaveTimeoutRef.current !== null)
-      window.clearTimeout(autoSaveTimeoutRef.current)
+      {window.clearTimeout(autoSaveTimeoutRef.current)}
     autoSaveTimeoutRef.current = window.setTimeout(() => {
       autoSaveTimeoutRef.current = null
       void saveDraftWithFeedback("auto")
@@ -586,7 +584,7 @@ export function useDraftEditor(initialData?: {
     if (isReadOnly) return
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== "s")
-        return
+        {return}
       event.preventDefault()
       if (isSubmittingReview || isUploading || !title.trim()) return
       void saveDraftWithFeedback("manual")
@@ -630,7 +628,7 @@ export function useDraftEditor(initialData?: {
   const handlePaste = (e: React.ClipboardEvent) => {
     if (isReadOnly || isUploading) return
     const items = e.clipboardData.items
-    for (const item of Array.from(items)) {
+    for (const item of [...items]) {
       if (item.type.indexOf("image") !== -1) {
         e.preventDefault()
         const file = item.getAsFile()
@@ -735,7 +733,7 @@ export function useDraftEditor(initialData?: {
             error?: string
           }
           if (!response.ok || typeof data.content !== "string")
-            throw new Error(data.error || "Failed to load repository file")
+            {throw new Error(data.error || "Failed to load repository file")}
           setRepoSnapshots((current) => ({
             ...current,
             [file.id]: {

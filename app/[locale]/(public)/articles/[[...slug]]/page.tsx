@@ -609,7 +609,7 @@ function formatArticleTitle(
 function embedTitleInMarkdown(content: string, title: string): string {
   const leadingWhitespace = content.match(/^\s*/)?.[0] ?? ""
   const trimmedStartContent = content.slice(leadingWhitespace.length)
-  const escapedTitle = title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  const escapedTitle = title.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&")
   const sameTitleHeadingPattern = new RegExp(
     `^#\\s+${escapedTitle}\\s*(?:\\r?\\n|$)`
   )

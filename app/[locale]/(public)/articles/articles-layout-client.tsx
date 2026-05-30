@@ -188,7 +188,7 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
       const next = !prev
       try {
         localStorage.setItem(CHAPTER_NAV_HIDDEN_KEY, String(next))
-      } catch { }
+      } catch {}
       return next
     })
   }, [])

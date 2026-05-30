@@ -111,9 +111,9 @@ function suppressNativeFpOverlays(instance: LitematicaRenderer) {
 
 function normalizeUrlInput(input: string) {
   let value = input
-    .replace(/\r?\n/g, "")
+    .replaceAll(/\r?\n/g, "")
     .trim()
-    .replace(/^['"]|['"]$/g, "")
+    .replaceAll(/^['"]|['"]$/g, "")
 
   for (let i = 0; i < 2; i++) {
     try {
@@ -407,12 +407,12 @@ export default function LitematicaViewer({
                   r.enableAdaptiveFPS = true
 
                   setSchematicReady(true)
-                } catch (err) {
-                  if (err instanceof Error && err.name === "AbortError") {
+                } catch (error) {
+                  if (error instanceof Error && error.name === "AbortError") {
                     return
                   }
 
-                  console.error("Error loading schematic:", err)
+                  console.error("Error loading schematic:", error)
                 }
               },
               onSchematicFileLoadFailure: (err: Error) => {
@@ -428,8 +428,8 @@ export default function LitematicaViewer({
         }
 
         rendererRef.current = renderer
-      } catch (e) {
-        console.error("Error setting up schematic-renderer:", e)
+      } catch (error) {
+        console.error("Error setting up schematic-renderer:", error)
       }
     }
 

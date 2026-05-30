@@ -111,7 +111,7 @@ export function FeatureEditor({ initialData }: FeatureEditorProps) {
     onInsertContent: (text: string) => {
       if (text === "") {
         setContent((prev) =>
-          prev.replace(/<!-- UPLOAD_PENDING_[a-f0-9-]+ -->\n?/g, "")
+          prev.replaceAll(/<!-- UPLOAD_PENDING_[a-f0-9-]+ -->\n?/g, "")
         )
       } else if (text.startsWith("<!--")) {
         insertTextAtCursor(text)
@@ -138,7 +138,7 @@ export function FeatureEditor({ initialData }: FeatureEditorProps) {
   const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
     if (isReadOnly || isUploading) return
     const items = e.clipboardData.items
-    for (const item of Array.from(items)) {
+    for (const item of [...items]) {
       if (item.type.indexOf("image") !== -1) {
         e.preventDefault()
         const file = item.getAsFile()

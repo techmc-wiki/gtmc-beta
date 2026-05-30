@@ -395,7 +395,7 @@ function splitLines(content: string) {
     return [] as string[]
   }
 
-  return content.replace(/\r\n/g, "\n").split("\n")
+  return content.replaceAll(/\r\n/g, "\n").split("\n")
 }
 
 function joinLines(lines: string[]) {

@@ -95,7 +95,7 @@ export function LazyCodeBlock({ lineCount, children }: LazyCodeBlockProps) {
 
           <div className="border-tech-main/10 flex items-center justify-end border-t px-4 py-1">
             <span className="text-tech-main/50 font-mono text-[0.5625rem] tracking-widest uppercase select-none">
-              {"//"} SYNTAX_HIGHLIGHT
+              // SYNTAX_HIGHLIGHT
             </span>
           </div>
         </div>

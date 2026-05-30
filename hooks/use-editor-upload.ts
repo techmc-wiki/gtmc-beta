@@ -174,7 +174,7 @@ export function useEditorUpload(
 
           const commitData = await commitRes.json()
           if (!commitRes.ok)
-            throw new Error(commitData.error || "Commit failed")
+            {throw new Error(commitData.error || "Commit failed")}
 
           resultUrl = commitData.url
           resultFilename = commitData.filename

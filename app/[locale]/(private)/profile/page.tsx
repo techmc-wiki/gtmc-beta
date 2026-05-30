@@ -88,7 +88,7 @@ export default async function ProfilePage() {
           </h1>
           <p className="tracking-tech-wide text-tech-main/70 mt-2 flex items-center gap-2 font-mono text-[0.625rem] sm:mt-3 sm:text-sm">
             <StatusDot size="sm" />
-            {"CONFIG // IDENTITY // TOKENS"}
+            CONFIG // IDENTITY // TOKENS
           </p>
         </div>
         <div className="tracking-tech-wide text-tech-main/50 mt-4 font-mono text-[0.5625rem] uppercase sm:text-xs md:mt-0">

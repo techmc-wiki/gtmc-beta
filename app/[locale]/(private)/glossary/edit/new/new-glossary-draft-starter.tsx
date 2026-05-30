@@ -42,12 +42,12 @@ export function NewGlossaryDraftStarter({
         }
         clearPendingDraftCreation = null
       }, 5000)
-    } catch (caught) {
+    } catch (error) {
       inFlightRef.current = false
       pendingDraftCreation = null
       setError(
-        caught instanceof Error
-          ? caught.message
+        error instanceof Error
+          ? error.message
           : "Failed to create glossary draft"
       )
     }

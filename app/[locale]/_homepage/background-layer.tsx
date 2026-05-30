@@ -1,4 +1,5 @@
-import { motion, MotionValue } from "motion/react"
+import type { MotionValue } from "motion/react";
+import { motion } from "motion/react"
 import { useMemo } from "react"
 import { DecorElement } from "./decor-element"
 
@@ -169,7 +170,7 @@ export function BackgroundLayer({
         blurMax={blurMax}
         isReducedMotion={isReducedMotion}>
         <div className="text-tech-main-dark mb-2 font-bold">
-          {"//"} REDSTONE_BOOLEAN_LOGIC
+          // REDSTONE_BOOLEAN_LOGIC
         </div>
         <span>Y = (A ∧ B) ∨ (¬C)</span>
         <br />

@@ -113,8 +113,8 @@ export function ClosedPRList({ getClosedPRsAction }: ClosedPRListProps) {
         )
         setPage(nextPage)
         setHasMore(nextPRs.length === PAGE_SIZE)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : String(err))
+      } catch (error) {
+        setError(error instanceof Error ? error.message : String(error))
       } finally {
         isRequestInFlightRef.current = false
         setIsInitialLoading(false)

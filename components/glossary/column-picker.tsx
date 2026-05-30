@@ -120,8 +120,7 @@ export function ColumnPicker({
     ]
   }, [locale, t])
 
-  const otherLanguageGroups = React.useMemo(() => {
-    return LANGUAGE_CODES.filter((code) => code !== locale).map((code) => {
+  const otherLanguageGroups = React.useMemo(() => LANGUAGE_CODES.filter((code) => code !== locale).map((code) => {
       const mapping = LOCALE_TO_COLUMN[code]
       return {
         code,
@@ -134,8 +133,7 @@ export function ColumnPicker({
           },
         ],
       }
-    })
-  }, [locale, t])
+    }), [locale, t])
 
   const coreEntries = React.useMemo(
     () =>

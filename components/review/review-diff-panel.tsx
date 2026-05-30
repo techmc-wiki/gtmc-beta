@@ -163,7 +163,7 @@ function buildDiffSegments(
 }
 
 function normalizeLineEndings(value: string) {
-  return value.replace(/\r\n/g, "\n").replace(/\r/g, "\n")
+  return value.replaceAll(/\r\n/g, "\n").replaceAll(/\r/g, "\n")
 }
 
 function splitDiffLines(value: string) {

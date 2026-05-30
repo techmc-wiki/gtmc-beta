@@ -202,8 +202,8 @@ export default async function DraftDashboardPage() {
           if (pr.state === "closed") {
             displayStatus = pr.merged ? "MERGED" : "CLOSED"
           }
-        } catch (e) {
-          console.error(`Failed to fetch PR #${d.githubPrNum}:`, e)
+        } catch (error) {
+          console.error(`Failed to fetch PR #${d.githubPrNum}:`, error)
         }
       }
       return Object.assign({}, d, {

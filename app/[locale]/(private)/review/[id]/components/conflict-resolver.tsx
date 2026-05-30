@@ -117,7 +117,7 @@ export default function ConflictResolver({
         "Are you sure you want to abort this rebase? All progress will be lost."
       )
     )
-      return
+      {return}
 
     setIsAborting(true)
     try {
@@ -271,8 +271,7 @@ export default function ConflictResolver({
           </div>
 
           <div className="border-tech-main/30 bg-tech-main/5 mb-8 space-y-2 border p-2">
-            {blocks.map((block) => {
-              return (
+            {blocks.map((block) => (
                 <div key={block.id}>
                   {block.type === "ok" ? (
                     <pre className="text-tech-main-dark p-4 font-mono text-sm whitespace-pre-wrap opacity-70">
@@ -328,8 +327,7 @@ export default function ConflictResolver({
                     </div>
                   )}
                 </div>
-              )
-            })}
+              ))}
           </div>
 
           <form onSubmit={handleFormSubmit} className="space-y-4">

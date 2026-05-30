@@ -10,7 +10,7 @@ import {
   parseConflictBlocks,
 } from "@/lib/review/rerere"
 import type { ConflictBlock, MergeConflictBlock } from "@/lib/review/rebase-types"
-import { Prisma } from "@prisma/client"
+import type { Prisma } from "@prisma/client"
 import { getMergeLibrary } from "@/lib/review/merge-strategy"
 import type {
   FileRebaseState,

@@ -5,7 +5,7 @@ import {
 } from "@/lib/github/articles-repo"
 import { serializeDraftFilesForStorage } from "@/lib/drafts/files"
 import type { ConflictBlock, MergeConflictBlock } from "@/lib/review/rebase-types"
-import { Prisma } from "@prisma/client"
+import type { Prisma } from "@prisma/client"
 import type {
   FileRebaseState,
   RebaseCommitInfo,

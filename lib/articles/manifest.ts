@@ -402,7 +402,7 @@ function buildTreeNode(
     mergedChildrenBySlug.set(child.slug, child)
   }
 
-  const children = Array.from(mergedChildrenBySlug.values())
+  const children = [...mergedChildrenBySlug.values()]
     .toSorted((a, b) => compareEntries(a, b, locale))
     .map((child) => buildTreeNode(child, parentIndex, locale))
     .filter((node): node is ArticleTreeNode => node !== null)

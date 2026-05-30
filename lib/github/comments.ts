@@ -1,14 +1,16 @@
 import { unstable_cache } from "next/cache"
 
+import type {
+  GithubComment} from "./api-client";
 import {
   getGithubRepoConfig,
   getRepoIssuesBaseUrl,
-  GithubComment,
   GithubFeaturesError,
   parseNextLink,
   requestGithub,
 } from "./api-client"
-import { GithubCommentResponse, normalizeComment } from "./normalize"
+import type { GithubCommentResponse} from "./normalize";
+import { normalizeComment } from "./normalize"
 
 export async function addIssueComment(
   issueNumber: number,

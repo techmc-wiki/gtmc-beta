@@ -40,10 +40,10 @@ function isParentNode(node: unknown): node is Parent {
  */
 function escapeHtml(value: string): string {
   return value
-    .replace(/&/g, "&amp;")
-    .replace(/"/g, "&quot;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
+    .replaceAll(/&/g, "&amp;")
+    .replaceAll(/"/g, "&quot;")
+    .replaceAll(/</g, "&lt;")
+    .replaceAll(/>/g, "&gt;")
 }
 
 /**

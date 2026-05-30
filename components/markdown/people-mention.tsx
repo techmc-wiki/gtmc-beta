@@ -206,12 +206,10 @@ export function PeopleMention({ children, ...props }: MarkdownComponentProps) {
     }
   }, [isOpen])
 
-  useEffect(() => {
-    return () => {
+  useEffect(() => () => {
       if (closeTimerRef.current) clearTimeout(closeTimerRef.current)
       if (animTimeoutRef.current) clearTimeout(animTimeoutRef.current)
-    }
-  }, [])
+    }, [])
 
   const hasSocial = !person.isFallback && Object.keys(person.social).length > 0
 
