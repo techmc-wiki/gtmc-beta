@@ -1,7 +1,7 @@
 <!-- prettier-ignore -->
 <div align="center">
 
-<img src="images/homepage.jpeg" alt="Graduate Texts in Minecraft" />
+<img src="images/articles_zh_light.jpeg" width="49%" alt="Graduate Texts in Minecraft" /><img src="images/articles_zh_dark.jpeg" width="49%" alt="Graduate Texts in Minecraft" />
 
 # Graduate Texts in Minecraft
 
