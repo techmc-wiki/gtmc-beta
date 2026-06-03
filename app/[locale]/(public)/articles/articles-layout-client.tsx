@@ -344,7 +344,7 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
           relative isolate flex min-h-[calc(100dvh-8rem)] min-w-0
           flex-col overflow-x-clip
           md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,48rem)_minmax(0,1fr)]
-          md:items-start md:gap-6
+          md:gap-6
         ">
         <div
           className={`
@@ -535,7 +535,7 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
           {children}
         </main>
 
-        <div className="md:col-start-3 md:justify-self-start">
+        <div className="md:col-start-3 md:justify-self-start md:self-stretch">
           <OutlineRail />
         </div>
       </div>
