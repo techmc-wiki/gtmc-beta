@@ -516,7 +516,7 @@ async function runPdf(locale: "en" | "zh", output: string): Promise<void> {
 
     // Navigate to the temp HTML file so file:// URL images load properly
     await page.goto(pathToFileURL(tempHtmlPath).href, {
-      waitUntil: "networkidle",
+      waitUntil: "load",
     })
 
     // Wait for KaTeX font loading and PDF-specific font loading
