@@ -156,8 +156,8 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0
       schematic-renderer:
-        specifier: ^1.2.3
-        version: 1.2.3(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4))
+        specifier: ^1.3.0
+        version: 1.3.0(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4))
       shiki:
         specifier: ^4.2.0
         version: 4.2.0
@@ -171,8 +171,8 @@ importers:
         specifier: ^0.184.0
         version: 0.184.0
       undici:
-        specifier: ^8.2.0
-        version: 8.3.0
+        specifier: ^8.4.0
+        version: 8.4.0
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -4103,8 +4103,8 @@ packages:
   scheduler@0.27.0:
     resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
 
-  schematic-renderer@1.2.3:
-    resolution: {integrity: sha512-uGxroXT8PW7cU4QUC3M7LkZnFXjh7QKmdiEOYvvH8Bjn4srHqM2/ov/Oal0on/+5s9r/XmKHzNE5ALccfxPoEg==}
+  schematic-renderer@1.3.0:
+    resolution: {integrity: sha512-pBFjn5ob2it/QiJ5w0a3hAiwRPsDT+YHFDdWzO6eiZ80RNu67cj1LrWoVqzQFkvGTA1FVBD8kxMrMQTlxlz5bg==}
 
   section-matter@1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
@@ -4466,8 +4466,8 @@ packages:
     resolution: {integrity: sha512-4yqz8a3n5HmGTlsbADNtr/dJlhkh/55Rq798G6ibiULcXbDtaLpTl1pvdqcbFfeoj3iSi52lePFM7h9H21cw/A==}
     engines: {node: '>=18.17'}
 
-  undici@8.3.0:
-    resolution: {integrity: sha512-TkUDgb6tl7KOGZ+7e8E3d2FYgUQgF6z5YypqjWmixVQSQERFcVrVg0ySADm2LVLRh5ljAaHTCR5Fmz3Q34rB7Q==}
+  undici@8.4.0:
+    resolution: {integrity: sha512-tDR4LgFBeV7YBWOFMlmbhtrnFVWuZ6HKbkG+88/csQdhK2tPlW78PnLI2VRjIQtTlslvgSZ4R43WBE+4g6rhng==}
     engines: {node: '>=22.19.0'}
 
   unified@11.0.5:
@@ -8855,7 +8855,7 @@ snapshots:
 
   scheduler@0.27.0: {}
 
-  schematic-renderer@1.2.3(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)):
+  schematic-renderer@1.3.0(vite@8.0.14(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.22.4)):
     dependencies:
       '@ffmpeg/ffmpeg': 0.12.15
       '@ffmpeg/util': 0.12.2
@@ -9280,7 +9280,7 @@ snapshots:
 
   undici@6.26.0: {}
 
-  undici@8.3.0: {}
+  undici@8.4.0: {}
 
   unified@11.0.5:
     dependencies:
