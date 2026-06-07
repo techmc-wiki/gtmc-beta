@@ -56,7 +56,7 @@ docs/superpowers
 data
 public/article-assets
 public/gtmc-*.pdf
-public/.gtmc-pdf-temp.html
+public/.gtmc-pdf-temp-*.html
 
 # lighthouse and playwright
 .lighthouseci
