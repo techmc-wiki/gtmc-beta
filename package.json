@@ -7,7 +7,7 @@
     "build:content": "tsx scripts/generate-article-manifest.ts && tsx scripts/generate-glossary-manifest.ts && tsx scripts/generate-article-content.ts && tsx scripts/generate-pdf.ts --locale all",
     "build:next": "next build",
     "build:pdf": "npx tsx scripts/generate-pdf.ts --locale all",
-    "build:vercel": "pnpm db:migrate:deploy && pnpm build",
+    "build:vercel": "pnpm exec playwright install chromium && pnpm db:migrate:deploy && pnpm build",
     "build": "pnpm build:content && pnpm build:next",
     "db:migrate:deploy": "prisma migrate deploy",
     "generate:content": "tsx scripts/generate-article-content.ts",
