@@ -78,7 +78,7 @@ interface OutlineNode {
 function parseArgs(): CliOptions {
   const args = process.argv.slice(2)
   let locale: "en" | "zh" = "en"
-  let output = path.join(process.cwd(), "public", "gtmc.pdf")
+  let output = ""
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i]
@@ -90,6 +90,10 @@ function parseArgs(): CliOptions {
       output = path.resolve(process.cwd(), args[i + 1])
       i++
     }
+  }
+
+  if (!output) {
+    output = path.join(process.cwd(), "public", `gtmc-${locale}.pdf`)
   }
 
   return { locale, output }
@@ -491,15 +495,21 @@ async function main(): Promise<void> {
 
   console.log("[pdf] Phase 6/6: Generating PDF via Playwright...")
 
-  const browser = await chromium.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
-  }).catch((error) => {
-    console.warn(
-      "[pdf] Failed to launch Playwright, skipping PDF generation:",
-      error
-    )
-    process.exit(0)
-  })
+  const browser = await chromium
+    .launch({
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+      ],
+    })
+    .catch((error) => {
+      console.warn(
+        "[pdf] Failed to launch Playwright, skipping PDF generation:",
+        error
+      )
+      process.exit(0)
+    })
 
   try {
     // Write HTML to a temp file so file:// images and CSS @import resolve

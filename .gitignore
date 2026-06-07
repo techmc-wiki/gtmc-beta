@@ -55,7 +55,7 @@ docs/superpowers
 # generated files
 data
 public/article-assets
-public/gtmc.pdf
+public/gtmc-*.pdf
 public/.gtmc-pdf-temp.html
 
 # lighthouse and playwright
