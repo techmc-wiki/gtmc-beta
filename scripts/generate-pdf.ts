@@ -144,24 +144,23 @@ async function checkHasMath(
   articles: LinearizedArticle[],
   locale: ArticleLocale
 ): Promise<boolean> {
-  /* oxlint-disable eslint/no-await-in-loop -- early-return on first match requires sequential iteration */
-  for (const article of articles) {
-    try {
-      const content = await getArticleContentForPdf(article.slug, locale)
-      if (!content) continue
-      if (
-        content.includes("$") ||
-        content.includes("\\(") ||
-        content.includes("\\[")
-      ) {
-        return true
+  const results = await Promise.all(
+    articles.map(async (article) => {
+      try {
+        const content = await getArticleContentForPdf(article.slug, locale)
+        if (!content) return false
+        return (
+          content.includes("$") ||
+          content.includes("\\(") ||
+          content.includes("\\[")
+        )
+      } catch {
+        // Skip articles that fail to load
+        return false
       }
-    } catch {
-      // Skip articles that fail to load
-    }
-  }
-  /* oxlint-enable eslint/no-await-in-loop */
-  return false
+    })
+  )
+  return results.some((r) => r)
 }
 
 // ── Custom Article Renderer ─────────────────────────────────────────────────
