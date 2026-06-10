@@ -40,14 +40,12 @@ type VirtualGlossaryRow =
   | { type: "letter"; letter: string; count: number }
   | { type: "entry"; entry: GlossaryEntry }
 
-let searchIndexCache:
-  | {
-      entries: GlossaryEntry[]
-      scope: SearchScope
-      locale: IndexLocale
-      index: GlossarySearchIndex
-    }
-  | null = null
+let searchIndexCache: {
+  entries: GlossaryEntry[]
+  scope: SearchScope
+  locale: IndexLocale
+  index: GlossarySearchIndex
+} | null = null
 
 function letterBucket(slug: string): string {
   const first = slug[0]?.toUpperCase() ?? "#"
@@ -133,7 +131,11 @@ export function GlossaryTable({
   const filteredEntries = React.useMemo(() => {
     if (!trimmedQuery) return categoryFiltered
 
-    const index = getCachedSearchIndex(categoryFiltered, searchScope, indexLocale)
+    const index = getCachedSearchIndex(
+      categoryFiltered,
+      searchScope,
+      indexLocale
+    )
     const hits = index.search(trimmedQuery)
     const hitOrder = new Map<string, number>()
     hits.forEach((hit, i) => {
@@ -242,7 +244,9 @@ export function GlossaryTable({
         className="border-tech-line/30 custom-bottom-scrollbar relative hidden h-[min(70vh,48rem)] overflow-auto border md:block"
         data-density={density}>
         {letterOffsets.length > 0 && (
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-0">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-0">
             {letterOffsets.map(({ letter, top }) => (
               <span
                 key={letter}
