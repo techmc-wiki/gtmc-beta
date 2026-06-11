@@ -4,9 +4,9 @@ import { type NextRequest } from "next/server"
 import mime from "mime-types"
 import {
   type ArticleLocale,
-  getLocalizedArticleEntry,
   hasArticleLocale,
 } from "@/lib/articles/manifest"
+import { getCachedLocalizedArticleEntry } from "@/lib/articles/manifest-cached"
 import { getArticleContentBySlug } from "@/lib/articles/content"
 import {
   readLocalArticleAsset,
@@ -184,9 +184,9 @@ export async function GET(
   const content = artifact.content
   const siteUrl = getSiteUrl()
 
-  const manifestEntry = await getLocalizedArticleEntry(slugPath, locale)
+  const manifestEntry = await getCachedLocalizedArticleEntry(slugPath, locale)
   const parentEntry = manifestEntry?.parentSlug
-    ? await getLocalizedArticleEntry(manifestEntry.parentSlug, locale)
+    ? await getCachedLocalizedArticleEntry(manifestEntry.parentSlug, locale)
     : null
 
   const rawTitle =
