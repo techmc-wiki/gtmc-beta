@@ -28,7 +28,7 @@ const BOTTOM_BAR_H = 24
 const GOOGLE_SPACE_MONO_700_CSS =
   "https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap"
 const GOOGLE_FONTS_USER_AGENT =
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
+  "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko"
 
 let spaceMonoFontDataPromise: Promise<ArrayBuffer | null> | null = null
 
