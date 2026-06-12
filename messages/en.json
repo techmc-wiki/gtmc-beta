@@ -497,7 +497,8 @@
     "dismissHint": "DISMISS",
     "pathLabel": "PATH:",
     "matchBody": "BODY",
-    "matchTitle": "TITLE"
+    "matchTitle": "TITLE",
+    "glossarySection": "INDEX — GLOSSARY"
   },
   "Outline": {
     "title": "On This Page",

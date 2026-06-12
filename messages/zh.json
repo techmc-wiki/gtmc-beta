@@ -497,7 +497,8 @@
     "dismissHint": "关闭",
     "pathLabel": "路径：",
     "matchBody": "正文",
-    "matchTitle": "标题"
+    "matchTitle": "标题",
+    "glossarySection": "索引 — 术语表"
   },
   "Outline": {
     "title": "本文目录",
