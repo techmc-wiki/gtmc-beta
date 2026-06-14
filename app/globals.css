@@ -353,6 +353,54 @@ body {
   [role="button"][aria-disabled="true"] {
     @apply cursor-not-allowed;
   }
+
+  /*
+   * Global scrollbar in @layer base (lower precedence than the opt-in
+   * custom-*-scrollbar @utility blocks, so those still win where applied).
+   * Uses theme variables, so it adapts to dark mode automatically.
+   */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(
+        in oklab,
+        var(--color-tech-main) 38%,
+        transparent
+      )
+      transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: color-mix(
+      in oklab,
+      var(--color-tech-main) 32%,
+      transparent
+    );
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 0;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(
+      in oklab,
+      var(--color-tech-main-dark) 60%,
+      transparent
+    );
+    background-clip: padding-box;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
 }
 
 @utility tracking-tech-wide {
