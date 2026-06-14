@@ -739,24 +739,37 @@ code[class^="language-"] {
     }
   }
 
+  /* Print Edition: the serif title is the chapter's chrome; the text block
+   * begins just below it, so give the opening paragraph a little air instead
+   * of butting it against the title rule. */
+  .article-prose h1 + p {
+    margin-top: 0.85rem;
+  }
+
   /* Print Edition: the opening paragraph carries a raised versal and a
    * small-caps incipit, the way a monograph opens a chapter. A *raised*
    * initial (not a sunk drop cap) is used on purpose — many articles open
    * with a one-line intro, and a floated drop cap would collide with the
-   * block beneath it. */
+   * block beneath it. The versal is set in the *sans* body face, not the
+   * serif title face: a versal belongs to the text block it opens, and a
+   * serif initial here would echo the serif H1 directly above it and read
+   * as a second, competing title. */
   .article-prose h1 + p::first-letter {
     float: none;
-    font-family: var(--font-markdown-title);
-    font-size: 3.1em;
-    font-weight: 600;
-    line-height: 0.9;
-    padding-right: 0.06em;
+    font-family: var(--font-sans);
+    font-size: 2.75em;
+    font-weight: 700;
+    line-height: 0.82;
+    letter-spacing: -0.02em;
+    padding-right: 0.09em;
     color: var(--color-tech-main-dark);
   }
 
   .article-prose h1 + p:lang(zh)::first-letter {
-    font-size: 2.4em;
-    padding-right: 0.04em;
+    font-size: 2.3em;
+    font-weight: 600;
+    letter-spacing: 0;
+    padding-right: 0.05em;
   }
 
   .article-prose h1 + p::first-line {
