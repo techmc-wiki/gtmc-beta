@@ -88,10 +88,10 @@ export function OutlineRail() {
               custom-left-scrollbar flex min-h-0 flex-1 flex-col gap-0
               overflow-y-auto overflow-x-hidden pr-4 overscroll-contain
             ">
-              {outline.map((item) => {
+              {outline.map((item, index) => {
                 const isActive = item.id === activeHeadingId
                 return (
-                  <li key={item.id} ref={isActive ? activeItemRef : undefined}>
+                  <li key={`${item.id}-${index}`} ref={isActive ? activeItemRef : undefined}>
                     <Link
                       href={`#${item.id}`}
                       className={`
