@@ -394,6 +394,16 @@ The reader is its own layout, separate from the rest of the site chrome.
 - Code blocks use a custom chrome (language strip, line counts, wrap toggle, copy button) and a bordered light frame.
 - Prev/next article navigation is a 2-column grid on `md`+, with `min-h-[44px]` touch targets.
 
+### Reading as a set page
+
+The text block is typeset like a printed monograph, not a blog post.
+
+- **Series imprint, not a stream readout.** The metadata head strip opens with the series name (`Graduate Texts in Minecraft`) behind a yellow signal tick, in mono small-caps — it reads as a running imprint. `PATH:` stays as honest apparatus on the right.
+- **The opening paragraph carries a raised versal.** The first letter after the article H1 is set large in the serif title face. It is *raised* (sits on the baseline), not a sunk/floated drop cap — many articles open with a one-line intro, and a floated cap would collide with the block beneath. The incipit (first line) is set in small-caps. CJK openings keep the versal but opt out of small-caps, which has no meaning for Han characters.
+- **Body paragraphs are justified at reading width.** At `md`+, top-level article paragraphs justify with `hyphens: auto`; mobile stays ragged-right where a narrow measure justifies poorly. Lists, blockquotes, and callouts are not justified.
+- **Thematic breaks are asterisms.** A `---` in source renders as a centered hairline-rule + ink diamond device, not a full-width line.
+- **Each article closes with a chapter-end mark.** A centered colophon device (three diamonds, the middle one in the article's accent — yellow, or burgundy when Advanced) sits between the body and the prev/next navigation, the way a printed chapter ends before the next begins.
+
 ## Loading
 
 A coherent loading language exists; reach for it before inventing new spinners.
