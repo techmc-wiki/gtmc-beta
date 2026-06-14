@@ -43,8 +43,8 @@ html {
   --color-tech-accent: #c9cfdd;
   --color-tech-line: #d6d3c8;
   --color-tech-advanced: #8c2f39;
-  --color-tech-signal: #e3b505;
-  --color-tech-signal-ink: #20283c;
+  --color-tech-signal: #1d6a96;
+  --color-tech-signal-ink: #f5f4ef;
   --color-surface: #fcfbf8;
   --color-surface-overlay: #fcfbf8;
   --color-surface-input: #fffefb;
@@ -240,18 +240,18 @@ html {
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --color-tech-bg: #14120d;
-  --color-tech-main: #a8a290;
-  --color-tech-main-dark: #ece6d6;
-  --color-tech-accent: #3d3a2f;
-  --color-tech-line: #2d2a21;
+  --color-tech-bg: #101826;
+  --color-tech-main: #9aa7bd;
+  --color-tech-main-dark: #e7ecf4;
+  --color-tech-accent: #2a3852;
+  --color-tech-line: #243248;
   --color-tech-advanced: #c25664;
-  --color-tech-signal: #e9c531;
-  --color-tech-signal-ink: #14120d;
-  --color-surface: #1c1912;
-  --color-surface-overlay: #221f16;
-  --color-surface-input: #121009;
-  --color-surface-modal: #201d15;
+  --color-tech-signal: #5fb0d4;
+  --color-tech-signal-ink: #0e1521;
+  --color-surface: #162031;
+  --color-surface-overlay: #1a2536;
+  --color-surface-input: #0c121d;
+  --color-surface-modal: #18222f;
 
   --color-ansi-black: #073642;
   --color-ansi-red: #dc322f;
