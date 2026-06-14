@@ -85,7 +85,7 @@ export function OutlineRail() {
             <ul
               ref={outlineListRef}
               className="
-              custom-left-scrollbar flex min-h-0 flex-1 flex-col gap-0
+              reader-rail-scrollbar flex min-h-0 flex-1 flex-col gap-0
               overflow-y-auto overflow-x-hidden pr-4 overscroll-contain
             ">
               {outline.map((item, index) => {
