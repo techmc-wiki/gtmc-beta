@@ -52,15 +52,15 @@ export function MobileOutlineBar() {
         {activeItem && (
           <button
             type="button"
-            className="pointer-events-auto flex h-fit w-full items-center px-4 py-2 pr-4 backdrop-blur-xs md:hidden"
+            className="pointer-events-auto flex h-fit max-w-[calc(100vw-8rem)] items-center px-4 py-2 backdrop-blur-xs md:hidden"
             aria-label={t("openSheet")}
             onClick={openSheet}>
-            <div className="max-w-[40vw] truncate font-mono text-xs font-bold text-tech-main transition-colors duration-150 hover:text-tech-main">
+            <div className="min-w-0 truncate font-mono text-xs font-bold text-tech-main transition-colors duration-150 hover:text-tech-main">
               {activeItem.text}
             </div>
           </button>
         )}
-        <div className="pr-28">
+        <div className="pr-32">
           <div
             className="bg-tech-signal h-0.5 transition-[width] duration-150"
             style={progressWidthStyle}
