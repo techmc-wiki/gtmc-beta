@@ -364,7 +364,7 @@ export function ArticlesLayoutClient({ children, tree }: ArticlesLayoutProps) {
                 font-bold tracking-[0.15em] text-tech-main
                 transition-[background-color,color,opacity] duration-150 ease-out
                 hover:bg-tech-main/5
-                ${isStuck ? "fixed top-20 right-4 z-50" : "absolute"}
+                ${isStuck ? "fixed top-28 right-4 z-50" : "absolute"}
                 ${isStuck && isOverlappingFooter ? "pointer-events-none opacity-0" : "opacity-100"}
               `}
               style={mobileButtonStyle}
