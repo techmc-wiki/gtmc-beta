@@ -71,11 +71,13 @@ export async function generateMetadata({
       description,
       type: "article",
       url: canonicalUrl,
+      images: ["/opengraph-image"],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
       description,
+      images: ["/opengraph-image"],
     },
   }
 }
