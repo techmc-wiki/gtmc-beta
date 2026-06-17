@@ -96,7 +96,8 @@ export default async function GlossarySlugPage({
   const siteUrl = getSiteUrl()
   const canonicalUrl = `${siteUrl}/${locale}/glossary/${entry.slug}`
   const glossaryIndexUrl = `${siteUrl}/${locale}/glossary`
-  const description = entry.description.trim() || entry.fullFormEn || entry.shortForm
+  const description =
+    entry.description.trim() || entry.fullFormEn || entry.shortForm
 
   const definedTermJsonLd: {
     "@context": "https://schema.org"
