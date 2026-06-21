@@ -16,6 +16,7 @@ import { FooterProvider } from "@/components/layout/footer-context"
 import Footer from "@/components/layout/footer"
 import { FooterWrapper } from "@/components/layout/footer-wrapper"
 import { ScrollRoot } from "@/components/layout/scroll-root"
+import { SpeculationRules } from "@/components/layout/speculation-rules"
 import { getSiteUrl } from "@/lib/site-url"
 import { NextIntlClientProvider } from "next-intl"
 import { hasLocale } from "next-intl"
@@ -207,6 +208,7 @@ export default async function RootLayout({
           </ThemeProvider>
         </NextIntlClientProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd} />
+        <SpeculationRules />
       </body>
     </html>
   )
