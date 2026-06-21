@@ -492,10 +492,15 @@ body {
 
 @utility homepage-decor-background {
   will-change: transform;
+  /* Skip paint/layout when off-screen; keeps decor from competing with HeroCard for LCP. */
+  content-visibility: auto;
+  contain-intrinsic-size: 100vw 100vh;
 }
 
 @utility homepage-decor-midground {
   will-change: transform;
+  content-visibility: auto;
+  contain-intrinsic-size: 100vw 100vh;
 }
 
 @utility homepage-decor-foreground {
