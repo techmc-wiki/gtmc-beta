@@ -60,7 +60,7 @@
     "diff": "^9.0.0",
     "dotenv": "^17.4.2",
     "gray-matter": "^4.0.3",
-    "js-yaml": "^4.2.0",
+    "js-yaml": "^5.0.0",
     "katex": "^0.17.0",
     "mdast-util-find-and-replace": "^3.0.2",
     "micromark-util-character": "^2.1.1",
