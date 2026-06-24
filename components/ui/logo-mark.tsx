@@ -1,6 +1,14 @@
 import lightMark from "@/public/logo-mark-light.svg"
 import darkMark from "@/public/logo-mark-dark.svg"
 
+const markStyle: React.CSSProperties = {
+  ["--gtmc-mark-light" as string]: `url("${lightMark.src}")`,
+  ["--gtmc-mark-dark" as string]: `url("${darkMark.src}")`,
+  backgroundSize: "contain",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center",
+}
+
 interface LogoMarkProps {
   className?: string
   title?: string
@@ -18,13 +26,7 @@ export function LogoMark({ className = "", title }: LogoMarkProps) {
       role={title ? "img" : undefined}
       aria-label={title}
       aria-hidden={title ? undefined : true}
-      style={{
-        ["--gtmc-mark-light" as string]: `url("${lightMark.src}")`,
-        ["--gtmc-mark-dark" as string]: `url("${darkMark.src}")`,
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
+      style={markStyle}
       className={`gtmc-logo-mark-bg ${className}`}
     />
   )
