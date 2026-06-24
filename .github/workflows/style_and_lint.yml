@@ -43,7 +43,7 @@ jobs:
           DATABASE_URL: "postgresql://localhost:5432/placeholder"
 
       - name: Run linter
-        run: pnpm lint:check
+        run: node --run lint:check
 
       - name: Check code formatting
-        run: pnpm fmt:check
+        run: node --run fmt:check

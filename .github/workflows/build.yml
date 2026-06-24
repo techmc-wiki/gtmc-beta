@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version: "26"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
@@ -54,7 +54,7 @@ jobs:
           DATABASE_URL: "postgresql://localhost:5432/placeholder"
 
       - name: TypeScript Check
-        run: pnpm typecheck
+        run: node --run typecheck
 
       - name: Build
-        run: pnpm build
+        run: node --run build
