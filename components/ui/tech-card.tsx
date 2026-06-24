@@ -207,59 +207,55 @@ export interface TechCardProps extends React.HTMLAttributes<HTMLDivElement> {
   bracketVariant?: TechCardBracketVariant
   /** Optional blueprint surface pattern used by existing frame shells. */
   pattern?: TechCardPattern
+  ref?: React.Ref<HTMLDivElement>
 }
 
-export const TechCard = React.forwardRef<HTMLDivElement, TechCardProps>(
-  (
-    {
-      className,
-      children,
-      tone: toneProp,
-      borderOpacity = "solid",
-      background = "default",
-      padding = "default",
-      hover = "default",
-      brackets = "visible",
-      bracketVariant = "static",
-      pattern = "none",
-      ...props
-    },
-    ref
-  ) => {
-    const tone = toneProp ?? "main"
+export function TechCard({
+  className,
+  children,
+  tone: toneProp,
+  borderOpacity = "solid",
+  background = "default",
+  padding = "default",
+  hover = "default",
+  brackets = "visible",
+  bracketVariant = "static",
+  pattern = "none",
+  ref,
+  ...props
+}: TechCardProps) {
+  const tone = toneProp ?? "main"
 
-    // 技术扁平图纸感：细边框，无圆角，纯色几何；响应式内边距
-    const baseStyles = cn(
-      "group relative border backdrop-blur-sm transition-colors duration-300",
-      getBorderClass(tone, borderOpacity),
-      getBackgroundClass(tone, background),
-      paddingClasses[padding],
-      getHoverClass(tone, hover),
-      toneClasses[tone].text
-    )
+  // 技术扁平图纸感：细边框，无圆角，纯色几何；响应式内边距
+  const baseStyles = cn(
+    "group relative border backdrop-blur-sm transition-colors duration-300",
+    getBorderClass(tone, borderOpacity),
+    getBackgroundClass(tone, background),
+    paddingClasses[padding],
+    getHoverClass(tone, hover),
+    toneClasses[tone].text
+  )
 
-    return (
-      <div ref={ref} className={cn(baseStyles, className)} {...props}>
-        {/* 卡片的十字定位角标 */}
-        {brackets === "visible" && (
-          <CornerBrackets
-            color={toneClasses[tone].bracket}
-            variant={bracketVariant}
-          />
-        )}
+  return (
+    <div ref={ref} className={cn(baseStyles, className)} {...props}>
+      {/* 卡片的十字定位角标 */}
+      {brackets === "visible" && (
+        <CornerBrackets
+          color={toneClasses[tone].bracket}
+          variant={bracketVariant}
+        />
+      )}
 
-        {pattern !== "none" && (
-          <div
-            className={cn(
-              "pointer-events-none absolute inset-0 z-0 opacity-[0.03]",
-              patternClasses[pattern]
-            )}
-          />
-        )}
+      {pattern !== "none" && (
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 z-0 opacity-[0.03]",
+            patternClasses[pattern]
+          )}
+        />
+      )}
 
-        {children}
-      </div>
-    )
-  }
-)
-TechCard.displayName = "TechCard"
+      {children}
+    </div>
+  )
+}
