@@ -29,7 +29,7 @@ export async function generateMetadata({
   if (!issue) return { title: "Feature Not Found" }
 
   const canonical = toAbsoluteUrl(`/${locale}/features/${issue.number}`)
-  const description = generateDescription(issue.body ?? "", undefined, 155)
+  const description = generateDescription(issue.body, undefined, 155)
 
   return {
     title: issue.title,
@@ -94,7 +94,7 @@ export default async function FeatureDetailPage({
   }
 
   const canonical = toAbsoluteUrl(`/${locale}/features/${issue.number}`)
-  const description = generateDescription(issue.body ?? "", undefined, 155)
+  const description = generateDescription(issue.body, undefined, 155)
 
   const isClosed = issue.state === "closed"
 
@@ -141,8 +141,8 @@ export default async function FeatureDetailPage({
     },
     assignee: parsedIssue.metadata?.assigneeId
       ? {
-          name: parsedIssue.metadata?.assigneeName ?? null,
-          email: parsedIssue.metadata?.assigneeEmail ?? null,
+          name: parsedIssue.metadata.assigneeName ?? null,
+          email: parsedIssue.metadata.assigneeEmail ?? null,
           image: null,
         }
       : null,
