@@ -584,6 +584,8 @@
     "label": "离线版 (PDF)",
     "title": "GTMC",
     "subtitle": "下载完整的 GTMC 文章。",
+    "metaTitle": "离线 PDF 下载",
+    "metaDescription": "下载完整的《Graduate Texts in Minecraft》技术 Minecraft 知识库为单个 PDF 文档 — 包含教程、机制详解与源码分析。",
     "download": "下载 PDF"
   },
   "Theme": {

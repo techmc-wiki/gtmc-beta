@@ -584,6 +584,8 @@
     "label": "Offline Version (PDF)",
     "title": "GTMC",
     "subtitle": "Download the full GTMC articles as a PDF document.",
+    "metaTitle": "Offline PDF Download",
+    "metaDescription": "Download the complete Graduate Texts in Minecraft knowledge base as a single PDF document — tutorials, mechanics deep-dives, and code analysis.",
     "download": "DOWNLOAD PDF"
   },
   "Theme": {
