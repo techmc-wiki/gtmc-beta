@@ -23,10 +23,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, id } = await params
   const issueNumber = Number.parseInt(id, 10)
-  if (isNaN(issueNumber)) return { title: "Feature Not Found" }
+  if (isNaN(issueNumber)) notFound()
 
   const issue = await getIssue(issueNumber)
-  if (!issue) return { title: "Feature Not Found" }
+  if (!issue) notFound()
 
   const canonical = toAbsoluteUrl(`/${locale}/features/${issue.number}`)
   const description = generateDescription(issue.body, undefined, 155)
