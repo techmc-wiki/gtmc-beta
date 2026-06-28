@@ -12,6 +12,7 @@ import { FooterWrapper } from "@/components/layout/footer-wrapper"
 import { ScrollRoot } from "@/components/layout/scroll-root"
 import { SpeculationRules } from "@/components/layout/speculation-rules"
 import { getSiteUrl } from "@/lib/site-url"
+import { buildOrganizationJsonLd } from "@/lib/seo/json-ld"
 import { NextIntlClientProvider } from "next-intl"
 import { hasLocale } from "next-intl"
 import { setRequestLocale } from "next-intl/server"
@@ -61,23 +62,7 @@ const baseFontVariables = `${geistSans.variable} ${geistMono.variable} ${stixTwo
 
 const jsonLd = {
   __html: JSON.stringify([
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "Graduate Texts in Minecraft",
-      alternateName: "GTMC",
-      url: siteUrl,
-      description:
-        "Graduate Texts in Technical Minecraft - collaboratively written comprehensive textbook for technical Minecraft.",
-      foundingDate: "2024",
-      logo: {
-        "@type": "ImageObject",
-        url: `${siteUrl}/favicon.svg`,
-        width: 100,
-        height: 100,
-      },
-      sameAs: ["https://github.com/gtmc-dev/gtmc"],
-    },
+    buildOrganizationJsonLd(siteUrl),
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
