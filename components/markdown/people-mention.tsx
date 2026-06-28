@@ -3,11 +3,13 @@
 import { useState, useEffect, useRef, useId, useMemo } from "react"
 import { createPortal } from "react-dom"
 import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import { addSiteScrollListener } from "@/hooks/site-scroll-root"
-import { resolvePerson } from "@/lib/markdown/people"
+import { resolvePersonClient } from "@/lib/articles/config/people-data"
+import { getAuthorProfileHandle } from "@/lib/articles/config/author-profiles"
 import { UserAvatar } from "@/components/ui/user-avatar"
 import { CornerBrackets } from "@/components/ui/corner-brackets"
-import type { ResolvedPerson } from "@/lib/markdown/people"
+import type { ResolvedPerson } from "@/lib/articles/config/people-data"
 import type { MarkdownComponentProps } from "@/lib/markdown/component-types"
 
 export function GithubIcon({ className = "size-3" }: { className?: string }) {
@@ -63,7 +65,7 @@ function GlobeIcon() {
 
 export function PeopleMention({ children, ...props }: MarkdownComponentProps) {
   const personKey = (props["data-person-key"] as string) ?? ""
-  const person: ResolvedPerson = resolvePerson(personKey)
+  const person: ResolvedPerson = resolvePersonClient(personKey)
   const [isOpen, setIsOpen] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const generatedId = useId()
@@ -217,6 +219,8 @@ export function PeopleMention({ children, ...props }: MarkdownComponentProps) {
     },
     []
   )
+
+  const authorProfileHandle = getAuthorProfileHandle(personKey)
 
   const hasSocial = !person.isFallback && Object.keys(person.social).length > 0
 
@@ -376,23 +380,34 @@ export function PeopleMention({ children, ...props }: MarkdownComponentProps) {
       className="group relative inline-block"
       onMouseEnter={openDelayed}
       onMouseLeave={closeDelayed}>
-      <button
-        type="button"
-        aria-label={`${t("profileLabel")}: ${person.name}`}
-        aria-expanded={isOpen}
-        aria-describedby={popupId}
-        onClick={() => {
-          if (isOpen || isAnimating) {
-            closeWithAnimation()
-          } else {
-            recalcPosition()
-            setIsOpen(true)
-          }
-        }}
-        className="border-tech-main/30 bg-tech-main/5 text-tech-main group-hover:bg-tech-main-dark group-hover:text-tech-bg focus-visible:outline-tech-main mx-1 inline-flex items-center gap-0.5 border px-1 font-mono text-[0.8em] tracking-wide no-underline transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2">
-        <span className="text-tech-main/40 group-hover:text-white/60">@</span>
-        {children}
-      </button>
+      {authorProfileHandle !== null ? (
+        <Link
+          href={`/authors/${encodeURIComponent(authorProfileHandle)}`}
+          aria-label={`${t("profileLabel")}: ${person.name}`}
+          aria-describedby={popupId}
+          className="border-tech-main/30 bg-tech-main/5 text-tech-main group-hover:bg-tech-main-dark group-hover:text-tech-bg focus-visible:outline-tech-main mx-1 inline-flex items-center gap-0.5 border px-1 font-mono text-[0.8em] tracking-wide no-underline transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2">
+          <span className="text-tech-main/40 group-hover:text-white/60">@</span>
+          {children}
+        </Link>
+      ) : (
+        <button
+          type="button"
+          aria-label={`${t("profileLabel")}: ${person.name}`}
+          aria-expanded={isOpen}
+          aria-describedby={popupId}
+          onClick={() => {
+            if (isOpen || isAnimating) {
+              closeWithAnimation()
+            } else {
+              recalcPosition()
+              setIsOpen(true)
+            }
+          }}
+          className="border-tech-main/30 bg-tech-main/5 text-tech-main group-hover:bg-tech-main-dark group-hover:text-tech-bg focus-visible:outline-tech-main mx-1 inline-flex items-center gap-0.5 border px-1 font-mono text-[0.8em] tracking-wide no-underline transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2">
+          <span className="text-tech-main/40 group-hover:text-white/60">@</span>
+          {children}
+        </button>
+      )}
 
       {(isOpen || isAnimating) && createPortal(popupContent, document.body)}
     </span>
