@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server"
 import { PageHeader } from "@/components/ui/page-header"
 import { SectionTitle } from "@/components/ui/section-title"
 import { toAbsoluteUrl, getSiteUrl } from "@/lib/site-url"
-import { buildWebPageJsonLd } from "@/lib/seo/json-ld"
+import { buildWebPageJsonLd, serializeJsonLd } from "@/lib/seo/json-ld"
 
 export async function generateMetadata({
   params,
@@ -48,11 +48,13 @@ export default async function EditorialPolicyPage({
   const t = await getTranslations({ locale, namespace: "EditorialPolicy" })
   const siteUrl = getSiteUrl()
 
-  const jsonLd = buildJsonLdScript(
-    siteUrl,
-    locale,
-    t("pageTitle"),
-    t("metaDescription")
+  const jsonLd = serializeJsonLd(
+    buildWebPageJsonLd(
+      siteUrl,
+      `/${locale}/editorial-policy`,
+      t("pageTitle"),
+      t("metaDescription")
+    )
   )
 
   return (
@@ -64,6 +66,32 @@ export default async function EditorialPolicyPage({
         subtitle={t("pageDescription")}
         topMargin
       />
+
+      <aside className="border-tech-main/20 text-tech-main mt-8 border-l-2 px-4 text-xs/relaxed">
+        <p>{t("sourceNote")}</p>
+        <p className="mt-1 font-mono tracking-wider uppercase">
+          <a
+            href="https://github.com/gtmc-dev/Articles/blob/main/CONTRIBUTING.md"
+            className="hover:text-tech-main-dark underline">
+            {t("sourceContributing")}
+          </a>
+          {" · "}
+          <a
+            href="https://github.com/gtmc-dev/Articles/blob/main/REVIEWERS.md"
+            className="hover:text-tech-main-dark underline">
+            {t("sourceReviewers")}
+          </a>
+          {" · "}
+          <a
+            href="https://github.com/gtmc-dev/Articles/blob/main/CODE_OF_CONDUCT.zh.md"
+            className="hover:text-tech-main-dark underline">
+            {t("sourceConduct")}
+          </a>
+        </p>
+        <p className="text-tech-main/60 mt-1">
+          {t("lastReviewed", { date: "2026-06-28" })}
+        </p>
+      </aside>
 
       <section className="mt-10">
         <SectionTitle>{t("sectionSubmission")}</SectionTitle>
@@ -116,22 +144,4 @@ export default async function EditorialPolicyPage({
       </section>
     </div>
   )
-}
-
-function buildJsonLdScript(
-  siteUrl: string,
-  locale: string,
-  title: string,
-  description: string
-) {
-  return {
-    __html: JSON.stringify(
-      buildWebPageJsonLd(
-        siteUrl,
-        `/${locale}/editorial-policy`,
-        title,
-        description
-      )
-    ),
-  }
 }

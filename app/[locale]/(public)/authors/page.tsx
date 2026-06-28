@@ -1,18 +1,18 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { getTranslations } from "next-intl/server"
+import { Link } from "@/i18n/navigation"
 import { PageHeader } from "@/components/ui/page-header"
 import { SectionTitle } from "@/components/ui/section-title"
 import { TechCard } from "@/components/ui/tech-card"
 import { UserAvatar } from "@/components/ui/user-avatar"
 import { toAbsoluteUrl, getSiteUrl } from "@/lib/site-url"
-import { getManifestStats } from "@/lib/articles/manifest"
+import { getManifestStats, loadArticleManifest } from "@/lib/articles/manifest"
 import {
   getUniqueAuthors,
   resolveAuthorPerson,
   getArticlesByAuthor,
 } from "@/lib/articles/person-resolver"
-import { buildWebPageJsonLd } from "@/lib/seo/json-ld"
+import { buildWebPageJsonLd, serializeJsonLd } from "@/lib/seo/json-ld"
 import type { ArticleLocale } from "@/lib/articles/manifest"
 
 export async function generateMetadata({
@@ -60,21 +60,24 @@ export default async function AuthorsPage({
   const siteUrl = getSiteUrl()
 
   const stats = getManifestStats(articleLocale)
-  const allAuthors = getUniqueAuthors()
+  const manifest = loadArticleManifest()
+  const allAuthors = getUniqueAuthors(manifest)
 
   const authorsWithCount = allAuthors.map((handle) => ({
     handle,
     person: resolveAuthorPerson(handle),
-    articleCount: getArticlesByAuthor(handle, articleLocale).length,
+    articleCount: getArticlesByAuthor(handle, articleLocale, manifest).length,
   }))
 
   authorsWithCount.sort((a, b) => b.articleCount - a.articleCount)
 
-  const jsonLd = buildJsonLdScript(
-    siteUrl,
-    locale,
-    t("pageTitle"),
-    t("metaDescription")
+  const jsonLd = serializeJsonLd(
+    buildWebPageJsonLd(
+      siteUrl,
+      `/${locale}/authors`,
+      t("pageTitle"),
+      t("metaDescription")
+    )
   )
 
   return (
@@ -109,7 +112,7 @@ export default async function AuthorsPage({
           {authorsWithCount.map(({ handle, person, articleCount }) => (
             <Link
               key={handle}
-              href={`/${locale}/authors/${handle}`}
+              href={`/authors/${encodeURIComponent(handle)}`}
               className="group/link focus-visible:outline-tech-main block focus-visible:outline-2 focus-visible:outline-offset-2">
               <TechCard padding="compact" hover="border">
                 <div className="flex items-start gap-3">
@@ -159,17 +162,4 @@ function StatCard({ label, value }: { label: string; value: string }) {
       <p className="text-tech-main-dark text-lg font-semibold">{value}</p>
     </TechCard>
   )
-}
-
-function buildJsonLdScript(
-  siteUrl: string,
-  locale: string,
-  title: string,
-  description: string
-) {
-  return {
-    __html: JSON.stringify(
-      buildWebPageJsonLd(siteUrl, `/${locale}/authors`, title, description)
-    ),
-  }
 }

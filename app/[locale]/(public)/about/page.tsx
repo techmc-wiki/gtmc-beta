@@ -1,16 +1,19 @@
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { Link } from "@/i18n/navigation"
 import { PageHeader } from "@/components/ui/page-header"
 import { SectionTitle } from "@/components/ui/section-title"
 import { TechCard } from "@/components/ui/tech-card"
 import { GithubIcon } from "@/components/ui/social-icons"
+import { UserAvatar } from "@/components/ui/user-avatar"
 import { toAbsoluteUrl, getSiteUrl } from "@/lib/site-url"
-import { getManifestStats } from "@/lib/articles/manifest"
+import { getManifestStats, loadArticleManifest } from "@/lib/articles/manifest"
 import {
+  getArticlesByAuthor,
   getUniqueAuthors,
   resolveAuthorPerson,
 } from "@/lib/articles/person-resolver"
-import { buildWebPageJsonLd } from "@/lib/seo/json-ld"
+import { buildWebPageJsonLd, serializeJsonLd } from "@/lib/seo/json-ld"
 import type { ArticleLocale } from "@/lib/articles/manifest"
 
 const PREVIEW_AUTHOR_COUNT = 8
@@ -60,18 +63,24 @@ export default async function AboutPage({
   const siteUrl = getSiteUrl()
 
   const stats = getManifestStats(articleLocale)
-  const allAuthors = getUniqueAuthors()
-  const previewAuthors = allAuthors.slice(0, PREVIEW_AUTHOR_COUNT)
-  const resolvedAuthors = previewAuthors.map((handle) => ({
-    handle,
-    person: resolveAuthorPerson(handle),
-  }))
+  const manifest = loadArticleManifest()
+  const allAuthors = getUniqueAuthors(manifest)
+  const previewAuthors = allAuthors
+    .map((handle) => ({
+      handle,
+      person: resolveAuthorPerson(handle),
+      articleCount: getArticlesByAuthor(handle, articleLocale, manifest).length,
+    }))
+    .toSorted((a, b) => b.articleCount - a.articleCount)
+    .slice(0, PREVIEW_AUTHOR_COUNT)
 
-  const jsonLd = buildJsonLdScript(
-    siteUrl,
-    locale,
-    t("pageTitle"),
-    t("metaDescription")
+  const jsonLd = serializeJsonLd(
+    buildWebPageJsonLd(
+      siteUrl,
+      `/${locale}/about`,
+      t("pageTitle"),
+      t("metaDescription")
+    )
   )
 
   return (
@@ -130,31 +139,39 @@ export default async function AboutPage({
           {t("teamDescription")}
         </p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {resolvedAuthors.map(({ handle, person }) => (
-            <TechCard key={handle} padding="compact" hover="border">
-              <div className="flex items-center gap-3">
-                <div className="bg-tech-main/10 flex size-9 shrink-0 items-center justify-center font-mono text-sm font-bold uppercase">
-                  {person.name[0]}
-                </div>
-                <div className="min-w-0">
-                  <p className="text-tech-main-dark truncate text-sm font-medium">
-                    {person.name}
-                  </p>
-                  {person.social.github && (
-                    <p className="text-tech-main/60 truncate font-mono text-xs">
-                      @{extractGithubHandle(person.social.github)}
+          {previewAuthors.map(({ handle, person }) => (
+            <Link
+              key={handle}
+              href={`/authors/${encodeURIComponent(handle)}`}
+              className="focus-visible:outline-tech-main block focus-visible:outline-2 focus-visible:outline-offset-2">
+              <TechCard padding="compact" hover="border">
+                <div className="flex items-center gap-3">
+                  <div className="size-9 shrink-0">
+                    <UserAvatar
+                      src={person.profile}
+                      alt={person.name}
+                      fallback={person.name}
+                      sizes="36px"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-tech-main-dark truncate text-sm font-medium">
+                      {person.name}
                     </p>
-                  )}
+                    <p className="text-tech-main/60 truncate font-mono text-xs">
+                      @{handle}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </TechCard>
+              </TechCard>
+            </Link>
           ))}
         </div>
-        {allAuthors.length > PREVIEW_AUTHOR_COUNT && (
-          <p className="text-tech-main/60 mt-4 font-mono text-xs tracking-widest uppercase">
-            {t("teamCountLabel")}: {allAuthors.length}
-          </p>
-        )}
+        <Link
+          href="/authors"
+          className="text-tech-main hover:text-tech-main-dark mt-4 inline-block font-mono text-xs tracking-widest uppercase transition-colors">
+          {t("teamViewAll")}
+        </Link>
       </section>
 
       <section className="mt-10">
@@ -188,7 +205,7 @@ export default async function AboutPage({
 
         <div className="mt-6 flex flex-wrap gap-4">
           <a
-            href="https://github.com/gtmc-dev/gtmc"
+            href="https://github.com/techmc-wiki/gtmc"
             target="_blank"
             rel="noopener noreferrer"
             className="text-tech-main hover:text-tech-main-dark inline-flex items-center gap-1.5 font-mono text-xs tracking-widest uppercase transition-colors">
@@ -196,7 +213,7 @@ export default async function AboutPage({
             {t("linkGitHub")}
           </a>
           <a
-            href="https://github.com/gtmc-dev/articles"
+            href="https://github.com/gtmc-dev/Articles"
             target="_blank"
             rel="noopener noreferrer"
             className="text-tech-main hover:text-tech-main-dark inline-flex items-center gap-1.5 font-mono text-xs tracking-widest uppercase transition-colors">
@@ -226,25 +243,4 @@ function StatCard({ label, value }: { label: string; value: string }) {
       <p className="text-tech-main-dark text-lg font-semibold">{value}</p>
     </TechCard>
   )
-}
-
-function extractGithubHandle(github: string): string {
-  if (github.startsWith("http")) {
-    const parts = github.replace(/\/$/, "").split("/")
-    return parts[parts.length - 1] || github
-  }
-  return github
-}
-
-function buildJsonLdScript(
-  siteUrl: string,
-  locale: string,
-  title: string,
-  description: string
-) {
-  return {
-    __html: JSON.stringify(
-      buildWebPageJsonLd(siteUrl, `/${locale}/about`, title, description)
-    ),
-  }
 }

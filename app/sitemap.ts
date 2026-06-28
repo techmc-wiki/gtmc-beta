@@ -121,42 +121,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${BASE}/zh/about`,
-      lastModified: STATIC_LAST_MODIFIED,
       alternates: localizedAlternates(BASE, "/about"),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
       url: `${BASE}/en/about`,
-      lastModified: STATIC_LAST_MODIFIED,
       alternates: localizedAlternates(BASE, "/about"),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
       url: `${BASE}/zh/authors`,
-      lastModified: STATIC_LAST_MODIFIED,
       alternates: localizedAlternates(BASE, "/authors"),
       changeFrequency: "weekly",
       priority: 0.7,
     },
     {
       url: `${BASE}/en/authors`,
-      lastModified: STATIC_LAST_MODIFIED,
       alternates: localizedAlternates(BASE, "/authors"),
       changeFrequency: "weekly",
       priority: 0.7,
     },
     {
       url: `${BASE}/zh/editorial-policy`,
-      lastModified: STATIC_LAST_MODIFIED,
       alternates: localizedAlternates(BASE, "/editorial-policy"),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${BASE}/en/editorial-policy`,
-      lastModified: STATIC_LAST_MODIFIED,
       alternates: localizedAlternates(BASE, "/editorial-policy"),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -252,14 +246,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       return [
         {
           url: `${BASE}/zh${path}`,
-          lastModified: STATIC_LAST_MODIFIED,
           alternates: localizedAlternates(BASE, path),
           changeFrequency: "weekly" as const,
           priority: 0.6,
         },
         {
           url: `${BASE}/en${path}`,
-          lastModified: STATIC_LAST_MODIFIED,
           alternates: localizedAlternates(BASE, path),
           changeFrequency: "weekly" as const,
           priority: 0.6,

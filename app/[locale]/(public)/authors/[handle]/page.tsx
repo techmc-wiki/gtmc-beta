@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
+import { Link } from "@/i18n/navigation"
 import { SectionTitle } from "@/components/ui/section-title"
 import { TechCard } from "@/components/ui/tech-card"
 import { CornerBrackets } from "@/components/ui/corner-brackets"
@@ -18,16 +18,23 @@ import {
   resolveAuthorPerson,
   getArticlesByAuthor,
 } from "@/lib/articles/person-resolver"
-import { buildPersonJsonLd } from "@/lib/seo/json-ld"
-import type { ArticleLocale } from "@/lib/articles/manifest"
+import { buildPersonJsonLd, serializeJsonLd } from "@/lib/seo/json-ld"
+import {
+  loadArticleManifest,
+  type ArticleEntry,
+  type ArticleLocale,
+} from "@/lib/articles/manifest"
 import type { AuthorArticleSummary } from "@/lib/articles/person-resolver"
 
 interface AuthorDetailPageProps {
   params: Promise<{ locale: string; handle: string }>
 }
 
-function isValidHandle(handle: string): boolean {
-  return getUniqueAuthors().includes(handle)
+function isValidHandle(
+  handle: string,
+  manifest?: Record<string, ArticleEntry>
+): boolean {
+  return getUniqueAuthors(manifest).includes(handle)
 }
 
 function decodeHandle(rawHandle: string): string {
@@ -54,15 +61,16 @@ export async function generateMetadata({
   const { locale, handle: rawHandle } = await params
   const handle = decodeHandle(rawHandle)
   const urlHandle = encodeURIComponent(handle)
+  const manifest = loadArticleManifest()
 
-  if (!isValidHandle(handle)) {
+  if (!isValidHandle(handle, manifest)) {
     notFound()
   }
 
   const t = await getTranslations({ locale, namespace: "AuthorDetail" })
   const person = resolveAuthorPerson(handle)
   const articleLocale = locale as ArticleLocale
-  const articles = getArticlesByAuthor(handle, articleLocale)
+  const articles = getArticlesByAuthor(handle, articleLocale, manifest)
   const canonical = toAbsoluteUrl(`/${locale}/authors/${urlHandle}`)
 
   const description =
@@ -109,8 +117,9 @@ export default async function AuthorDetailPage({
   const { locale, handle: rawHandle } = await params
   const handle = decodeHandle(rawHandle)
   const urlHandle = encodeURIComponent(handle)
+  const manifest = loadArticleManifest()
 
-  if (!isValidHandle(handle)) {
+  if (!isValidHandle(handle, manifest)) {
     notFound()
   }
 
@@ -119,8 +128,7 @@ export default async function AuthorDetailPage({
   const siteUrl = getSiteUrl()
 
   const person = resolveAuthorPerson(handle)
-  const articles = getArticlesByAuthor(handle, articleLocale)
-  const articleTitles = articles.map((a) => a.title)
+  const articles = getArticlesByAuthor(handle, articleLocale, manifest)
 
   const coAuthoredCount = articles.filter(
     (a) =>
@@ -130,12 +138,13 @@ export default async function AuthorDetailPage({
         false)
   ).length
 
-  const jsonLd = buildPersonJsonLdScript(
-    person,
-    siteUrl,
-    urlHandle,
-    articleTitles
+  const jsonLd = serializeJsonLd(
+    buildPersonJsonLd(person, siteUrl, locale, urlHandle)
   )
+  const contributorSince = getArticlesByAuthor(handle, "zh", manifest)
+    .map((article) => manifest[article.slug]?.created)
+    .filter((date): date is string => date !== undefined)
+    .toSorted()[0]
 
   const githubUrl = person.social.github
     ? person.social.github.startsWith("http")
@@ -169,7 +178,7 @@ export default async function AuthorDetailPage({
       <nav className="mt-8 mb-6">
         <p className="font-mono text-xs tracking-widest uppercase">
           <Link
-            href={`/${locale}/authors`}
+            href="/authors"
             className="text-tech-main/70 hover:text-tech-main-dark transition-colors">
             {t("breadcrumbAuthors")}
           </Link>
@@ -251,7 +260,16 @@ export default async function AuthorDetailPage({
               <span>
                 {t("coAuthoredLabel")}: {coAuthoredCount}
               </span>
-              <span>{t("contributorSinceLabel")}: —</span>
+              <span>
+                {t("contributorSinceLabel")}:{" "}
+                {contributorSince
+                  ? new Date(contributorSince).toLocaleDateString(locale, {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })
+                  : "—"}
+              </span>
             </div>
           </div>
         </div>
@@ -270,7 +288,6 @@ export default async function AuthorDetailPage({
                 key={article.slug}
                 article={article}
                 handle={handle}
-                locale={locale}
                 rowIndex={i + 1}
                 coauthoredLabel={t("coauthoredBadge")}
               />
@@ -285,7 +302,7 @@ export default async function AuthorDetailPage({
 
       <nav className="mt-10">
         <Link
-          href={`/${locale}/authors`}
+          href="/authors"
           className="text-tech-main/70 hover:text-tech-main-dark inline-flex items-center font-mono text-xs tracking-widest uppercase transition-colors">
           {t("backToList")}
         </Link>
@@ -318,13 +335,11 @@ function SocialLink({
 function ArticleRow({
   article,
   handle,
-  locale,
   rowIndex,
   coauthoredLabel,
 }: {
   article: AuthorArticleSummary
   handle: string
-  locale: string
   rowIndex: number
   coauthoredLabel: string
 }) {
@@ -344,7 +359,7 @@ function ArticleRow({
 
   return (
     <Link
-      href={`/${locale}/articles/${article.slug}`}
+      href={`/articles/${article.slug}`}
       className="group/article focus-visible:outline-tech-main block focus-visible:outline-2 focus-visible:outline-offset-2">
       <TechCard padding="compact" hover="border">
         <div className="flex items-center gap-3">
@@ -376,17 +391,4 @@ function ArticleRow({
       </TechCard>
     </Link>
   )
-}
-
-function buildPersonJsonLdScript(
-  person: Parameters<typeof buildPersonJsonLd>[0],
-  siteUrl: string,
-  handle: string,
-  articleTitles: string[]
-) {
-  return {
-    __html: JSON.stringify(
-      buildPersonJsonLd(person, siteUrl, handle, articleTitles)
-    ),
-  }
 }

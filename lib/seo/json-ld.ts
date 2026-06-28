@@ -22,6 +22,10 @@ export type JsonLdObject = {
   [key: string]: unknown
 }
 
+export function serializeJsonLd(value: unknown): { __html: string } {
+  return { __html: JSON.stringify(value).replaceAll("<", "\\u003c") }
+}
+
 // --- Organization ------------------------------------------------------------
 
 /**
@@ -65,7 +69,7 @@ export function buildOrganizationJsonLd(
   siteUrl: string,
   options: OrganizationJsonLdOptions = {}
 ): OrganizationJsonLd {
-  const baseSameAs = ["https://github.com/gtmc-dev/gtmc"]
+  const baseSameAs = ["https://github.com/techmc-wiki/gtmc"]
   const sameAs = [...baseSameAs, ...(options.sameAs ?? [])]
 
   return {
@@ -90,13 +94,12 @@ export function buildOrganizationJsonLd(
 // --- Person ------------------------------------------------------------------
 
 /**
- * Build a schema.org Person object for an author.
+ * Build a schema.org ProfilePage with the author as its main entity.
  *
  * @param person   The resolved person record (from `resolvePerson`).
  * @param siteUrl  Absolute site origin, used to build the profile URL.
- * @param handle   The author's key/handle (e.g. GitHub username) used on the site.
- * @param articleTitles Optional list of article titles this person authored,
- *                       attached as `knowsAbout` for richer author pages.
+ * @param locale   Locale segment used by the profile route.
+ * @param handle   URL-encoded author handle used by the profile route.
  *
  * Optional fields (description, image/avatar, social links) are only emitted
  * when present, avoiding null-heavy schema. `sameAs` aggregates every supported
@@ -106,11 +109,10 @@ export function buildOrganizationJsonLd(
 export function buildPersonJsonLd(
   person: ResolvedPerson,
   siteUrl: string,
-  handle: string,
-  articleTitles?: string[]
+  locale: string,
+  handle: string
 ): JsonLdObject {
-  const profilePath = handle ? `/authors/${handle}` : ""
-  const profileUrl = profilePath ? `${siteUrl}${profilePath}` : undefined
+  const profileUrl = `${siteUrl}/${locale}/authors/${handle}`
 
   const sameAs: string[] = []
   if (person.social.github) {
@@ -143,32 +145,30 @@ export function buildPersonJsonLd(
     }
   }
 
-  const personObject: JsonLdObject = {
-    "@context": "https://schema.org",
+  const personObject: Record<string, unknown> = {
     "@type": "Person",
     name: person.name,
+    url: profileUrl,
   }
 
-  if (profileUrl) {
-    personObject.url = profileUrl
-  }
   if (person.description) {
     personObject.description = person.description
   }
   if (person.profile) {
-    personObject.image = person.profile
-  }
-  if (person.email) {
-    personObject.email = person.email
+    personObject.image = person.profile.startsWith("http")
+      ? person.profile
+      : `${siteUrl}${person.profile.startsWith("/") ? "" : "/"}${person.profile}`
   }
   if (sameAs.length > 0) {
     personObject.sameAs = sameAs
   }
-  if (articleTitles && articleTitles.length > 0) {
-    personObject.knowsAbout = articleTitles
-  }
 
-  return personObject
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    url: profileUrl,
+    mainEntity: personObject,
+  }
 }
 
 // --- WebPage -----------------------------------------------------------------

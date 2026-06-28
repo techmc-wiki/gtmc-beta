@@ -23,7 +23,6 @@
     "statsLanguagesValue": "Chinese & English",
     "statsLastRevision": "LAST REVISION",
     "statsTitle": "The Text So Far",
-    "teamCountLabel": "CONTRIBUTORS",
     "teamDescription": "Articles are written by community members with hands-on expertise in technical Minecraft. Each contributor brings deep knowledge of specific subsystems — from redstone timing to chunk loading internals.",
     "teamTitle": "Contributors",
     "teamViewAll": "View all contributors →"
@@ -265,13 +264,14 @@
     "writeTab": "Write"
   },
   "EditorialPolicy": {
+    "lastReviewed": "Last reviewed against the source documents: {date}.",
     "metaDescription": "How Graduate Texts in Minecraft reviews submissions, governs its editorial board, and licenses content.",
     "pageDescription": "Review process, editorial board, community standards, and licensing",
     "pageTitle": "Editorial Policy",
     "sectionEditorialBoard": "Editorial Board",
     "sectionEditorialBoardBody": "GTMC is governed by a single Editorial Board. Members are collectively referred to as Editors (also called Article Editors).",
     "sectionEditorialBoardBody2": "The board runs on a hybrid seat model. Permanent seats (such as Petris and void) hold core personnel responsible for architectural decisions, arbitration of major disputes, and system revisions. Promotions to permanent seats are currently by invitation only. Rotating seats are filled by active editors selected periodically from the candidate pool; any contributor who has submitted at least one PR may be invited to the rotation candidate pool.",
-    "sectionEditorialBoardBody3": "Each rotation cycle lasts one month and selects three active editors via a weighted random process. Participation is optional — members choose whether to serve a given cycle based on their schedule. A resting principle prevents editors from serving consecutive cycles unless an extreme shortage requires it. A strict recusal policy applies: any content involving an active editor must be cross-reviewed by other board members. When an author disputes an editor's rejection or penalty, permanent-seat members intervene to make the final ruling.",
+    "sectionEditorialBoardBody3": "The current proposal uses an adjustable one-month rotation and tentatively selects three active editors through a weighted random process. Participation is optional, and a resting principle lowers the priority of editors who served in the previous cycle unless expertise is scarce. Content involving an active editor must be cross-reviewed. The source document still marks the formal dispute-resolution process as unfinished; it currently anticipates permanent-seat members making the final ruling.",
     "sectionLicense": "License",
     "sectionLicenseBody": "Article content in Graduate Texts in Minecraft is licensed under CC BY-NC-SA 4.0 — the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license.",
     "sectionLicenseBody2": "You may share and adapt the articles for non-commercial purposes, provided you give appropriate attribution and distribute your contributions under the same license. Website code is licensed separately under Apache-2.0.",
@@ -287,7 +287,11 @@
     "sectionTranslationBody2": "When the source has moved beyond the pinned revision, the website surfaces a \"translation may be stale\" hint so readers can judge freshness. Translations follow the same review and recusal policies as source articles.",
     "sectionViolations": "Violation Policy",
     "sectionViolationsBody": "Violations of the Code of Conduct are handled in three tiers. Level 1 (minor formatting or tone violations): a reminder is issued and the contributor is asked to revise the content to meet the guidelines, with no point deductions.",
-    "sectionViolationsBody2": "Level 2 (spamming or unauthorized copying): the violating content is deleted immediately, the contributor faces a short-term ban, and contribution points are deducted based on the circumstances. Level 3 (malicious fabrication of mechanics or personal attacks): the incident is publicly announced site-wide and the offending individual is permanently banned. A contributor who disagrees with a reviewer's rejection or factual-error penalty may appeal to core permanent members of the management team for final ruling and arbitration."
+    "sectionViolationsBody2": "Level 2 (spamming or unauthorized copying): the violating content is deleted immediately, the contributor faces a short-term ban, and contribution points are deducted based on the circumstances. Level 3 (malicious fabrication of mechanics or personal attacks): the incident is publicly announced site-wide and the offending individual is permanently banned. The draft governance document anticipates an appeal to permanent-seat members, but the formal dispute-resolution process remains unfinished.",
+    "sourceConduct": "Code of Conduct",
+    "sourceContributing": "Contributing Guide",
+    "sourceNote": "This page summarizes the project documents below. Those documents remain authoritative when wording differs.",
+    "sourceReviewers": "Editorial Board"
   },
   "Feature": {
     "assigneeLabel": "Assignee",
@@ -467,6 +471,7 @@
   "Nav": {
     "about": "ABOUT",
     "articles": "ARTICLES",
+    "authors": "AUTHORS",
     "drafts": "MY DRAFTS",
     "features": "FEATURES REPORTS",
     "glossary": "GLOSSARY",
