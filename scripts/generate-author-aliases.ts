@@ -8,17 +8,12 @@
  *   3. Group emails by GitHub username; the username becomes the canonical
  *      key and every distinct display name (minus the canonical) becomes an
  *      alias.
- *   4. Merge on top of the existing `authors-alias.yml` (baseline) so a
- *      degraded no-token/API run never shrinks the file and loses
- *      previously-known mappings (e.g. `Royan -> RoyanAB`).
- *   5. Apply manual overrides from `author-alias-overrides.yml` last.
- *   6. Write `authors-alias.yml` sorted by canonical key for stable diffs.
+ *   4. Apply manual overrides from `author-alias-overrides.yml` last.
+ *   5. Write `authors-alias.yml` sorted by canonical key for stable diffs.
  *
- * The GitHub API is only contacted when the `GITHUB_FEATURES_ISSUES_PAT`
- * env var is set OR the email is a noreply address (resolved locally without
- * a network call). All network failures are logged and skipped — the
- * baseline plus local git/noreply information is always enough to produce a
- * useful, non-regressing file.
+ * The GitHub token is optional but recommended to avoid rate limits. Noreply
+ * addresses resolve locally; other addresses use the commits API, matching the
+ * legacy Python generator.
  */
 
 import { execFileSync } from "node:child_process"
@@ -36,9 +31,9 @@ const ARTICLES_PATH =
 
 const GITHUB_TOKEN = process.env.GITHUB_FEATURES_ISSUES_PAT
 const GITHUB_API_BASE = "https://api.github.com"
-const GITHUB_ARTICLES_REPO = "gtmc-dev/articles"
+const GITHUB_ARTICLES_REPO = "gtmc-dev/Articles"
 
-const NOREPLY_PATTERN = /\+(\w+)@users\.noreply\.github\.com/
+const NOREPLY_PATTERN = /\+([a-z\d-]+)@users\.noreply\.github\.com/i
 
 type AliasMap = Record<string, string[]>
 
@@ -131,11 +126,8 @@ async function fetchGithubLoginFromEmail(
 /**
  * Resolve a commit email to a GitHub username.
  *
- * 1. If `GITHUB_FEATURES_ISSUES_PAT` is absent AND the email is not a noreply
- *    address, skip the API call entirely (avoids guaranteed 403s and respects
- *    the "graceful degradation without token" contract).
- * 2. Noreply emails are resolved locally with no network.
- * 3. Otherwise, query the commits API (with token if available).
+ * Noreply emails resolve locally. Other addresses use the commits API, with
+ * authentication when available.
  */
 async function getGithubUsernameForEmail(
   email: string
@@ -143,17 +135,11 @@ async function getGithubUsernameForEmail(
   const noreply = extractNoreplyUsername(email)
   if (noreply) return noreply
 
-  if (!GITHUB_TOKEN) {
-    // Without a token the commits API returns 401/403 for most emails.
-    // Don't waste a round-trip; local noreply resolution above already ran.
-    return undefined
-  }
-
   const headers: Record<string, string> = {
     Accept: "application/vnd.github.v3+json",
     "User-Agent": "gtmc-alias-script",
-    Authorization: `Bearer ${GITHUB_TOKEN}`,
   }
+  if (GITHUB_TOKEN) headers.Authorization = `Bearer ${GITHUB_TOKEN}`
   return fetchGithubLoginFromEmail(email, headers)
 }
 
@@ -168,48 +154,10 @@ function loadManualAliases(): AliasMap {
 }
 
 /**
- * Load the existing output file as a baseline so a degraded (no-token,
- * API-failing) run never shrinks the file and drops already-known mappings.
- * Returns `{}` on first run or if the file is missing/corrupt.
+ * Apply authoritative manual corrections to the aliases derived from history.
  */
-function loadBaselineAliases(): AliasMap {
-  if (!existsSync(OUTPUT_PATH)) return {}
-  const parsed = yamlLoad(readFileSync(OUTPUT_PATH, "utf-8"))
-  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {}
-  return parsed as AliasMap
-}
-
-/**
- * Merge alias layers in increasing precedence:
- *   baseline (existing file)  <  auto (git/API-derived)  <  manual overrides
- *
- * Baseline and auto layers are unioned (both are "discovered" knowledge, so
- * neither removes the other's aliases). A manual override for a canonical key
- * **replaces** the merged alias list for that key — overrides are
- * authoritative corrections (e.g. casing fixes), not additions. Output is
- * sorted by canonical key for stable diffs.
- */
-function mergeAliases(
-  baseline: AliasMap,
-  auto: AliasMap,
-  manual: AliasMap
-): AliasMap {
-  const merged: AliasMap = {}
-
-  const unionLayer = (entries: AliasMap): void => {
-    for (const [canonical, aliases] of Object.entries(entries)) {
-      const existing = merged[canonical] ?? []
-      const combined = [...new Set([...existing, ...aliases])]
-      merged[canonical] = combined.toSorted()
-    }
-  }
-
-  unionLayer(baseline)
-  unionLayer(auto)
-
-  // Manual overrides are authoritative: a key present here is rewritten in
-  // full, so a casing fix like `Ryan100C -> Ryan100c` actually takes effect
-  // instead of being buried by a union with the buggy baseline entry.
+function mergeAliases(auto: AliasMap, manual: AliasMap): AliasMap {
+  const merged = { ...auto }
   for (const [canonical, aliases] of Object.entries(manual)) {
     merged[canonical] = [...new Set(aliases)].toSorted()
   }
@@ -275,15 +223,14 @@ async function generateAliases(): Promise<AliasMap> {
 }
 
 async function main(): Promise<void> {
-  const baselineAliases = loadBaselineAliases()
   const autoAliases = await generateAliases()
   const manualAliases = loadManualAliases()
-  const aliases = mergeAliases(baselineAliases, autoAliases, manualAliases)
+  const aliases = mergeAliases(autoAliases, manualAliases)
 
   const header =
     "# Auto-generated author aliases (canonical_username -> [alias, ...]).\n" +
-    "# Generated by `pnpm generate:aliases`; merges git/API-derived aliases\n" +
-    "# onto the existing baseline, then applies author-alias-overrides.yml.\n" +
+    "# Generated from the articles Git history by `pnpm generate:aliases`,\n" +
+    "# then corrected by author-alias-overrides.yml.\n" +
     "# Manual overrides belong in author-alias-overrides.yml.\n"
 
   const body = yamlDump(aliases, {

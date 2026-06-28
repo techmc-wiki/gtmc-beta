@@ -1,18 +1,4 @@
-/**
- * Client-safe people mention data.
- *
- * This is a static snapshot of `lib/articles/config/people.yml` inlined as a
- * pure ESM object literal. The data is duplicated here to avoid pulling
- * server-only filesystem and YAML dependencies into the client bundle when
- * `components/markdown/people-mention.tsx` resolves person data.
- *
- * Server-side code should continue using `lib/markdown/people.ts` which loads
- * the YAML at runtime. This module exists only for the client component.
- *
- * Re-sync: print `people.yml` with tsx and replace the literal below whenever
- * people entries are added, removed, or modified.
- */
-
+// Generated from people.yml by scripts/generate-author-profiles.ts. Do not edit.
 export type PeopleEntry = {
   name: string
   description?: string
@@ -33,13 +19,7 @@ export type ResolvedPerson = {
   description: string | null
   profile: string | null
   email: string | null
-  social: {
-    github?: string
-    bilibili?: string
-    twitter?: string
-    website?: string
-    custom?: Array<{ label: string; url: string }>
-  }
+  social: NonNullable<PeopleEntry["social"]>
   isFallback: boolean
 }
 
@@ -77,35 +57,30 @@ const peopleData: Readonly<Record<string, PeopleEntry>> = {
   },
   "Ryan100c": {
     "name": "Ryan100c",
-    "description": "GTMC contributor",
     "social": {
       "github": "https://github.com/Ryan100c"
     }
   },
   "yuhan2680": {
     "name": "yuhan2680",
-    "description": "GTMC contributor",
     "social": {
       "github": "https://github.com/yuhan2680"
     }
   },
   "Molforte": {
     "name": "Molforte",
-    "description": "GTMC contributor",
     "social": {
       "github": "https://github.com/Molforte"
     }
   },
   "Twisuki": {
     "name": "Twisuki",
-    "description": "GTMC contributor",
     "social": {
       "github": "https://github.com/Twisuki"
     }
   },
   "xhbsh": {
     "name": "xhbsh",
-    "description": "GTMC contributor",
     "social": {
       "github": "https://github.com/xhbsh"
     }
@@ -142,35 +117,27 @@ const peopleData: Readonly<Record<string, PeopleEntry>> = {
   }
 }
 
-/**
- * Resolve a person key to a `ResolvedPerson` (client-safe).
- *
- * Returns the matching entry from the inlined snapshot when found,
- * or a fallback with `isFallback: true` when the key is unknown.
- */
 export function resolvePersonClient(key: string): ResolvedPerson {
   const normalized = key.trim()
   const entry = peopleData[normalized]
 
-  if (entry) {
-    return {
-      key: normalized,
-      name: entry.name,
-      description: entry.description ?? null,
-      profile: entry.profile ?? null,
-      email: entry.email ?? null,
-      social: entry.social ?? {},
-      isFallback: false,
-    }
-  }
-
-  return {
-    key: normalized,
-    name: normalized,
-    description: null,
-    profile: null,
-    email: null,
-    social: {},
-    isFallback: true,
-  }
+  return entry
+    ? {
+        key: normalized,
+        name: entry.name,
+        description: entry.description ?? null,
+        profile: entry.profile ?? null,
+        email: entry.email ?? null,
+        social: entry.social ?? {},
+        isFallback: false,
+      }
+    : {
+        key: normalized,
+        name: normalized,
+        description: null,
+        profile: null,
+        email: null,
+        social: {},
+        isFallback: true,
+      }
 }
